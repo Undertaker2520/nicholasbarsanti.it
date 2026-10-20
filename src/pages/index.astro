@@ -6,6 +6,7 @@ import Scheda from '../components/Scheda.astro';
 import Carosello from '../components/Carosello.astro';
 import ElencoPunti from '../components/ElencoPunti.astro';
 import Profili from '../components/Profili.astro';
+import Domande from '../components/Domande.astro';
 import { sito, mailto } from '../config';
 import { sezioni } from '../data/sezioni';
 import {
@@ -16,6 +17,7 @@ import {
   perche,
   lavori,
   linkLavoro,
+  domande,
   contatti,
   richiestaServizio,
   carosello,
@@ -88,6 +90,14 @@ const mostraLavori = sito.mostraLavori && lavori.length > 0;
             </li>
           ))}
         </ul>
+      </Sezione>
+    )
+  }
+
+  {
+    domande.length > 0 && (
+      <Sezione sezione={sezioni.domande}>
+        <Domande voci={domande} />
       </Sezione>
     )
   }

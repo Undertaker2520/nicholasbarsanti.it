@@ -1,0 +1,27 @@
+---
+/**
+ * Domande frequenti con <details>/<summary>: si aprono e chiudono senza JavaScript,
+ * con mouse, tocco e tastiera (Invio o Spazio sulla domanda), annunciate come
+ * pulsanti espandibili dai lettori di schermo.
+ */
+import type { Domanda } from '../data/testi';
+
+interface Props {
+  voci: readonly Domanda[];
+}
+
+const { voci } = Astro.props;
+---
+
+<div class="domande" data-comparsa-gruppo>
+  {
+    voci.map((voce) => (
+      <details class="domanda">
+        <summary class="domanda__titolo">{voce.domanda}</summary>
+        <div class="domanda__risposta">
+          <p>{voce.risposta}</p>
+        </div>
+      </details>
+    ))
+  }
+</div>

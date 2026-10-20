@@ -66,8 +66,9 @@ Intestazioni definite in `src/sicurezza/intestazioni.ts` (unica fonte): in build
 5. **Come lavoro**: quattro passi numerati.
 6. **Perché lavorare con me**: tre punti brevi.
 7. **Lavori realizzati**: sezione predisposta ma **nascosta** finché non c'è almeno un lavoro vero (un flag in un file di configurazione la attiva). Non inventare progetti.
-8. **Contatti**
-9. **Piè di pagina**, con link alla pagina `/privacy`.
+8. **Domande frequenti**: cinque domande con `<details>`/`<summary>`, senza JavaScript.
+9. **Contatti**
+10. **Piè di pagina**, con link alla pagina `/privacy`.
 
 Pagina aggiuntiva `/privacy`: informativa breve e chiara (titolare Nicholas Barsanti, contatto info@nicholasbarsanti.it; il sito non usa cookie né analytics; l'hosting Netlify registra dati tecnici di accesso come l'indirizzo IP nei log del server; i dati inviati via email sono usati solo per rispondere). Da segnalare come bozza da far verificare.
 
@@ -81,7 +82,7 @@ Registro: si dà del **tu** al visitatore.
 **Pulsante:** Scrivimi
 
 ### Chi sono
-Sono Nicholas, sviluppatore con oltre cinque anni di esperienza e responsabile del reparto informatico di un'azienda, dove seguo software, server e sicurezza. In parallelo realizzo siti per attività e professionisti della zona.
+Sono Nicholas, programmo professionalmente dal 2021 e sono responsabile del reparto informatico di un'azienda, dove seguo software, server e sicurezza. In parallelo realizzo siti per attività e professionisti della zona.
 
 Mi sono formato in sicurezza informatica, e si vede nel modo in cui lavoro: ogni sito che consegno nasce già protetto.
 
@@ -104,9 +105,17 @@ Associazioni ed enti con molti contenuti, siti in più lingue, aree riservate.
 4. **Consegna.** Il sito è tuo: dominio e hosting a tuo nome, una guida per gestirlo e 30 giorni di garanzia.
 
 ### Perché lavorare con me
-- **Sicurezza di serie.** Aggiornamenti, backup e protezioni sono inclusi fin dal primo giorno.
+- **Sicurezza di serie.** Aggiornamenti automatici, backup e protezioni configurati fin dal primo giorno.
 - **Il sito resta tuo.** Niente abbonamenti obbligatori né vincoli: se un giorno vuoi cambiare, porti via tutto.
 - **Un solo interlocutore.** Parli con chi scrive il codice, non con un call center.
+
+### Domande frequenti
+Le risposte riprendono solo fatti già scritti nel sito.
+- **Quanto costa davvero un sito vetrina?** Si parte da 900 € per un sito fino a 5 pagine. Il prezzo finale dipende da quante pagine e funzioni ti servono: prima di iniziare ricevi un preventivo scritto con cosa è incluso e cosa no, così non ci sono sorprese.
+- **Dominio e hosting sono compresi?** Dominio e hosting sono intestati a te, così il sito resta tuo e non dipendi da me. Il loro costo annuale lo paghi direttamente al fornitore e lo trovi indicato nel preventivo.
+- **Potrò aggiornare il sito da solo?** Sì. Ti insegno a modificare testi e foto e alla consegna ricevi una guida scritta per gestire il sito in autonomia.
+- **Cosa succede dopo la consegna?** Hai 30 giorni di garanzia. Non ci sono abbonamenti obbligatori né vincoli: se un giorno vuoi cambiare, porti via tutto.
+- **Come iniziamo?** Scrivimi due righe su cosa ti serve: rispondo entro la giornata e fissiamo una prima chiacchierata, gratuita e senza impegno.
 
 ### Contatti
 Raccontami il tuo progetto: rispondo entro la giornata.

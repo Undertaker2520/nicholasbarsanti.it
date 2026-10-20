@@ -16,6 +16,7 @@ export const sezioni = {
   comeLavoro: { id: 'come-lavoro', etichetta: 'Come lavoro' },
   perche: { id: 'perche', etichetta: 'Perché lavorare con me' },
   lavori: { id: 'lavori', etichetta: 'Lavori realizzati' },
+  domande: { id: 'domande', etichetta: 'Domande frequenti' },
   contatti: { id: 'contatti', etichetta: 'Contatti' },
 } as const satisfies Record<string, Sezione>;
 

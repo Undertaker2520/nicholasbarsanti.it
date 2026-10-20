@@ -134,6 +134,11 @@ $larghezza-schede-min: 15rem;
 // ha un bordo pieno: togliendo questi pixel in alto i due margini appaiono uguali.
 $scheda-compensazione-ottica: 4px;
 
+// Domande frequenti: elenco non più largo di una colonna di lettura comoda.
+$domande-larghezza-max: 48rem;
+$domanda-icona: 0.875rem; // segno "+" / "−" a destra della domanda
+$domanda-icona-tratto: 2px;
+
 // Carosello delle schede sotto `largo`: una scheda per volta, intera e centrata.
 $carosello-larghezza-scheda: 100%;
 $carosello-icona: 0.75rem; // icona pausa/riprendi

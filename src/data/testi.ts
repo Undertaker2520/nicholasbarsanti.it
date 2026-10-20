@@ -17,6 +17,11 @@ export interface Servizio {
   tempi?: string;
 }
 
+export interface Domanda {
+  domanda: string;
+  risposta: string;
+}
+
 export interface Lavoro {
   titolo: string;
   descrizione: string;
@@ -32,7 +37,7 @@ export const apertura = {
 };
 
 export const chiSono: readonly string[] = [
-  "Sono Nicholas, sviluppatore con oltre cinque anni di esperienza e responsabile del reparto informatico di un'azienda, dove seguo software, server e sicurezza. In parallelo realizzo siti per attività e professionisti della zona.",
+  "Sono Nicholas, programmo professionalmente dal 2021 e sono responsabile del reparto informatico di un'azienda, dove seguo software, server e sicurezza. In parallelo realizzo siti per attività e professionisti della zona.",
   'Mi sono formato in sicurezza informatica, e si vede nel modo in cui lavoro: ogni sito che consegno nasce già protetto.',
 ];
 
@@ -113,7 +118,7 @@ export const comeLavoro: readonly Punto[] = [
 export const perche: readonly Punto[] = [
   {
     titolo: 'Sicurezza di serie.',
-    testo: 'Aggiornamenti, backup e protezioni sono inclusi fin dal primo giorno.',
+    testo: 'Aggiornamenti automatici, backup e protezioni configurati fin dal primo giorno.',
   },
   {
     titolo: 'Il sito resta tuo.',
@@ -131,6 +136,39 @@ export const lavori: readonly Lavoro[] = [];
 
 /** Testo del link al sito di un lavoro realizzato. */
 export const linkLavoro = 'Visita il sito';
+
+/**
+ * Domande frequenti. Ogni risposta riprende solo fatti già scritti nel sito (prezzi,
+ * preventivo, consegna, garanzia, contatti): niente promesse nuove.
+ * La sezione compare solo se l'elenco non è vuoto.
+ */
+export const domande: readonly Domanda[] = [
+  {
+    domanda: 'Quanto costa davvero un sito vetrina?',
+    risposta:
+      'Si parte da 900 € per un sito fino a 5 pagine. Il prezzo finale dipende da quante pagine e funzioni ti servono: prima di iniziare ricevi un preventivo scritto con cosa è incluso e cosa no, così non ci sono sorprese.',
+  },
+  {
+    domanda: 'Dominio e hosting sono compresi?',
+    risposta:
+      'Dominio e hosting sono intestati a te, così il sito resta tuo e non dipendi da me. Il loro costo annuale lo paghi direttamente al fornitore e lo trovi indicato nel preventivo.',
+  },
+  {
+    domanda: 'Potrò aggiornare il sito da solo?',
+    risposta:
+      'Sì. Ti insegno a modificare testi e foto e alla consegna ricevi una guida scritta per gestire il sito in autonomia.',
+  },
+  {
+    domanda: 'Cosa succede dopo la consegna?',
+    risposta:
+      'Hai 30 giorni di garanzia. Non ci sono abbonamenti obbligatori né vincoli: se un giorno vuoi cambiare, porti via tutto.',
+  },
+  {
+    domanda: 'Come iniziamo?',
+    risposta:
+      'Scrivimi due righe su cosa ti serve: rispondo entro la giornata e fissiamo una prima chiacchierata, gratuita e senza impegno.',
+  },
+];
 
 export const contatti = {
   invito: 'Raccontami il tuo progetto: rispondo entro la giornata.',

@@ -1,0 +1,74 @@
+// Domande frequenti (src/components/Domande.astro): <details>/<summary> senza JavaScript.
+
+@use '../variabili' as v;
+@use '../strumenti' as *;
+
+.domande {
+  display: grid;
+  gap: spazio(xs);
+  max-width: v.$domande-larghezza-max;
+}
+
+.domanda {
+  background: colore(sfondo);
+  border: v.$bordo-spessore solid colore(bordo);
+  border-radius: v.$raggio;
+
+  @include con-movimento {
+    transition: transizioni(v.$durata-media, border-color, background-color);
+  }
+
+  &[open] {
+    background: colore(superficie);
+    border-color: colore(accento);
+  }
+
+  // La domanda è il controllo: tutta la riga è cliccabile, il segno a destra indica lo stato.
+  &__titolo {
+    position: relative;
+    padding: spazio(s) spazio(m);
+    padding-right: calc(#{spazio(m)} * 2 + #{v.$domanda-icona});
+    border-radius: v.$raggio;
+    font-weight: v.$peso-forte;
+    list-style: none;
+    cursor: pointer;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    // "+" fatto di due tratti; da aperta resta solo quello orizzontale ("−").
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: spazio(m);
+      width: v.$domanda-icona;
+      height: v.$domanda-icona;
+      translate: 0 -50%;
+      background:
+        linear-gradient(currentColor, currentColor) center / 100% v.$domanda-icona-tratto no-repeat,
+        linear-gradient(currentColor, currentColor) center / v.$domanda-icona-tratto 100% no-repeat;
+      color: colore(accento);
+
+      @include con-movimento {
+        transition: transizioni(v.$durata-breve, background-size);
+      }
+    }
+
+    @include al-passaggio {
+      color: colore(accento);
+    }
+  }
+
+  &[open] > &__titolo::after {
+    background-size:
+      100% v.$domanda-icona-tratto,
+      v.$domanda-icona-tratto 0;
+  }
+
+  &__risposta {
+    padding: 0 spazio(m) spazio(m);
+    color: colore(testo-secondario);
+  }
+}

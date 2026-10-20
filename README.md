@@ -70,6 +70,10 @@ Ogni scheda ha in fondo il pulsante "Chiedi informazioni" (stesso componente `Pu
 
 Sotto i 1024 px le schede diventano un **carosello** (`src/components/Carosello.astro`): una per volta, intere e centrate, con aggancio CSS (`scroll-snap`). Pallini e pulsante pausa sono nell'HTML ma nascosti; `src/scripts/moduli/carosello.js` li mostra, evidenzia il pallino della scheda visibile, porta alla scheda scelta e fa **scorrere le schede da sole ogni 4 secondi**. Lo scorrimento automatico rispetta WCAG 2.2.2: pulsante pausa/riprendi sempre visibile, arresto definitivo appena la persona tocca, trascina o usa un pallino, sospensione con mouse o focus sul carosello, fuori schermo o con la scheda del browser nascosta, nessun movimento con `prefers-reduced-motion`. Senza JavaScript si scorre comunque con il dito o la barra di scorrimento. Nessuna libreria esterna (Owl Carousel scartato: non mantenuto dal 2018, incompatibile con jQuery 4 e con i pallini senza nome accessibile). Il pulsante è la variante `dimensione="piccolo"` (a pillola, testo non in grassetto).
 
+## Domande frequenti
+
+Sezione prima di Contatti (`src/components/Domande.astro`), con `<details>`/`<summary>`: si apre e chiude senza JavaScript, anche da tastiera (Tab, poi Invio o Spazio). I testi sono in `domande` (`src/data/testi.ts`) e riprendono solo fatti già scritti nel sito; con l'elenco vuoto la sezione non compare.
+
 ## Animazioni e JavaScript
 
 - **Comparsa allo scorrimento**: `data-comparsa` su un elemento, `data-comparsa-gruppo` su un elenco (i figli compaiono uno dopo l'altro). Il JavaScript nasconde solo gli elementi ancora fuori dallo schermo e li mostra quando entrano.
