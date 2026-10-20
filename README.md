@@ -66,7 +66,7 @@ Per cambiare colori o font si modifica solo `src/styles/_variabili.scss`.
 
 ## Schede dei servizi
 
-Ogni scheda ha in fondo il pulsante "Chiedi informazioni" (stesso componente `Pulsante` di "Scrivimi"), esteso a tutta la scheda: apre il programma di posta con oggetto e testo già scritti per quel servizio. I testi del messaggio sono in `richiestaServizio` (`src/data/testi.ts`); il link è costruito da `mailtoPrecompilato` (`src/lib/email.ts`). La prima scheda (Sito vetrina) è evidenziata dal bordo petrolio, come chiesto dal brief; lo sfondo tenue compare su ogni scheda al passaggio del mouse. Il pulsante è la variante `dimensione="piccolo"` (a pillola, testo non in grassetto).
+Ogni scheda ha in fondo il pulsante "Chiedi informazioni" (stesso componente `Pulsante` di "Scrivimi"), esteso a tutta la scheda: apre il programma di posta con oggetto e testo già scritti per quel servizio. I testi del messaggio sono in `richiestaServizio` (`src/data/testi.ts`); il link è costruito da `mailtoPrecompilato` (`src/lib/email.ts`). Le schede sono uguali: sfondo tenue e bordo petrolio compaiono su ognuna solo al passaggio del mouse. Il pulsante è la variante `dimensione="piccolo"` (a pillola, testo non in grassetto).
 
 ## Animazioni e JavaScript
 

@@ -15,7 +15,6 @@ export interface Servizio {
   prezzoDa?: number;
   descrizione: string;
   tempi?: string;
-  evidenziato?: boolean;
 }
 
 export interface Lavoro {
@@ -44,7 +43,6 @@ export const servizi: readonly Servizio[] = [
     descrizione:
       'Il sito completo per presentare la tua attività: fino a 5 pagine, perfetto da telefono, con contatti, mappa e WhatsApp. Ti insegno a modificare testi e foto da solo.',
     tempi: '3–4 settimane',
-    evidenziato: true,
   },
   {
     titolo: 'Controllo e messa in sicurezza del sito WordPress',

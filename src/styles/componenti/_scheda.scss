@@ -33,11 +33,6 @@
     background: colore(superficie);
   }
 
-  // Evidenza leggera (Sito vetrina): bordo nel colore d'accento; lo sfondo tenue arriva al passaggio.
-  &--evidenziata {
-    border-color: colore(accento);
-  }
-
   &__titolo {
     margin-bottom: spazio(xs);
   }

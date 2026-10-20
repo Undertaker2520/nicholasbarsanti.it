@@ -14,15 +14,12 @@ interface Props {
   nota?: string;
   /** Link in fondo: rende cliccabile tutta la scheda. */
   azione?: Azione;
-  evidenziata?: boolean;
 }
 
-const { titolo, etichetta, nota, azione, evidenziata = false } = Astro.props;
+const { titolo, etichetta, nota, azione } = Astro.props;
 ---
 
-<article
-  class:list={['scheda', { 'scheda--evidenziata': evidenziata, 'scheda--cliccabile': azione }]}
->
+<article class="scheda">
   <h3 class="scheda__titolo">{titolo}</h3>
   {etichetta && <p class="scheda__etichetta">{etichetta}</p>}
   <slot />

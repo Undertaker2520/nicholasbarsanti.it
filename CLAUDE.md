@@ -62,7 +62,7 @@ Intestazioni definite in `src/sicurezza/intestazioni.ts` (unica fonte): in build
 1. **Intestazione**: nome a sinistra; a destra i link interni Chi sono, Servizi, Come lavoro, Contatti (ancore alla stessa pagina).
 2. **Apertura**: titolo, sottotitolo, pulsante "Scrivimi", foto.
 3. **Chi sono**
-4. **Cosa posso fare per te**: tre schede, la prima (Sito vetrina) leggermente evidenziata.
+4. **Cosa posso fare per te**: tre schede uguali; al passaggio del mouse ognuna si solleva, con sfondo tenue e bordo petrolio (scelta di Nicholas: nessuna scheda evidenziata di default).
 5. **Come lavoro**: quattro passi numerati.
 6. **Perché lavorare con me**: tre punti brevi.
 7. **Lavori realizzati**: sezione predisposta ma **nascosta** finché non c'è almeno un lavoro vero (un flag in un file di configurazione la attiva). Non inventare progetti.
