@@ -59,6 +59,27 @@ export const servizi: readonly Servizio[] = [
   },
 ];
 
+/**
+ * Link in fondo a ogni scheda dei servizi: apre l'email con oggetto e testo già scritti,
+ * così chi scrive deve solo completare le risposte.
+ */
+export const richiestaServizio = {
+  link: 'Chiedi informazioni',
+  oggetto: (servizio: string) => `Informazioni su: ${servizio}`,
+  corpo: (servizio: string) =>
+    [
+      'Ciao Nicholas,',
+      '',
+      `vorrei qualche informazione sul servizio «${servizio}».`,
+      '',
+      'La mia attività: ',
+      'Cosa mi servirebbe: ',
+      'Tempi che ho in mente: ',
+      '',
+      'Grazie!',
+    ].join('\n'),
+};
+
 /** Testo del prezzo; spazio indivisibile tra cifra ed euro, così non va a capo. */
 export const etichettaPrezzo = (servizio: Servizio) =>
   servizio.prezzoDa === undefined ? 'su preventivo' : `da ${servizio.prezzoDa} €`;
@@ -101,6 +122,9 @@ export const perche: readonly Punto[] = [
 
 /** Solo lavori veri. La sezione compare se `sito.mostraLavori` è true e l'elenco non è vuoto. */
 export const lavori: readonly Lavoro[] = [];
+
+/** Testo del link al sito di un lavoro realizzato. */
+export const linkLavoro = 'Visita il sito';
 
 export const contatti = {
   invito: 'Raccontami il tuo progetto: rispondo entro la giornata.',

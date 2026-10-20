@@ -13,28 +13,8 @@
     margin-bottom: 0;
   }
 
-  // Fascia a tutta larghezza color petrolio, con un riflesso chiaro in alto a destra.
   &--banda {
-    background-color: colore(banda-sfondo);
-    background-image: radial-gradient(
-      circle at 85% 0%,
-      sfumato(banda-testo, 12%),
-      transparent 45%
-    );
-    color: colore(banda-secondario);
-
-    h2,
-    strong {
-      color: colore(banda-testo);
-    }
-
-    a {
-      color: inherit;
-    }
-
-    :focus-visible {
-      outline-color: colore(banda-testo);
-    }
+    @include fascia-petrolio;
   }
 }
 

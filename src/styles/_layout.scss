@@ -10,6 +10,11 @@
   padding-inline: v.$margine-laterale;
 }
 
+// Testo letto dai lettori di schermo ma non mostrato (per esempio a completare un link).
+.solo-lettori-schermo {
+  @include solo-lettori-schermo;
+}
+
 // Link "Vai al contenuto": invisibile finché non riceve il focus da tastiera.
 .salta-al-contenuto {
   @include solo-lettori-schermo;

@@ -42,7 +42,7 @@ src/
   layouts/         struttura HTML comune
   pages/           pagine del sito (anche .well-known/security.txt, generato)
   sicurezza/       intestazioni HTTP (CSP, HSTS, ...): unica fonte
-  lib/             funzioni comuni (URL, JSON-LD, risposte di testo)
+  lib/             funzioni comuni (URL, JSON-LD, email precompilate, risposte di testo)
   scripts/
     main.js          punto di ingresso del JavaScript (incluso dal layout)
     moduli/          comparsa allo scorrimento, intestazione, sfondo
@@ -63,6 +63,10 @@ Per cambiare colori o font si modifica solo `src/styles/_variabili.scss`.
 
 - **Foto**: salvare un ritratto (meglio quadrato, almeno 400×400 px) come `src/assets/nicholas.jpg`. Astro lo converte in AVIF/WebP/JPEG fino a 400 px (qualità 80) e rimuove i metadati EXIF. Senza file compare il cerchio con le iniziali.
 - **Lavori realizzati**: aggiungere i lavori in `lavori` dentro `src/data/testi.ts` e impostare `mostraLavori: true` in `src/config.ts`. La sezione compare solo se entrambe le condizioni sono vere.
+
+## Schede dei servizi
+
+Ogni scheda ha in fondo il link "Chiedi informazioni", esteso a tutta la scheda: apre il programma di posta con oggetto e testo già scritti per quel servizio. I testi del messaggio sono in `richiestaServizio` (`src/data/testi.ts`); il link è costruito da `mailtoPrecompilato` (`src/lib/email.ts`). La prima scheda (Sito vetrina) è evidenziata come chiesto dal brief.
 
 ## Animazioni e JavaScript
 

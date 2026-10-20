@@ -52,9 +52,9 @@ Intestazioni definite in `src/sicurezza/intestazioni.ts` (unica fonte): in build
 ## Design
 
 - Sobrio, professionale, molto spazio bianco. Un solo colore di accento (blu scuro o verde petrolio), il resto neutro.
-- Animazioni sobrie: comparsa allo scorrimento, effetti al passaggio del mouse, sfondo con nebulose petrolio sfumate fisse rispetto allo schermo (in alto a destra e in basso a sinistra della parte visualizzata) che derivano e seguono il mouse; intensità limitata dal contrasto del testo (vedi `$decorazione-intensita`), fascia petrolio in "Perché lavorare con me". Sempre disattivate con `prefers-reduced-motion`; durate e distanze in `_variabili.scss`. Niente immagini stock, niente icone generiche in eccesso.
+- Animazioni sobrie: comparsa allo scorrimento, effetti al passaggio del mouse, sfondo con nebulose petrolio sfumate fisse rispetto allo schermo (in alto a destra e in basso a sinistra della parte visualizzata) che derivano e seguono il mouse; intensità limitata dal contrasto del testo (vedi `$decorazione-intensita`), fascia petrolio in "Perché lavorare con me" e nel piè di pagina. Sempre disattivate con `prefers-reduced-motion`; durate e distanze in `_variabili.scss`. Niente immagini stock, niente icone generiche in eccesso.
 - Tipografia leggibile: testo a 17–18 px su desktop, righe di massimo 70 caratteri circa.
-- Un solo pulsante principale ("Scrivimi"), che apre `mailto:info@nicholasbarsanti.it`.
+- Un solo pulsante principale ("Scrivimi"), che apre `mailto:info@nicholasbarsanti.it`. Nelle schede dei servizi un link testuale "Chiedi informazioni" (esteso a tutta la scheda) apre l'email con oggetto e testo precompilati per quel servizio.
 - Foto: `public/images/nicholas.jpg`. **Se il file non esiste**, mostrare un cerchio con le iniziali "NB" come segnaposto. Quando la foto c'è, servirla ottimizzata (Astro `<Image>`, formati moderni, dimensioni corrette, `alt` descrittivo).
 
 ## Struttura della pagina (ordine fisso)

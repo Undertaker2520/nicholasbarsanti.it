@@ -1,16 +1,43 @@
 ---
+interface Azione {
+  href: string;
+  testo: string;
+}
+
 interface Props {
   titolo: string;
   /** Riga sotto il titolo, per esempio il prezzo. */
   etichetta?: string;
+  /** Riga discreta in fondo, per esempio i tempi. */
+  nota?: string;
+  /** Link in fondo: rende cliccabile tutta la scheda. */
+  azione?: Azione;
   evidenziata?: boolean;
 }
 
-const { titolo, etichetta, evidenziata = false } = Astro.props;
+const { titolo, etichetta, nota, azione, evidenziata = false } = Astro.props;
 ---
 
-<article class:list={['scheda', { 'scheda--evidenziata': evidenziata }]}>
+<article
+  class:list={['scheda', { 'scheda--evidenziata': evidenziata, 'scheda--cliccabile': azione }]}
+>
   <h3 class="scheda__titolo">{titolo}</h3>
   {etichetta && <p class="scheda__etichetta">{etichetta}</p>}
   <slot />
+  {
+    (nota || azione) && (
+      <div class="scheda__fondo">
+        {nota && <p class="scheda__nota">{nota}</p>}
+        {azione && (
+          <p class="scheda__azione">
+            <a class="scheda__link" href={azione.href}>
+              {azione.testo}
+              <span class="solo-lettori-schermo">: {titolo}</span>
+              <span class="scheda__freccia" aria-hidden="true">→</span>
+            </a>
+          </p>
+        )}
+      </div>
+    )
+  }
 </article>

@@ -13,6 +13,7 @@
 }
 
 .scheda {
+  position: relative; // riferimento del link esteso a tutta la scheda
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -46,11 +47,57 @@
     font-weight: v.$peso-forte;
   }
 
-  // Nota finale (tempi, link): sempre in fondo alla scheda.
-  &__nota {
+  // Nota e link: sempre in fondo alla scheda, allineati tra schede vicine.
+  &__fondo {
     margin-top: auto;
+    padding-top: spazio(s);
+  }
+
+  &__nota {
+    margin-bottom: spazio(xs);
     color: colore(testo-secondario);
     font-size: testo(piccolo);
+  }
+
+  &__azione {
+    font-weight: v.$peso-forte;
+  }
+
+  &__link {
+    @include sottolineatura-animata;
+    color: colore(accento);
+
+    // Tutta la scheda è cliccabile: l'area del link si estende fino ai bordi.
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: v.$raggio;
+    }
+
+    // Il contorno di focus avvolge la scheda intera.
+    &:focus-visible {
+      outline: none;
+
+      &::after {
+        @include focus-visibile;
+      }
+    }
+  }
+
+  &__freccia {
+    display: inline-block;
+    margin-left: 0.35em;
+
+    @include con-movimento {
+      transition: transizioni(v.$durata-breve, transform);
+    }
+  }
+
+  @include al-passaggio {
+    .scheda__freccia {
+      transform: translateX(v.$spostamento-freccia);
+    }
   }
 
   p:last-child {

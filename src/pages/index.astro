@@ -13,9 +13,12 @@ import {
   comeLavoro,
   perche,
   lavori,
+  linkLavoro,
   contatti,
+  richiestaServizio,
 } from '../data/testi';
 import { datiStrutturati } from '../lib/dati-strutturati';
+import { mailtoPrecompilato } from '../lib/email';
 
 const mostraLavori = sito.mostraLavori && lavori.length > 0;
 ---
@@ -35,10 +38,17 @@ const mostraLavori = sito.mostraLavori && lavori.length > 0;
             <Scheda
               titolo={servizio.titolo}
               etichetta={etichettaPrezzo(servizio)}
+              nota={servizio.tempi && `Tempi: ${servizio.tempi}.`}
+              azione={{
+                href: mailtoPrecompilato(
+                  richiestaServizio.oggetto(servizio.titolo),
+                  richiestaServizio.corpo(servizio.titolo),
+                ),
+                testo: richiestaServizio.link,
+              }}
               evidenziata={servizio.evidenziato}
             >
               <p>{servizio.descrizione}</p>
-              {servizio.tempi && <p class="scheda__nota">Tempi: {servizio.tempi}.</p>}
             </Scheda>
           </li>
         ))
@@ -60,13 +70,11 @@ const mostraLavori = sito.mostraLavori && lavori.length > 0;
         <ul class="schede schede--adattive" data-comparsa-gruppo>
           {lavori.map((lavoro) => (
             <li>
-              <Scheda titolo={lavoro.titolo}>
+              <Scheda
+                titolo={lavoro.titolo}
+                azione={lavoro.url ? { href: lavoro.url, testo: linkLavoro } : undefined}
+              >
                 <p>{lavoro.descrizione}</p>
-                {lavoro.url && (
-                  <p class="scheda__nota">
-                    <a href={lavoro.url}>Visita il sito</a>
-                  </p>
-                )}
               </Scheda>
             </li>
           ))}
