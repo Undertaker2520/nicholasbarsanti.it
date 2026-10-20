@@ -14,6 +14,11 @@
   z-index: -1; // dietro al contenuto, sopra lo sfondo del body (che è isolato)
   overflow: hidden; // le macchie escono dai bordi senza creare scorrimento orizzontale
   pointer-events: none;
+
+  // Su mobile niente nebulose: sfondo pulito e nessuna animazione continua da calcolare.
+  @include fino-a(medio) {
+    display: none;
+  }
 }
 
 .sfondo__macchia {

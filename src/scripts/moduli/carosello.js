@@ -14,7 +14,7 @@ import { movimentoRidotto, osservazioneDisponibile, perFotogramma } from '../uti
 const CLASSE_ATTIVO = 'carosello--attivo';
 const CLASSE_PALLINO_ATTIVO = 'carosello__pallino--attivo';
 const CLASSE_PAUSA_FERMA = 'carosello__pausa--ferma';
-const INTERVALLO_MS = 6000; // tempo per leggere una scheda prima di passare alla successiva
+const INTERVALLO_MS = 4000; // tempo per leggere una scheda prima di passare alla successiva
 const TOLLERANZA_FINE_PX = 2;
 
 export function avviaCaroselli() {
