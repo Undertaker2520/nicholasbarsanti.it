@@ -7,8 +7,8 @@ Il sito stesso è una dimostrazione di competenza: deve essere veloce, accessibi
 ## Tecnologia
 
 - **Astro** con output completamente statico (`output: 'static'`). Nessun framework UI (niente React, Vue, ecc.).
-- **Zero JavaScript lato client**, salvo necessità reale e motivata. Il menu su mobile deve funzionare anche senza JS (per esempio con un semplice ancoraggio o `<details>`).
-- Quando serve JavaScript si usa **jQuery**, installato via npm e incluso nel bundle di Astro come file esterno: mai da CDN, mai script inline.
+- **JavaScript solo come miglioramento progressivo**: senza JS la pagina è completa e funzionante (menu compreso). Oggi il JS gestisce la comparsa degli elementi durante lo scorrimento e l'intestazione (ombra, voce di menu attiva).
+- Quando serve JavaScript si usa **jQuery**, installato via npm e incluso nel bundle di Astro come file esterno: mai da CDN, mai script inline. Si usa la build **slim** (`jquery/slim`). Codice in `src/scripts/`, un modulo per funzione.
 - Stili scritti a mano in **SCSS** (compilato da Vite con `sass`), in file separati, niente Tailwind. **Font, colori e altre variabili di design stanno in un unico file dedicato** (`src/styles/_variabili.scss`); gli altri file li usano, non ridefiniscono valori. Impostare `build.inlineStylesheets: 'never'` così la Content Security Policy non richiede `unsafe-inline`.
 - Dipendenze ammesse: `astro`, `@astrojs/sitemap`, `sass` (sviluppo) e `jquery` (solo quando serve JS). Qualsiasi altra dipendenza va proposta e motivata prima di installarla.
 - Font: uno solo, **self-hosted** in formato woff2 (per esempio Inter), oppure lo stack di sistema. **Mai** Google Fonts da CDN o altre risorse esterne: nessuna richiesta verso terze parti.
@@ -52,7 +52,7 @@ Intestazioni definite in `src/sicurezza/intestazioni.ts` (unica fonte): in build
 ## Design
 
 - Sobrio, professionale, molto spazio bianco. Un solo colore di accento (blu scuro o verde petrolio), il resto neutro.
-- Niente animazioni decorative, niente immagini stock, niente icone generiche in eccesso.
+- Animazioni sobrie: comparsa allo scorrimento, effetti al passaggio del mouse, sfondo petrolio leggermente animato nell'apertura, fascia petrolio in "Perché lavorare con me". Sempre disattivate con `prefers-reduced-motion`; durate e distanze in `_variabili.scss`. Niente immagini stock, niente icone generiche in eccesso.
 - Tipografia leggibile: testo a 17–18 px su desktop, righe di massimo 70 caratteri circa.
 - Un solo pulsante principale ("Scrivimi"), che apre `mailto:info@nicholasbarsanti.it`.
 - Foto: `public/images/nicholas.jpg`. **Se il file non esiste**, mostrare un cerchio con le iniziali "NB" come segnaposto. Quando la foto c'è, servirla ottimizzata (Astro `<Image>`, formati moderni, dimensioni corrette, `alt` descrittivo).

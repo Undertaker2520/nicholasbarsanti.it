@@ -18,8 +18,8 @@ html {
   text-size-adjust: 100%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  html {
+html {
+  @include con-movimento {
     scroll-behavior: smooth;
   }
 }
@@ -98,4 +98,9 @@ svg {
 // Spostamento dello scorrimento per le ancore, così i titoli non toccano il bordo.
 [id] {
   scroll-margin-top: spazio(m);
+
+  // Da `medio` l'intestazione è fissa: le ancore si fermano sotto di lei.
+  @include da(medio) {
+    scroll-margin-top: v.$intestazione-altezza + spazio(m);
+  }
 }

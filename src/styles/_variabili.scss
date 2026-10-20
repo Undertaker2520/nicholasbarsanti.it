@@ -19,7 +19,8 @@ $peso-forte: 650;
 
 // --- Colori ------------------------------------------------------------------
 // Le due palette devono avere le stesse chiavi (lo verifica il mixin `temi`).
-// Contrasti verificati: ogni coppia testo/sfondo è almeno 7:1 (WCAG AAA).
+// Contrasti verificati: testo/sfondo almeno 7:1 (WCAG AAA); nella fascia petrolio
+// il testo secondario è almeno 6:1 (oltre il 4.5:1 richiesto da AA).
 
 $colori-chiaro: (
   sfondo: #ffffff,
@@ -30,6 +31,11 @@ $colori-chiaro: (
   accento: #0f5c63,
   accento-hover: #0a454b,
   su-accento: #ffffff,
+  // Fascia a tutta larghezza color petrolio ("Perché lavorare con me").
+  banda-sfondo: #0f5c63,
+  banda-testo: #ffffff,
+  banda-secondario: #d6e9ea,
+  ombra: rgba(15, 50, 55, 0.14),
 );
 
 $colori-scuro: (
@@ -41,7 +47,14 @@ $colori-scuro: (
   accento: #5fbfc4,
   accento-hover: #8ad4d8,
   su-accento: #0b1a1c,
+  banda-sfondo: #123f43,
+  banda-testo: #e6eaec,
+  banda-secondario: #b8d3d5,
+  ombra: rgba(0, 0, 0, 0.45),
 );
+
+// Intensità delle macchie di colore decorative nello sfondo dell'apertura.
+$decorazione-intensita: 16%;
 
 // --- Tipografia --------------------------------------------------------------
 
@@ -90,4 +103,30 @@ $focus-distanza: 3px;
 $breakpoint: (
   medio: 40rem, // 640 px
   largo: 64rem, // 1024 px
+);
+
+// Intestazione fissa in alto da `medio`: le ancore si fermano sotto di lei.
+$intestazione-altezza: 4.5rem;
+
+// --- Movimento ---------------------------------------------------------------
+// Tutto disattivato con prefers-reduced-motion: reduce (mixin `con-movimento`).
+
+$durata-breve: 0.2s; // hover di link e pulsanti
+$durata-media: 0.3s; // hover delle schede
+$durata-comparsa: 0.7s; // comparsa degli elementi durante lo scorrimento
+$durata-deriva: 26s; // movimento lento delle macchie decorative
+$curva: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+$comparsa-spostamento: 1.25rem; // gli elementi salgono di questa distanza mentre compaiono
+$comparsa-ritardo: 90ms; // sfasamento tra gli elementi di uno stesso gruppo
+$comparsa-gruppo-max: 6; // oltre questo numero di elementi lo sfasamento non cresce più
+
+$sollevamento-scheda: -4px;
+$sollevamento-pulsante: -2px;
+
+// Forme delle ombre; il colore è `ombra` della palette del tema attivo.
+$ombre: (
+  bassa: 0 8px 18px -12px,
+  media: 0 16px 32px -18px,
+  intestazione: 0 10px 24px -18px,
 );

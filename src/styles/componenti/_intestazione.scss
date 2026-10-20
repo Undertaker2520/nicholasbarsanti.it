@@ -3,6 +3,26 @@
 
 .intestazione {
   border-bottom: v.$bordo-spessore solid colore(bordo);
+  background: colore(sfondo);
+
+  // Da `medio` resta in alto durante lo scorrimento, semitrasparente e sfocata.
+  @include da(medio) {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: sfumato(sfondo, 85%);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+
+    @include con-movimento {
+      transition: transizioni(v.$durata-media, box-shadow);
+    }
+  }
+
+  // Aggiunta dal JavaScript appena la pagina scorre.
+  &--staccata {
+    box-shadow: ombra(intestazione);
+  }
 
   &__riga {
     display: flex;
@@ -11,6 +31,11 @@
     justify-content: space-between;
     gap: spazio(xs) spazio(m);
     padding-block: spazio(s);
+
+    @include da(medio) {
+      min-height: v.$intestazione-altezza;
+      padding-block: 0;
+    }
   }
 
   &__nome {
@@ -19,6 +44,10 @@
     font-size: testo(grande);
     text-decoration: none;
     letter-spacing: -0.01em;
+
+    @include con-movimento {
+      transition: transizioni(v.$durata-breve, color);
+    }
 
     &:hover {
       color: colore(accento);
@@ -40,17 +69,17 @@
     width: auto;
   }
 
-  a {
+  &__link {
+    @include sottolineatura-animata('.menu__link--attivo');
     display: inline-block;
-    padding-block: spazio(xs); // area di tocco ≥ 24 px (WCAG 2.5.8)
+    margin-block: spazio(xs); // area di tocco ≥ 24 px (WCAG 2.5.8)
     color: colore(testo-secondario);
     font-size: testo(piccolo);
     font-weight: v.$peso-medio;
-    text-decoration: none;
 
-    &:hover {
+    &:hover,
+    &--attivo {
       color: colore(accento);
-      text-decoration: underline;
     }
   }
 }

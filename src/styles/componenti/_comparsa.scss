@@ -1,0 +1,26 @@
+// Comparsa degli elementi durante lo scorrimento.
+// Il JavaScript aggiunge `.in-attesa` solo agli elementi ancora fuori dallo schermo e la toglie
+// quando entrano: senza JavaScript, o con movimento ridotto, tutto è visibile da subito.
+
+@use '../variabili' as v;
+@use '../strumenti' as *;
+
+$elementi: '[data-comparsa], [data-comparsa-gruppo] > *';
+
+@include con-movimento {
+  #{$elementi} {
+    transition: transizioni(v.$durata-comparsa, opacity, transform);
+  }
+
+  .in-attesa {
+    opacity: 0;
+    transform: translateY(v.$comparsa-spostamento);
+  }
+
+  // Negli elenchi gli elementi compaiono uno dopo l'altro.
+  @for $i from 2 through v.$comparsa-gruppo-max {
+    [data-comparsa-gruppo] > :nth-child(#{$i}) {
+      transition-delay: ($i - 1) * v.$comparsa-ritardo;
+    }
+  }
+}

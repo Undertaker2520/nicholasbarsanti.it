@@ -11,7 +11,7 @@ import { menu, linkSezione } from '../data/sezioni';
         {
           menu.map((voce) => (
             <li>
-              <a href={linkSezione(voce)}>{voce.etichetta}</a>
+              <a class="menu__link" href={linkSezione(voce)}>{voce.etichetta}</a>
             </li>
           ))
         }

@@ -2,7 +2,7 @@
 
 Sito personale di Nicholas Barsanti: pagina unica statica realizzata con [Astro](https://astro.build), pubblicata su Netlify.
 
-Nessun JavaScript lato client, nessun cookie, nessuna risorsa di terze parti. Se in futuro servirà JavaScript si userà jQuery, installato via npm e incluso nel bundle (mai da CDN né inline).
+Nessun cookie, nessuna risorsa di terze parti. Il JavaScript (jQuery slim, incluso nel bundle, mai da CDN né inline) aggiunge solo animazioni: senza JavaScript il sito è completo.
 
 ## Requisiti
 
@@ -43,6 +43,10 @@ src/
   pages/           pagine del sito (anche .well-known/security.txt, generato)
   sicurezza/       intestazioni HTTP (CSP, HSTS, ...): unica fonte
   lib/             funzioni comuni (URL, JSON-LD, risposte di testo)
+  scripts/
+    main.js          punto di ingresso del JavaScript (incluso dal layout)
+    moduli/          comparsa allo scorrimento, intestazione
+    utilita.js       controlli comuni (movimento ridotto, IntersectionObserver)
   styles/
     _variabili.scss  UNICO file con font, colori, misure e breakpoint
     _strumenti.scss  funzioni e mixin (temi, media query, focus)
@@ -59,6 +63,14 @@ Per cambiare colori o font si modifica solo `src/styles/_variabili.scss`.
 
 - **Foto**: salvare un ritratto (meglio quadrato, almeno 400×400 px) come `src/assets/nicholas.jpg`. Astro lo converte in AVIF/WebP/JPEG fino a 400 px (qualità 80) e rimuove i metadati EXIF. Senza file compare il cerchio con le iniziali.
 - **Lavori realizzati**: aggiungere i lavori in `lavori` dentro `src/data/testi.ts` e impostare `mostraLavori: true` in `src/config.ts`. La sezione compare solo se entrambe le condizioni sono vere.
+
+## Animazioni e JavaScript
+
+- **Comparsa allo scorrimento**: `data-comparsa` su un elemento, `data-comparsa-gruppo` su un elenco (i figli compaiono uno dopo l'altro). Il JavaScript nasconde solo gli elementi ancora fuori dallo schermo e li mostra quando entrano.
+- **Intestazione** (da 640 px): resta in alto, prende un'ombra quando la pagina scorre ed evidenzia la voce della sezione che si sta leggendo.
+- **Al passaggio del mouse** (solo CSS, solo con mouse): schede che si sollevano, pulsante, sottolineatura animata nel menu, leggero zoom della foto.
+- **Sfondo**: macchie petrolio sfumate e lente nell'apertura, fascia petrolio in "Perché lavorare con me".
+- Con `prefers-reduced-motion: reduce` niente si muove e il JavaScript non nasconde nulla. Durate, distanze e intensità sono in `src/styles/_variabili.scss`.
 
 ## Pagine
 
@@ -77,14 +89,14 @@ Le intestazioni HTTP sono definite **solo** in `src/sicurezza/intestazioni.ts`:
 Regole che rendono possibile una CSP senza `unsafe-inline`:
 
 - nessun `<script>` eseguibile né `<style>` inline e nessun attributo `style=` nell'HTML generato
-  (l'unico blocco ammesso è il JSON-LD, che il browser non esegue);
+  (ammessi solo il JSON-LD, che il browser non esegue, e gli script esterni con `src`);
 - CSS sempre in file esterni (`build.inlineStylesheets: 'never'`);
 - nessuna risorsa da domini esterni (font, immagini, script: tutto self-hosted).
 
 Controllo rapido dopo la build (non deve stampare nulla):
 
 ```bash
-LC_ALL=C.UTF-8 grep -l -P '<script(?! type="application/ld\+json")|<style|style=' dist/*.html
+LC_ALL=C.UTF-8 grep -l -P '<script(?![^>]*\bsrc=)(?! type="application/ld\+json")|<style|style=' dist/*.html
 ```
 
 `/.well-known/security.txt` (RFC 9116) è generato in build da `src/config.ts`; il campo `Expires` è fissato a un anno dalla build, quindi ogni pubblicazione lo rinnova.
@@ -151,6 +163,8 @@ Prima della pubblicazione (in locale):
 - [ ] `npm run preview`: console del browser senza errori né avvisi, in tema chiaro e scuro
 - [ ] HTML valido su <https://validator.w3.org/nu/> (index, privacy, 404)
 - [ ] navigazione completa da tastiera, focus sempre visibile, "Vai al contenuto" al primo Tab
+- [ ] con "riduci animazioni" attivo nel sistema nessun elemento si muove e tutto è visibile
+- [ ] con JavaScript disattivato (DevTools → Ctrl+Shift+P → "Disable JavaScript") tutto il contenuto è visibile
 - [ ] leggibile a 320 px senza scroll orizzontale
 - [ ] informativa privacy verificata da un consulente
 

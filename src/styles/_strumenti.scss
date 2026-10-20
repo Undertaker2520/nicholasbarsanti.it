@@ -2,6 +2,7 @@
 // Funzioni e mixin: nessun CSS generato da questo file da solo.
 // =============================================================================
 
+@use 'sass:list';
 @use 'sass:map';
 @use 'variabili' as v;
 
@@ -62,6 +63,62 @@
 @mixin _variabili-colore($palette) {
   @each $chiave, $valore in $palette {
     --colore-#{$chiave}: #{$valore};
+  }
+}
+
+// Ombra con forma da $ombre e colore del tema: ombra(media).
+@function ombra($chiave) {
+  @return da-mappa(v.$ombre, $chiave, '$ombre') colore(ombra);
+}
+
+// Colore del tema reso semitrasparente: sfumato(accento, 16%).
+@function sfumato($chiave, $intensita) {
+  @return color-mix(in srgb, #{colore($chiave)} #{$intensita}, transparent);
+}
+
+// Transizioni sulle proprietà indicate, con durata e curva comuni.
+@function transizioni($durata, $proprieta...) {
+  $lista: ();
+  @each $p in $proprieta {
+    $lista: list.append($lista, $p $durata v.$curva, comma);
+  }
+  @return $lista;
+}
+
+// Animazioni e transizioni solo se l'utente non ha chiesto di ridurre il movimento.
+@mixin con-movimento {
+  @media (prefers-reduced-motion: no-preference) {
+    @content;
+  }
+}
+
+// Effetti al passaggio del mouse solo con un puntatore vero (niente hover "incollato" sul touch).
+@mixin al-passaggio {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+// Sottolineatura che si allarga da sinistra al passaggio del mouse o al focus.
+@mixin sottolineatura-animata($attiva-selettore: null) {
+  text-decoration: none;
+  background: linear-gradient(currentColor, currentColor) no-repeat 0 100% / 0 2px;
+
+  @include con-movimento {
+    transition: transizioni(v.$durata-breve, background-size, color);
+  }
+
+  &:hover,
+  &:focus-visible {
+    background-size: 100% 2px;
+  }
+
+  @if $attiva-selettore {
+    &#{$attiva-selettore} {
+      background-size: 100% 2px;
+    }
   }
 }
 

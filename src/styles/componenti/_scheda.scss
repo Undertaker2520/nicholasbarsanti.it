@@ -21,6 +21,16 @@
   border: v.$bordo-spessore solid colore(bordo);
   border-radius: v.$raggio;
 
+  @include con-movimento {
+    transition: transizioni(v.$durata-media, transform, box-shadow, border-color);
+  }
+
+  @include al-passaggio {
+    transform: translateY(v.$sollevamento-scheda);
+    box-shadow: ombra(media);
+    border-color: colore(accento);
+  }
+
   // Evidenza leggera: sfondo tenue e bordo nel colore d'accento.
   &--evidenziata {
     background: colore(superficie);

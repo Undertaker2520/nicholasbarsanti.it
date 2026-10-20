@@ -13,8 +13,22 @@
   font-weight: v.$peso-forte;
   text-decoration: none;
 
+  @include con-movimento {
+    transition: transizioni(v.$durata-breve, background-color, transform, box-shadow);
+  }
+
   &:hover {
     background: colore(accento-hover);
     color: colore(su-accento);
+  }
+
+  @include al-passaggio {
+    transform: translateY(v.$sollevamento-pulsante);
+    box-shadow: ombra(bassa);
+  }
+
+  &:active {
+    transform: none;
+    box-shadow: none;
   }
 }

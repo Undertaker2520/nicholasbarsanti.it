@@ -3,15 +3,21 @@ import { titoloSezione, type Sezione } from '../data/sezioni';
 
 interface Props {
   sezione: Sezione;
+  /** `banda`: fascia a tutta larghezza color petrolio. */
+  variante?: 'banda';
 }
 
-const { sezione } = Astro.props;
+const { sezione, variante } = Astro.props;
 const idTitolo = `${sezione.id}-titolo`;
 ---
 
-<section id={sezione.id} class="sezione" aria-labelledby={idTitolo}>
+<section
+  id={sezione.id}
+  class:list={['sezione', variante && `sezione--${variante}`]}
+  aria-labelledby={idTitolo}
+>
   <div class="contenitore">
-    <h2 id={idTitolo} class="sezione__titolo">{titoloSezione(sezione)}</h2>
+    <h2 id={idTitolo} class="sezione__titolo" data-comparsa>{titoloSezione(sezione)}</h2>
     <slot />
   </div>
 </section>

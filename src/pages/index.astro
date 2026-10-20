@@ -24,11 +24,11 @@ const mostraLavori = sito.mostraLavori && lavori.length > 0;
   <Apertura />
 
   <Sezione sezione={sezioni.chiSono}>
-    {chiSono.map((paragrafo) => <p>{paragrafo}</p>)}
+    {chiSono.map((paragrafo) => <p data-comparsa>{paragrafo}</p>)}
   </Sezione>
 
   <Sezione sezione={sezioni.servizi}>
-    <ul class="schede">
+    <ul class="schede" data-comparsa-gruppo>
       {
         servizi.map((servizio) => (
           <li>
@@ -50,14 +50,14 @@ const mostraLavori = sito.mostraLavori && lavori.length > 0;
     <ElencoPunti voci={comeLavoro} numerato />
   </Sezione>
 
-  <Sezione sezione={sezioni.perche}>
+  <Sezione sezione={sezioni.perche} variante="banda">
     <ElencoPunti voci={perche} />
   </Sezione>
 
   {
     mostraLavori && (
       <Sezione sezione={sezioni.lavori}>
-        <ul class="schede schede--adattive">
+        <ul class="schede schede--adattive" data-comparsa-gruppo>
           {lavori.map((lavoro) => (
             <li>
               <Scheda titolo={lavoro.titolo}>
@@ -76,7 +76,7 @@ const mostraLavori = sito.mostraLavori && lavori.length > 0;
   }
 
   <Sezione sezione={sezioni.contatti}>
-    <p>{contatti.invito}</p>
-    <p class="contatti__email"><a href={mailto}>{sito.email}</a></p>
+    <p data-comparsa>{contatti.invito}</p>
+    <p class="contatti__email" data-comparsa><a href={mailto}>{sito.email}</a></p>
   </Sezione>
 </Base>

@@ -11,7 +11,7 @@ const { voci, numerato = false } = Astro.props;
 const Elenco = numerato ? 'ol' : 'ul';
 ---
 
-<Elenco class:list={['punti', { 'punti--numerati': numerato }]}>
+<Elenco data-comparsa-gruppo class:list={['punti', { 'punti--numerati': numerato }]}>
   {
     voci.map((voce) => (
       <li class="punti__voce">
