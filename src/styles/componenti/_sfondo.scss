@@ -1,0 +1,52 @@
+// Sfondo decorativo di tutta la pagina: macchie petrolio sfumate, definite in $macchie.
+// Due movimenti indipendenti che si sommano:
+// - `transform`: deriva lenta e continua (animazione CSS);
+// - `translate`: segue il mouse, dalle variabili --sfondo-x/--sfondo-y (da -1 a 1)
+//   impostate da src/scripts/moduli/sfondo.js.
+
+@use 'sass:map';
+@use '../variabili' as v;
+@use '../strumenti' as *;
+
+.sfondo {
+  position: absolute;
+  inset: 0;
+  z-index: -1; // dietro al contenuto, sopra lo sfondo del body (che è isolato)
+  overflow: hidden; // le macchie escono dai bordi senza creare scorrimento orizzontale
+  pointer-events: none;
+}
+
+.sfondo__macchia {
+  position: absolute;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, sfumato(accento, v.$decorazione-intensita), transparent);
+}
+
+@each $nome, $macchia in v.$macchie {
+  $mouse: map.get($macchia, mouse);
+
+  .sfondo__macchia--#{$nome} {
+    width: map.get($macchia, diametro);
+    translate: calc(var(--sfondo-x, 0) * #{$mouse}) calc(var(--sfondo-y, 0) * #{$mouse});
+
+    @each $lato, $valore in map.get($macchia, posizione) {
+      #{$lato}: $valore;
+    }
+
+    @include con-movimento {
+      animation: deriva v.$durata-deriva ease-in-out infinite map.get($macchia, deriva);
+      transition: translate v.$durata-inseguimento v.$curva;
+    }
+  }
+}
+
+@keyframes deriva {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  to {
+    transform: translate3d(-3rem, 2rem, 0) scale(1.08);
+  }
+}

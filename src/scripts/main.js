@@ -6,6 +6,7 @@
 import $ from 'jquery/slim';
 import { avviaComparsa } from './moduli/comparsa.js';
 import { avviaIntestazione } from './moduli/intestazione.js';
+import { avviaSfondo } from './moduli/sfondo.js';
 import { movimentoRidotto } from './utilita.js';
 
 $(() => {
@@ -13,5 +14,6 @@ $(() => {
 
   if (!movimentoRidotto()) {
     avviaComparsa();
+    avviaSfondo();
   }
 });

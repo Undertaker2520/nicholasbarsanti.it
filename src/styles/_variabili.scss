@@ -53,8 +53,27 @@ $colori-scuro: (
   ombra: rgba(0, 0, 0, 0.45),
 );
 
-// Intensità delle macchie di colore decorative nello sfondo dell'apertura.
+// --- Sfondo decorativo ----------------------------------------------------------
+// Macchie petrolio sfumate dietro tutta la pagina (src/components/Sfondo.astro).
+// `posizione`: rispetto all'intera pagina (alto = inizio, basso = fondo).
+// `mouse`: quanto la macchia segue il puntatore; valori di segno opposto danno profondità.
+
 $decorazione-intensita: 16%;
+
+$macchie: (
+  alto: (
+    diametro: 46rem,
+    posizione: (top: -18rem, right: -14rem),
+    mouse: 3rem,
+    deriva: alternate,
+  ),
+  basso: (
+    diametro: 38rem,
+    posizione: (bottom: -18rem, left: -14rem),
+    mouse: -2.5rem,
+    deriva: alternate-reverse,
+  ),
+);
 
 // --- Tipografia --------------------------------------------------------------
 
@@ -115,6 +134,7 @@ $durata-breve: 0.2s; // hover di link e pulsanti
 $durata-media: 0.3s; // hover delle schede
 $durata-comparsa: 0.7s; // comparsa degli elementi durante lo scorrimento
 $durata-deriva: 26s; // movimento lento delle macchie decorative
+$durata-inseguimento: 1.2s; // ritardo con cui le macchie raggiungono la posizione del mouse
 $curva: cubic-bezier(0.2, 0.7, 0.2, 1);
 
 $comparsa-spostamento: 1.25rem; // gli elementi salgono di questa distanza mentre compaiono

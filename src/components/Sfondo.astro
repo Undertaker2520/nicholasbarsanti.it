@@ -1,0 +1,12 @@
+---
+/**
+ * Sfondo decorativo dietro tutta la pagina. Le macchie (dimensioni, posizioni,
+ * movimento) sono definite in $macchie in src/styles/_variabili.scss: i nomi qui
+ * devono corrispondere alle chiavi della mappa.
+ */
+const macchie = ['alto', 'basso'];
+---
+
+<div class="sfondo" aria-hidden="true">
+  {macchie.map((nome) => <span class={`sfondo__macchia sfondo__macchia--${nome}`} />)}
+</div>

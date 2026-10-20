@@ -3,6 +3,7 @@ import '../styles/main.scss';
 import fontInter from '../assets/fonts/inter-latin-var.woff2?url';
 import Intestazione from '../components/Intestazione.astro';
 import Piede from '../components/Piede.astro';
+import Sfondo from '../components/Sfondo.astro';
 import { sito, immagini } from '../config';
 import { serializzaJsonLd } from '../lib/dati-strutturati';
 import { urlAssoluto, urlPagina } from '../lib/url';
@@ -69,6 +70,7 @@ const urlAnteprima = urlAssoluto(anteprima.percorso);
     }
   </head>
   <body>
+    <Sfondo />
     <a class="salta-al-contenuto" href="#contenuto">Vai al contenuto</a>
     <Intestazione />
     <main id="contenuto">

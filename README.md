@@ -45,8 +45,8 @@ src/
   lib/             funzioni comuni (URL, JSON-LD, risposte di testo)
   scripts/
     main.js          punto di ingresso del JavaScript (incluso dal layout)
-    moduli/          comparsa allo scorrimento, intestazione
-    utilita.js       controlli comuni (movimento ridotto, IntersectionObserver)
+    moduli/          comparsa allo scorrimento, intestazione, sfondo
+    utilita.js       controlli comuni (movimento ridotto, puntatore, un aggiornamento per fotogramma)
   styles/
     _variabili.scss  UNICO file con font, colori, misure e breakpoint
     _strumenti.scss  funzioni e mixin (temi, media query, focus)
@@ -69,7 +69,7 @@ Per cambiare colori o font si modifica solo `src/styles/_variabili.scss`.
 - **Comparsa allo scorrimento**: `data-comparsa` su un elemento, `data-comparsa-gruppo` su un elenco (i figli compaiono uno dopo l'altro). Il JavaScript nasconde solo gli elementi ancora fuori dallo schermo e li mostra quando entrano.
 - **Intestazione** (da 640 px): resta in alto, prende un'ombra quando la pagina scorre ed evidenzia la voce della sezione che si sta leggendo.
 - **Al passaggio del mouse** (solo CSS, solo con mouse): schede che si sollevano, pulsante, sottolineatura animata nel menu, leggero zoom della foto.
-- **Sfondo**: macchie petrolio sfumate e lente nell'apertura, fascia petrolio in "Perché lavorare con me".
+- **Sfondo di pagina** (`src/components/Sfondo.astro`, mappa `$macchie` in `_variabili.scss`): macchie petrolio sfumate in alto a destra e in fondo a sinistra, con una deriva lenta e, solo con il mouse, un leggero spostamento che segue il puntatore (le due macchie in direzioni opposte). Fascia petrolio in "Perché lavorare con me".
 - Con `prefers-reduced-motion: reduce` niente si muove e il JavaScript non nasconde nulla. Durate, distanze e intensità sono in `src/styles/_variabili.scss`.
 
 ## Pagine

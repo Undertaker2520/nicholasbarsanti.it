@@ -3,6 +3,7 @@
  * corrispondente alla sezione che si sta leggendo.
  */
 import $ from 'jquery/slim';
+import { perFotogramma } from '../utilita.js';
 
 const CLASSE_STACCATA = 'intestazione--staccata';
 const CLASSE_ATTIVO = 'menu__link--attivo';
@@ -27,17 +28,7 @@ export function avviaIntestazione() {
     $(linkPerSezione.get(corrente?.id) ?? []).addClass(CLASSE_ATTIVO);
   };
 
-  // Al massimo un aggiornamento per fotogramma.
-  let aggiornamentoInCoda = false;
-  $(window).on('scroll resize', () => {
-    if (aggiornamentoInCoda) return;
-    aggiornamentoInCoda = true;
-    window.requestAnimationFrame(() => {
-      aggiorna();
-      aggiornamentoInCoda = false;
-    });
-  });
-
+  $(window).on('scroll resize', perFotogramma(aggiorna));
   aggiorna();
 }
 

@@ -1,45 +1,8 @@
 @use '../variabili' as v;
 @use '../strumenti' as *;
 
-// Macchia di colore sfumata, decorativa, dietro al contenuto.
-@mixin macchia($diametro) {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  width: $diametro;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: radial-gradient(closest-side, sfumato(accento, v.$decorazione-intensita), transparent);
-  pointer-events: none;
-}
-
 .apertura {
-  position: relative;
-  isolation: isolate; // le macchie stanno dietro al testo ma davanti allo sfondo della pagina
-  overflow: hidden;
   padding-block: spazio(xl);
-
-  &::before {
-    @include macchia(46rem);
-    top: -18rem;
-    right: -14rem;
-  }
-
-  &::after {
-    @include macchia(32rem);
-    bottom: -18rem;
-    left: -12rem;
-  }
-
-  @include con-movimento {
-    &::before {
-      animation: deriva v.$durata-deriva ease-in-out infinite alternate;
-    }
-
-    &::after {
-      animation: deriva v.$durata-deriva ease-in-out infinite alternate-reverse;
-    }
-  }
 
   &__griglia {
     display: grid;
@@ -88,12 +51,3 @@
   }
 }
 
-@keyframes deriva {
-  from {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-
-  to {
-    transform: translate3d(-3rem, 2rem, 0) scale(1.08);
-  }
-}
