@@ -1,0 +1,10 @@
+@use 'variabili' as v;
+
+@font-face {
+  font-family: v.$font-famiglia;
+  font-style: normal;
+  font-weight: v.$font-pesi;
+  font-display: swap;
+  src: url(v.$font-file) format('woff2');
+  unicode-range: v.$font-unicode-range;
+}

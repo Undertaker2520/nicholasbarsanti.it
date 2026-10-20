@@ -1,0 +1,31 @@
+// Contenitori e struttura generale della pagina.
+
+@use 'variabili' as v;
+@use 'strumenti' as *;
+
+.contenitore {
+  width: 100%;
+  max-width: v.$larghezza-massima;
+  margin-inline: auto;
+  padding-inline: v.$margine-laterale;
+}
+
+// Link "Vai al contenuto": invisibile finché non riceve il focus da tastiera.
+.salta-al-contenuto {
+  @include solo-lettori-schermo;
+
+  &:focus {
+    position: fixed;
+    top: spazio(s);
+    left: spazio(s);
+    z-index: 10;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: spazio(xs) spazio(s);
+    clip-path: none;
+    background: colore(accento);
+    color: colore(su-accento);
+    border-radius: v.$raggio;
+  }
+}

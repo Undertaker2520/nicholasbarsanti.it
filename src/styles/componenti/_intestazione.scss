@@ -1,0 +1,56 @@
+@use '../variabili' as v;
+@use '../strumenti' as *;
+
+.intestazione {
+  border-bottom: v.$bordo-spessore solid colore(bordo);
+
+  &__riga {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: spazio(xs) spazio(m);
+    padding-block: spazio(s);
+  }
+
+  &__nome {
+    color: colore(testo);
+    font-weight: v.$peso-forte;
+    font-size: testo(grande);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+
+    &:hover {
+      color: colore(accento);
+    }
+  }
+}
+
+// Su mobile i link vanno a capo sotto il nome; da `medio` stanno sulla stessa riga.
+.menu {
+  @include elenco-semplice;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 spazio(s);
+  max-width: none;
+  width: 100%;
+
+  @include da(medio) {
+    gap: 0 spazio(m);
+    width: auto;
+  }
+
+  a {
+    display: inline-block;
+    padding-block: spazio(xs); // area di tocco ≥ 24 px (WCAG 2.5.8)
+    color: colore(testo-secondario);
+    font-size: testo(piccolo);
+    font-weight: v.$peso-medio;
+    text-decoration: none;
+
+    &:hover {
+      color: colore(accento);
+      text-decoration: underline;
+    }
+  }
+}

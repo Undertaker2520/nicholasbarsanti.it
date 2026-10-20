@@ -32,8 +32,18 @@ astro.config.mjs   configurazione di Astro (output statico, sitemap)
 netlify.toml       impostazioni di build per Netlify
 src/
   config.ts        dati del sito (URL, contatti, flag delle sezioni)
+  data/            id delle sezioni, voci di menu
+  assets/fonts/    Inter variabile (sottoinsieme latin, licenza OFL)
+  components/      componenti Astro riusabili
   layouts/         struttura HTML comune
   pages/           pagine del sito
+  styles/
+    _variabili.scss  UNICO file con font, colori, misure e breakpoint
+    _strumenti.scss  funzioni e mixin (temi, media query, focus)
+    main.scss        punto di ingresso, importa tutto il resto
+    componenti/      stili dei singoli componenti
 ```
+
+Per cambiare colori o font si modifica solo `src/styles/_variabili.scss`.
 
 <!-- Da completare: stili, componenti, intestazioni di sicurezza, pubblicazione su Netlify, DNS OVH, checklist finale. -->

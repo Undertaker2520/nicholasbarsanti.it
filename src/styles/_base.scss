@@ -1,0 +1,101 @@
+// Reset essenziale e stili degli elementi HTML.
+
+@use 'variabili' as v;
+@use 'strumenti' as *;
+
+:root {
+  @include temi(v.$colori-chiaro, v.$colori-scuro);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: colore(sfondo);
+  color: colore(testo);
+  font-family: v.$font-famiglia, v.$font-ripiego;
+  font-size: testo(base);
+  font-weight: v.$peso-normale;
+  line-height: v.$interlinea;
+  overflow-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+}
+
+main {
+  flex: 1;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0 0 spazio(s);
+  line-height: v.$interlinea-titoli;
+  font-weight: v.$peso-forte;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: testo(h1);
+  letter-spacing: -0.025em;
+}
+
+h2 {
+  font-size: testo(h2);
+}
+
+h3 {
+  font-size: testo(h3);
+}
+
+p,
+ul,
+ol {
+  margin: 0 0 spazio(s);
+  max-width: v.$misura-testo;
+}
+
+a {
+  color: colore(accento);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+
+  &:hover {
+    color: colore(accento-hover);
+    text-decoration-thickness: 2px;
+  }
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+:focus-visible {
+  @include focus-visibile;
+}
+
+// Spostamento dello scorrimento per le ancore, così i titoli non toccano il bordo.
+[id] {
+  scroll-margin-top: spazio(m);
+}

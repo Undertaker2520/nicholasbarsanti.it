@@ -17,3 +17,5 @@ export const sito = {
   /** Attiva la sezione "Lavori realizzati" solo quando c'è almeno un lavoro vero. */
   mostraLavori: false,
 } as const;
+
+export const mailto = `mailto:${sito.email}`;

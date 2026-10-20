@@ -13,3 +13,6 @@ npm-debug.log*
 Thumbs.db
 .vscode/
 .idea/
+
+# Impostazioni locali di Claude Code
+.claude/

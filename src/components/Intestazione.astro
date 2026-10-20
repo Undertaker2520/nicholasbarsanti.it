@@ -1,0 +1,21 @@
+---
+import { sito } from '../config';
+import { menu, linkSezione } from '../data/sezioni';
+---
+
+<header class="intestazione">
+  <div class="contenitore intestazione__riga">
+    <a class="intestazione__nome" href="/">{sito.nome}</a>
+    <nav aria-label="Menu principale">
+      <ul class="menu">
+        {
+          menu.map((voce) => (
+            <li>
+              <a href={linkSezione(voce)}>{voce.etichetta}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>

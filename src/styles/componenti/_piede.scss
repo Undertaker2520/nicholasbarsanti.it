@@ -1,0 +1,19 @@
+@use '../variabili' as v;
+@use '../strumenti' as *;
+
+.piede {
+  margin-top: spazio(xxl);
+  padding-block: spazio(l);
+  border-top: v.$bordo-spessore solid colore(bordo);
+  color: colore(testo-secondario);
+  font-size: testo(piccolo);
+
+  p {
+    margin-bottom: spazio(xs);
+    max-width: none;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

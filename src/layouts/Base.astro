@@ -1,4 +1,8 @@
 ---
+import '../styles/main.scss';
+import fontInter from '../assets/fonts/inter-latin-var.woff2?url';
+import Intestazione from '../components/Intestazione.astro';
+import Piede from '../components/Piede.astro';
 import { sito } from '../config';
 
 interface Props {
@@ -14,10 +18,17 @@ const { titolo = sito.titolo, descrizione = sito.descrizione } = Astro.props;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
     <title>{titolo}</title>
     <meta name="description" content={descrizione} />
+    <link rel="preload" href={fontInter} as="font" type="font/woff2" crossorigin />
   </head>
   <body>
-    <slot />
+    <a class="salta-al-contenuto" href="#contenuto">Vai al contenuto</a>
+    <Intestazione />
+    <main id="contenuto">
+      <slot />
+    </main>
+    <Piede />
   </body>
 </html>

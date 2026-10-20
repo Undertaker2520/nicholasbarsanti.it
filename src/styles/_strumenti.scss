@@ -1,0 +1,83 @@
+// =============================================================================
+// Funzioni e mixin: nessun CSS generato da questo file da solo.
+// =============================================================================
+
+@use 'sass:map';
+@use 'variabili' as v;
+
+// Legge un valore da una mappa e si ferma se la chiave non esiste.
+@function da-mappa($mappa, $chiave, $nome-mappa) {
+  @if not map.has-key($mappa, $chiave) {
+    @error 'Chiave "#{$chiave}" assente in #{$nome-mappa}. Disponibili: #{map.keys($mappa)}';
+  }
+  @return map.get($mappa, $chiave);
+}
+
+@function spazio($chiave) {
+  @return da-mappa(v.$spazi, $chiave, '$spazi');
+}
+
+@function testo($chiave) {
+  @return da-mappa(v.$testo, $chiave, '$testo');
+}
+
+// Riferimento a un colore del tema attivo (variabile CSS generata da `temi`).
+@function colore($chiave) {
+  $_: da-mappa(v.$colori-chiaro, $chiave, '$colori-chiaro');
+  @return var(--colore-#{$chiave});
+}
+
+// Media query mobile-first: @include da(medio) { ... }
+@mixin da($chiave) {
+  @media (min-width: da-mappa(v.$breakpoint, $chiave, '$breakpoint')) {
+    @content;
+  }
+}
+
+// Variabili CSS per tema chiaro e scuro, scelte da prefers-color-scheme.
+@mixin temi($chiaro, $scuro) {
+  @each $chiave in map.keys($chiaro) {
+    @if not map.has-key($scuro, $chiave) {
+      @error 'Il colore "#{$chiave}" manca nella palette scura.';
+    }
+  }
+
+  color-scheme: light dark;
+  @include _variabili-colore($chiaro);
+
+  @media (prefers-color-scheme: dark) {
+    @include _variabili-colore($scuro);
+  }
+}
+
+@mixin _variabili-colore($palette) {
+  @each $chiave, $valore in $palette {
+    --colore-#{$chiave}: #{$valore};
+  }
+}
+
+// Contorno di focus coerente per tutti gli elementi interattivi.
+@mixin focus-visibile {
+  outline: v.$focus-spessore solid colore(accento);
+  outline-offset: v.$focus-distanza;
+}
+
+// Nasconde visivamente un elemento lasciandolo ai lettori di schermo.
+@mixin solo-lettori-schermo {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Elenco senza punti né rientri.
+@mixin elenco-semplice {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
