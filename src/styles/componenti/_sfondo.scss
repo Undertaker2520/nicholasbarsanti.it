@@ -1,4 +1,4 @@
-// Sfondo decorativo di tutta la pagina: macchie petrolio sfumate, definite in $macchie.
+// Sfondo decorativo: nebulose petrolio sfumate fisse rispetto allo schermo, definite in $macchie.
 // Due movimenti indipendenti che si sommano:
 // - `transform`: deriva lenta e continua (animazione CSS);
 // - `translate`: segue il mouse, dalle variabili --sfondo-x/--sfondo-y (da -1 a 1)
@@ -9,7 +9,7 @@
 @use '../strumenti' as *;
 
 .sfondo {
-  position: absolute;
+  position: fixed; // segue la parte di pagina visualizzata
   inset: 0;
   z-index: -1; // dietro al contenuto, sopra lo sfondo del body (che è isolato)
   overflow: hidden; // le macchie escono dai bordi senza creare scorrimento orizzontale
@@ -47,6 +47,6 @@
   }
 
   to {
-    transform: translate3d(-3rem, 2rem, 0) scale(1.08);
+    transform: translate(v.$deriva-spostamento) scale(v.$deriva-scala);
   }
 }

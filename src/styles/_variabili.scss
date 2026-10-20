@@ -54,26 +54,33 @@ $colori-scuro: (
 );
 
 // --- Sfondo decorativo ----------------------------------------------------------
-// Macchie petrolio sfumate dietro tutta la pagina (src/components/Sfondo.astro).
-// `posizione`: rispetto all'intera pagina (alto = inizio, basso = fondo).
-// `mouse`: quanto la macchia segue il puntatore; valori di segno opposto danno profondità.
+// Nebulose petrolio sfumate dietro la pagina (src/components/Sfondo.astro), fisse rispetto
+// allo schermo: restano negli angoli della parte di pagina visualizzata mentre si scorre.
+// `posizione`: rispetto alla finestra. `mouse`: quanto la nebulosa segue il puntatore;
+// valori di segno opposto danno profondità.
 
-$decorazione-intensita: 16%;
+// Intensità nel centro della nebulosa. Al 28% il caso peggiore (testo secondario e link
+// proprio sul centro) resta sopra 4.6:1 in entrambi i temi; oltre il 30% scenderebbe sotto AA.
+$decorazione-intensita: 28%;
 
 $macchie: (
   alto: (
     diametro: 46rem,
     posizione: (top: -18rem, right: -14rem),
-    mouse: 3rem,
+    mouse: 6rem,
     deriva: alternate,
   ),
   basso: (
-    diametro: 38rem,
+    diametro: 42rem,
     posizione: (bottom: -18rem, left: -14rem),
-    mouse: -2.5rem,
+    mouse: -5rem,
     deriva: alternate-reverse,
   ),
 );
+
+// Deriva lenta: dove arriva la nebulosa a fine ciclo (spostamento e ingrandimento).
+$deriva-spostamento: (-8rem, 6rem);
+$deriva-scala: 1.2;
 
 // --- Tipografia --------------------------------------------------------------
 
@@ -133,7 +140,7 @@ $intestazione-altezza: 4.5rem;
 $durata-breve: 0.2s; // hover di link e pulsanti
 $durata-media: 0.3s; // hover delle schede
 $durata-comparsa: 0.7s; // comparsa degli elementi durante lo scorrimento
-$durata-deriva: 26s; // movimento lento delle macchie decorative
+$durata-deriva: 16s; // ciclo della deriva delle nebulose decorative
 $durata-inseguimento: 1.2s; // ritardo con cui le macchie raggiungono la posizione del mouse
 $curva: cubic-bezier(0.2, 0.7, 0.2, 1);
 
