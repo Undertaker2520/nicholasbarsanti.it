@@ -11,6 +11,7 @@ const persona = {
   name: sito.nome,
   jobTitle: 'Sviluppatore web',
   email: sito.email,
+  sameAs: sito.profili.map((profilo) => profilo.url),
 };
 
 const offerte = servizi.map((servizio) => ({

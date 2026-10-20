@@ -4,6 +4,7 @@ import Apertura from '../components/Apertura.astro';
 import Sezione from '../components/Sezione.astro';
 import Scheda from '../components/Scheda.astro';
 import ElencoPunti from '../components/ElencoPunti.astro';
+import Profili from '../components/Profili.astro';
 import { sito, mailto } from '../config';
 import { sezioni } from '../data/sezioni';
 import {
@@ -86,5 +87,6 @@ const mostraLavori = sito.mostraLavori && lavori.length > 0;
   <Sezione sezione={sezioni.contatti}>
     <p data-comparsa>{contatti.invito}</p>
     <p class="contatti__email" data-comparsa><a href={mailto}>{sito.email}</a></p>
+    <p data-comparsa>{contatti.profili} <Profili />.</p>
   </Sezione>
 </Base>

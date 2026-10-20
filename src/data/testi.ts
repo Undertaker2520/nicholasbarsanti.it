@@ -128,4 +128,6 @@ export const linkLavoro = 'Visita il sito';
 
 export const contatti = {
   invito: 'Raccontami il tuo progetto: rispondo entro la giornata.',
+  /** Seguito dai link ai profili (config.ts → sito.profili). */
+  profili: 'Mi trovi anche su',
 };

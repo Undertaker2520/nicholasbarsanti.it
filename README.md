@@ -33,7 +33,7 @@ La build produce la cartella `dist/`, che è ciò che Netlify pubblica.
 astro.config.mjs   configurazione di Astro (output statico, sitemap)
 netlify.toml       impostazioni di build per Netlify
 src/
-  config.ts        dati del sito (URL, contatti, flag delle sezioni)
+  config.ts        dati del sito (URL, contatti, profili come LinkedIn, flag delle sezioni)
   data/sezioni.ts  id delle ancore, voci di menu, titoli delle sezioni
   data/testi.ts    TUTTI i testi della pagina (modificare solo qui)
   assets/          foto facoltativa nicholas.jpg (se manca: segnaposto "NB")

@@ -21,6 +21,9 @@ export const sito = {
   paese: 'IT',
   areaServita: 'Lucca e provincia',
 
+  /** Profili esterni: mostrati in Contatti e nel piè di pagina, e nel JSON-LD (sameAs). */
+  profili: [{ nome: 'LinkedIn', url: 'https://www.linkedin.com/in/nicholas-barsanti/' }],
+
   /** Attiva la sezione "Lavori realizzati" solo quando c'è almeno un lavoro vero. */
   mostraLavori: false,
 } as const;

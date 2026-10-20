@@ -1,0 +1,25 @@
+---
+/**
+ * Link ai profili esterni (config.ts → sito.profili), separati da `separatore`.
+ * Semplici link testuali: nessun widget né risorsa caricata da altri siti.
+ * rel="me" dichiara che il profilo appartiene alla stessa persona del sito.
+ */
+import { sito } from '../config';
+
+interface Props {
+  separatore?: string;
+}
+
+const { separatore = ', ' } = Astro.props;
+---
+
+{
+  sito.profili.map((profilo, indice) => (
+    <>
+      {indice > 0 && separatore}
+      <a href={profilo.url} rel="me">
+        {profilo.nome}
+      </a>
+    </>
+  ))
+}

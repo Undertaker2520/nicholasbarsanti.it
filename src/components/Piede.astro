@@ -1,4 +1,5 @@
 ---
+import Profili from './Profili.astro';
 import { sito, mailto } from '../config';
 ---
 
@@ -6,6 +7,7 @@ import { sito, mailto } from '../config';
   <div class="contenitore">
     <p>
       {sito.nome} · {sito.localita} ({sito.provincia}) · <a href={mailto}>{sito.email}</a>
+      {' · '}<Profili separatore=" · " />
     </p>
     <p>
       Questo sito non usa cookie né sistemi di tracciamento. · <a href="/privacy">Privacy</a>
