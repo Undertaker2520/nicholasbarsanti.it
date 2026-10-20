@@ -2,6 +2,8 @@
 
 Sito personale di Nicholas Barsanti: pagina unica statica realizzata con [Astro](https://astro.build), pubblicata su Netlify.
 
+Nessun JavaScript lato client, nessun cookie, nessuna risorsa di terze parti. Se in futuro servirà JavaScript si userà jQuery, installato via npm e incluso nel bundle (mai da CDN né inline).
+
 ## Requisiti
 
 - Node.js 24 (vedi `.nvmrc`; minimo 22.22)
@@ -100,4 +102,73 @@ npm run immagini
 
 Lo script legge i colori da `_variabili.scss` e nome e ruolo da `config.ts`: va rilanciato dopo aver cambiato uno dei due. Il testo dell'anteprima usa un font di sistema (Segoe UI su Windows), quindi rigenerarla su un altro sistema operativo può cambiarne leggermente l'aspetto.
 
-<!-- Da completare: pubblicazione su Netlify, DNS OVH, checklist finale. -->
+## Pubblicazione su Netlify
+
+Il repository è `github.com/Undertaker2520/nicholasbarsanti.it` (privato). Ogni push su `main` viene pubblicato automaticamente.
+
+1. Accedere a <https://app.netlify.com> (piano gratuito) con l'account GitHub **Undertaker2520**.
+2. **Add new project → Import an existing project → GitHub**, autorizzare Netlify **solo** sul repository `nicholasbarsanti.it` (opzione "Only select repositories").
+3. Impostazioni di build: vengono lette da `netlify.toml` (comando `npm run build`, cartella `dist`); la versione di Node da `.nvmrc`. Non serve altro.
+4. **Deploy**. Al termine il sito è raggiungibile su un indirizzo tipo `nome-casuale.netlify.app`: annotarlo, serve per il DNS. Conviene rinominarlo in **Project configuration → Change project name** (per esempio `nicholasbarsanti`).
+5. Su `nome.netlify.app` controllare che tutto funzioni e che le intestazioni ci siano (vedi checklist) **prima** di toccare il DNS.
+
+### Dominio
+
+1. **Domain management → Add a domain** → `nicholasbarsanti.it` (senza `www`). Netlify aggiunge da solo anche `www.nicholasbarsanti.it` e lo reindirizza al dominio principale.
+2. Netlify chiede se usare Netlify DNS: **no**, il DNS resta su OVH ("Configure external DNS").
+
+> Nota: con DNS esterno Netlify consiglia `www` come dominio principale, perché il dominio senza `www` può puntare solo a un indirizzo IP e non sfrutta appieno la CDN. Il brief sceglie il dominio senza `www`: per un sito statico così leggero la differenza è trascurabile.
+
+### Record DNS su OVH
+
+In **OVHcloud → Web Cloud → Nomi di dominio → nicholasbarsanti.it → Zona DNS**:
+
+| Azione | Sottodominio | Tipo | Destinazione |
+|---|---|---|---|
+| modificare (o creare) | *(vuoto)* | `A` | `75.2.60.5` |
+| **eliminare** | *(vuoto)* | `AAAA` | indirizzo IPv6 di OVH, se presente |
+| eliminare | `www` | `A` / `AAAA` | indirizzi OVH, se presenti |
+| creare | `www` | `CNAME` | `nome.netlify.app.` (con il punto finale) |
+
+- `75.2.60.5` è il load balancer di Netlify per i DNS esterni (documentazione: *Configure external DNS*; ricontrollarlo prima di modificare la zona).
+- Il record `AAAA` del dominio principale va tolto: Netlify con DNS esterno non risponde su IPv6 e chi ha IPv6 finirebbe sulla vecchia pagina di OVH.
+- **Non toccare**: record `MX`, `TXT` di SPF (`v=spf1…`) e DMARC (`_dmarc`), record DKIM (`…_domainkey`), `autodiscover`/`autoconfig`, eventuali `SRV`, i server DNS (`NS`) e **DNSSEC**, che resta attivo: OVH firma da sola i nuovi record.
+- Se esiste un record `CAA`, deve consentire `letsencrypt.org`, altrimenti Netlify non può ottenere il certificato.
+
+La propagazione richiede da pochi minuti a 24 ore. Poi, in Netlify, **Domain management → HTTPS → Verify DNS configuration**: il certificato Let's Encrypt viene emesso e rinnovato automaticamente.
+
+### Dopo il collegamento
+
+- Il sito resta raggiungibile anche su `nome.netlify.app`: il canonical punta a `nicholasbarsanti.it`, quindi per i motori di ricerca non è un duplicato.
+- HSTS ha `includeSubDomains`: una volta visitato il sito, i browser useranno solo HTTPS anche per tutti i sottodomini. Ogni sottodominio web futuro dovrà avere un certificato valido (la posta non è interessata).
+
+## Checklist di verifica finale
+
+Prima della pubblicazione (in locale):
+
+- [ ] `npm run build` senza errori né avvisi
+- [ ] controllo inline (sezione Sicurezza) senza risultati
+- [ ] `npm run preview`: console del browser senza errori né avvisi, in tema chiaro e scuro
+- [ ] HTML valido su <https://validator.w3.org/nu/> (index, privacy, 404)
+- [ ] navigazione completa da tastiera, focus sempre visibile, "Vai al contenuto" al primo Tab
+- [ ] leggibile a 320 px senza scroll orizzontale
+- [ ] informativa privacy verificata da un consulente
+
+Dopo la pubblicazione (su `https://nicholasbarsanti.it`):
+
+- [ ] Lighthouse 100/100/100/100 su mobile e desktop (Chrome DevTools → Lighthouse, finestra in incognito)
+- [ ] <https://securityheaders.com>: A+
+- [ ] <https://developer.mozilla.org/observatory>: A+
+- [ ] scheda Rete del browser: nessuna richiesta verso domini esterni
+- [ ] `https://www.nicholasbarsanti.it` e `http://nicholasbarsanti.it` reindirizzano a `https://nicholasbarsanti.it`
+- [ ] raggiungibili: `/.well-known/security.txt`, `/robots.txt`, `/sitemap-index.xml`, `/privacy`; un indirizzo inventato restituisce la pagina 404 con codice 404
+- [ ] `/_headers` **non** raggiungibile (deve dare 404)
+- [ ] intestazioni presenti e non duplicate:
+
+```bash
+curl -sI https://nicholasbarsanti.it/
+```
+
+- [ ] JSON-LD valido: <https://search.google.com/test/rich-results> e <https://validator.schema.org>
+- [ ] anteprima corretta condividendo il link su WhatsApp (in caso di cache vecchia: <https://developers.facebook.com/tools/debug/>)
+- [ ] record email intatti: SPF, DKIM e DMARC ancora validi (per esempio con <https://mxtoolbox.com>)
