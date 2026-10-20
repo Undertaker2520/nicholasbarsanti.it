@@ -55,7 +55,7 @@ Per cambiare colori o font si modifica solo `src/styles/_variabili.scss`.
 
 ## Foto e lavori realizzati
 
-- **Foto**: salvare un ritratto (meglio quadrato, almeno 512×512 px) come `src/assets/nicholas.jpg`. Astro lo converte in AVIF/WebP/JPEG fino a 512 px e rimuove i metadati EXIF. Senza file compare il cerchio con le iniziali.
+- **Foto**: salvare un ritratto (meglio quadrato, almeno 400×400 px) come `src/assets/nicholas.jpg`. Astro lo converte in AVIF/WebP/JPEG fino a 400 px (qualità 80) e rimuove i metadati EXIF. Senza file compare il cerchio con le iniziali.
 - **Lavori realizzati**: aggiungere i lavori in `lavori` dentro `src/data/testi.ts` e impostare `mostraLavori: true` in `src/config.ts`. La sezione compare solo se entrambe le condizioni sono vere.
 
 ## Sicurezza

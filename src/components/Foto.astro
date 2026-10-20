@@ -21,10 +21,12 @@ const iniziali = sito.nome
   .join('');
 
 // Deve corrispondere a $foto-dimensioni in src/styles/_variabili.scss.
-const sizes = '(min-width: 40rem) 16rem, 10rem';
-// 10rem e 16rem a densità 1x e 2x, senza superare la larghezza dell'originale
-// (le foto non vengono mai ingrandite); 512 px è il massimo pubblicato.
-const LARGHEZZE = [160, 256, 320, 512];
+const sizes = '(min-width: 40rem) 12.5rem, 10rem';
+// 10rem e 12.5rem a densità 1x e 2x, senza superare la larghezza dell'originale
+// (le foto non vengono mai ingrandite); 400 px è il massimo pubblicato.
+const LARGHEZZE = [160, 200, 320, 400];
+// Qualità più alta del predefinito (circa 50): capelli e tessuti restano definiti.
+const QUALITA = 80;
 const massima = Math.min(foto?.width ?? 0, Math.max(...LARGHEZZE));
 const widths = [...LARGHEZZE.filter((larghezza) => larghezza < massima), massima];
 ---
@@ -39,6 +41,7 @@ const widths = [...LARGHEZZE.filter((larghezza) => larghezza < massima), massima
       width={massima}
       widths={widths}
       sizes={sizes}
+      quality={QUALITA}
       priority
     />
   ) : (

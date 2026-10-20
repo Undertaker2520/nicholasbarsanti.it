@@ -70,10 +70,11 @@ $spazi: (
 );
 
 // Diametro della foto: piccola su mobile, grande da `medio`.
-// Deve corrispondere all'attributo `sizes` in src/components/Foto.astro.
+// 12.5rem = 200 px: a densità 2x servono 400 px, la larghezza dell'originale (nitida, senza ingrandimenti).
+// Deve corrispondere a `sizes` e `LARGHEZZE` in src/components/Foto.astro.
 $foto-dimensioni: (
   piccola: 10rem,
-  grande: 16rem,
+  grande: 12.5rem,
 );
 
 $numero-passo-diametro: 2rem; // cerchio con il numero dei passi in "Come lavoro"
