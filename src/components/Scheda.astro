@@ -32,7 +32,7 @@ const { titolo, etichetta, nota, azione, evidenziata = false } = Astro.props;
         {nota && <p class="scheda__nota">{nota}</p>}
         {azione && (
           <p class="scheda__azione">
-            <Pulsante href={azione.href} class="scheda__link">
+            <Pulsante href={azione.href} dimensione="piccolo" class="scheda__link">
               {azione.testo}
               <span class="solo-lettori-schermo">: {titolo}</span>
               <span class="scheda__freccia" aria-hidden="true">→</span>

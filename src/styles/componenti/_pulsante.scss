@@ -31,4 +31,13 @@
     transform: none;
     box-shadow: none;
   }
+
+  // Variante discreta (schede): a pillola, più bassa, testo non in grassetto.
+  &--piccolo {
+    min-height: 2.5rem; // area di tocco ben sopra i 24 px richiesti (WCAG 2.5.8)
+    padding: spazio(xs) spazio(m);
+    border-radius: v.$raggio-pillola;
+    font-weight: v.$peso-medio;
+    line-height: v.$interlinea-titoli; // una sola riga: niente interlinea da paragrafo
+  }
 }

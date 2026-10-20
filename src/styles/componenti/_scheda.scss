@@ -23,18 +23,18 @@
   border-radius: v.$raggio;
 
   @include con-movimento {
-    transition: transizioni(v.$durata-media, transform, box-shadow, border-color);
+    transition: transizioni(v.$durata-media, transform, box-shadow, border-color, background-color);
   }
 
   @include al-passaggio {
     transform: translateY(v.$sollevamento-scheda);
     box-shadow: ombra(media);
     border-color: colore(accento);
+    background: colore(superficie);
   }
 
-  // Evidenza leggera: sfondo tenue e bordo nel colore d'accento.
+  // Evidenza leggera (Sito vetrina): bordo nel colore d'accento; lo sfondo tenue arriva al passaggio.
   &--evidenziata {
-    background: colore(superficie);
     border-color: colore(accento);
   }
 

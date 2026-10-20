@@ -1,11 +1,13 @@
 ---
 interface Props {
   href: string;
+  /** `piccolo`: variante discreta a pillola, per esempio nelle schede. */
+  dimensione?: 'piccolo';
   /** Classi aggiuntive, per adattare il pulsante al contesto (per esempio nelle schede). */
   class?: string;
 }
 
-const { href, class: classe } = Astro.props;
+const { href, dimensione, class: classe } = Astro.props;
 ---
 
-<a class:list={['pulsante', classe]} href={href}><slot /></a>
+<a class:list={['pulsante', dimensione && `pulsante--${dimensione}`, classe]} href={href}><slot /></a>
