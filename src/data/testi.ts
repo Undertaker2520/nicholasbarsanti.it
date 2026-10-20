@@ -29,7 +29,7 @@ export const apertura = {
   sottotitolo:
     "Realizzo siti veloci, facili da aggiornare e protetti, per chi lavora a Lucca e dintorni. Parli direttamente con chi li costruisce, dall'inizio alla consegna.",
   pulsante: 'Scrivimi',
-  altFoto: 'Ritratto di Nicholas Barsanti',
+  altFoto: 'Nicholas Barsanti, sorridente, in camicia grigia e a braccia conserte',
 };
 
 export const chiSono: readonly string[] = [

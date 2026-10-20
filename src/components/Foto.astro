@@ -22,8 +22,11 @@ const iniziali = sito.nome
 
 // Deve corrispondere a $foto-dimensioni in src/styles/_variabili.scss.
 const sizes = '(min-width: 40rem) 16rem, 10rem';
-// 10rem e 16rem a densità 1x e 2x; 512 px è anche il massimo pubblicato.
-const widths = [160, 256, 320, 512];
+// 10rem e 16rem a densità 1x e 2x, senza superare la larghezza dell'originale
+// (le foto non vengono mai ingrandite); 512 px è il massimo pubblicato.
+const LARGHEZZE = [160, 256, 320, 512];
+const massima = Math.min(foto?.width ?? 0, Math.max(...LARGHEZZE));
+const widths = [...LARGHEZZE.filter((larghezza) => larghezza < massima), massima];
 ---
 
 {
@@ -33,7 +36,7 @@ const widths = [160, 256, 320, 512];
       src={foto}
       alt={alt}
       formats={['avif', 'webp']}
-      width={Math.max(...widths)}
+      width={massima}
       widths={widths}
       sizes={sizes}
       priority
