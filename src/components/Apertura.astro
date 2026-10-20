@@ -1,0 +1,19 @@
+---
+import Foto from './Foto.astro';
+import Pulsante from './Pulsante.astro';
+import { mailto } from '../config';
+import { apertura } from '../data/testi';
+---
+
+<section class="apertura" aria-labelledby="apertura-titolo">
+  <div class="contenitore apertura__griglia">
+    <div class="apertura__testo">
+      <h1 id="apertura-titolo">{apertura.titolo}</h1>
+      <p class="apertura__sottotitolo">{apertura.sottotitolo}</p>
+      <Pulsante href={mailto}>{apertura.pulsante}</Pulsante>
+    </div>
+    <div class="apertura__foto">
+      <Foto alt={apertura.altFoto} />
+    </div>
+  </div>
+</section>

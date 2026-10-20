@@ -1,0 +1,20 @@
+@use '../variabili' as v;
+@use '../strumenti' as *;
+
+.pulsante {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: spazio(xs) spazio(l);
+  background: colore(accento);
+  color: colore(su-accento);
+  border-radius: v.$raggio;
+  font-weight: v.$peso-forte;
+  text-decoration: none;
+
+  &:hover {
+    background: colore(accento-hover);
+    color: colore(su-accento);
+  }
+}

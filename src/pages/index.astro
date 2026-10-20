@@ -1,10 +1,73 @@
 ---
 import Base from '../layouts/Base.astro';
+import Apertura from '../components/Apertura.astro';
+import Sezione from '../components/Sezione.astro';
+import Scheda from '../components/Scheda.astro';
+import ElencoPunti from '../components/ElencoPunti.astro';
+import { sito, mailto } from '../config';
+import { sezioni } from '../data/sezioni';
+import { chiSono, servizi, comeLavoro, perche, lavori, contatti } from '../data/testi';
+
+const mostraLavori = sito.mostraLavori && lavori.length > 0;
 ---
 
 <Base>
-  <div class="contenitore">
-    <h1>Siti web curati e sicuri per attività e professionisti</h1>
-    <p>Le sezioni arrivano al passo 3.</p>
-  </div>
+  <Apertura />
+
+  <Sezione sezione={sezioni.chiSono}>
+    {chiSono.map((paragrafo) => <p>{paragrafo}</p>)}
+  </Sezione>
+
+  <Sezione sezione={sezioni.servizi}>
+    <ul class="schede">
+      {
+        servizi.map((servizio) => (
+          <li>
+            <Scheda
+              titolo={servizio.titolo}
+              etichetta={servizio.prezzo}
+              evidenziata={servizio.evidenziato}
+            >
+              <p>{servizio.descrizione}</p>
+              {servizio.tempi && <p class="scheda__nota">Tempi: {servizio.tempi}.</p>}
+            </Scheda>
+          </li>
+        ))
+      }
+    </ul>
+  </Sezione>
+
+  <Sezione sezione={sezioni.comeLavoro}>
+    <ElencoPunti voci={comeLavoro} numerato />
+  </Sezione>
+
+  <Sezione sezione={sezioni.perche}>
+    <ElencoPunti voci={perche} />
+  </Sezione>
+
+  {
+    mostraLavori && (
+      <Sezione sezione={sezioni.lavori}>
+        <ul class="schede schede--adattive">
+          {lavori.map((lavoro) => (
+            <li>
+              <Scheda titolo={lavoro.titolo}>
+                <p>{lavoro.descrizione}</p>
+                {lavoro.url && (
+                  <p class="scheda__nota">
+                    <a href={lavoro.url}>Visita il sito</a>
+                  </p>
+                )}
+              </Scheda>
+            </li>
+          ))}
+        </ul>
+      </Sezione>
+    )
+  }
+
+  <Sezione sezione={sezioni.contatti}>
+    <p>{contatti.invito}</p>
+    <p class="contatti__email"><a href={mailto}>{sito.email}</a></p>
+  </Sezione>
 </Base>

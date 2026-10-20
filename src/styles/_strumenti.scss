@@ -34,6 +34,15 @@
   }
 }
 
+// Media query limitata a un intervallo: @include tra(medio, largo) { ... }
+@mixin tra($da, $a) {
+  $minimo: da-mappa(v.$breakpoint, $da, '$breakpoint');
+  $massimo: da-mappa(v.$breakpoint, $a, '$breakpoint');
+  @media (min-width: $minimo) and (max-width: ($massimo - 0.01rem)) {
+    @content;
+  }
+}
+
 // Variabili CSS per tema chiaro e scuro, scelte da prefers-color-scheme.
 @mixin temi($chiaro, $scuro) {
   @each $chiave in map.keys($chiaro) {
@@ -73,6 +82,26 @@
   clip-path: inset(50%);
   white-space: nowrap;
   border: 0;
+}
+
+// Griglia per pochi elementi: in colonna su mobile, tutti sulla stessa riga da `largo`.
+// Evita righe incomplete (per esempio 3 + 1) a qualunque larghezza.
+@mixin griglia-in-riga($spazio: spazio(m)) {
+  display: grid;
+  gap: $spazio;
+
+  @include da(largo) {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+  }
+}
+
+// Griglia per un numero variabile di elementi: tante colonne quante ne entrano.
+@mixin griglia-adattiva($minimo: v.$larghezza-schede-min, $spazio: spazio(m)) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min($minimo, 100%), 1fr));
+  gap: $spazio;
 }
 
 // Elenco senza punti né rientri.

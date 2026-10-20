@@ -1,0 +1,21 @@
+@use '../variabili' as v;
+@use '../strumenti' as *;
+
+.sezione {
+  padding-block: spazio(xl);
+
+  &__titolo {
+    margin-bottom: spazio(m);
+  }
+
+  // L'ultimo paragrafo non aggiunge spazio oltre al padding della sezione.
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.contatti__email {
+  font-size: testo(h3);
+  font-weight: v.$peso-forte;
+  overflow-wrap: anywhere;
+}

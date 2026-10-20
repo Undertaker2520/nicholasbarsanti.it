@@ -1,0 +1,31 @@
+@use '../variabili' as v;
+@use '../strumenti' as *;
+
+.apertura {
+  padding-block: spazio(xl);
+
+  &__griglia {
+    display: grid;
+    gap: spazio(l);
+    align-items: center;
+
+    @include da(medio) {
+      grid-template-columns: 1fr auto;
+    }
+  }
+
+  &__sottotitolo {
+    margin-bottom: spazio(l);
+    color: colore(testo-secondario);
+    font-size: testo(grande);
+  }
+
+  // Su mobile la foto sta sopra il testo; da `medio` va a destra.
+  &__foto {
+    order: -1;
+
+    @include da(medio) {
+      order: 0;
+    }
+  }
+}

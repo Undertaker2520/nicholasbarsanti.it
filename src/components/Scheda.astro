@@ -1,0 +1,16 @@
+---
+interface Props {
+  titolo: string;
+  /** Riga sotto il titolo, per esempio il prezzo. */
+  etichetta?: string;
+  evidenziata?: boolean;
+}
+
+const { titolo, etichetta, evidenziata = false } = Astro.props;
+---
+
+<article class:list={['scheda', { 'scheda--evidenziata': evidenziata }]}>
+  <h3 class="scheda__titolo">{titolo}</h3>
+  {etichetta && <p class="scheda__etichetta">{etichetta}</p>}
+  <slot />
+</article>

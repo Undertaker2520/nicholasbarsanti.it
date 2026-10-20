@@ -1,0 +1,46 @@
+@use '../variabili' as v;
+@use '../strumenti' as *;
+
+.punti {
+  @include elenco-semplice;
+  @include griglia-in-riga($spazio: spazio(m) spazio(l));
+  max-width: none;
+
+  strong {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-weight: v.$peso-forte;
+  }
+
+  // Passi numerati: il numero è un contatore CSS dentro un cerchio d'accento.
+  &--numerati {
+    counter-reset: passo;
+
+    // Quattro passi: 2 × 2 sugli schermi medi (da `largo` stanno in fila).
+    @include tra(medio, largo) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .punti__voce {
+      position: relative;
+      padding-left: v.$numero-passo-diametro + spazio(s);
+      counter-increment: passo;
+
+      &::before {
+        content: counter(passo);
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: grid;
+        place-items: center;
+        width: v.$numero-passo-diametro;
+        height: v.$numero-passo-diametro;
+        border-radius: 50%;
+        background: colore(accento);
+        color: colore(su-accento);
+        font-size: testo(piccolo);
+        font-weight: v.$peso-forte;
+      }
+    }
+  }
+}

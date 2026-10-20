@@ -2,7 +2,6 @@
 @use '../strumenti' as *;
 
 .piede {
-  margin-top: spazio(xxl);
   padding-block: spazio(l);
   border-top: v.$bordo-spessore solid colore(bordo);
   color: colore(testo-secondario);

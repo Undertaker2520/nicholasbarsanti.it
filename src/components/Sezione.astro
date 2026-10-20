@@ -1,0 +1,17 @@
+---
+import { titoloSezione, type Sezione } from '../data/sezioni';
+
+interface Props {
+  sezione: Sezione;
+}
+
+const { sezione } = Astro.props;
+const idTitolo = `${sezione.id}-titolo`;
+---
+
+<section id={sezione.id} class="sezione" aria-labelledby={idTitolo}>
+  <div class="contenitore">
+    <h2 id={idTitolo} class="sezione__titolo">{titoloSezione(sezione)}</h2>
+    <slot />
+  </div>
+</section>

@@ -69,6 +69,16 @@ $spazi: (
   xxl: clamp(4rem, 3rem + 5vw, 7rem),
 );
 
+// Diametro della foto: piccola su mobile, grande da `medio`.
+// Deve corrispondere all'attributo `sizes` in src/components/Foto.astro.
+$foto-dimensioni: (
+  piccola: 10rem,
+  grande: 16rem,
+);
+
+$numero-passo-diametro: 2rem; // cerchio con il numero dei passi in "Come lavoro"
+$larghezza-schede-min: 15rem; // sotto questa larghezza schede e punti vanno in colonna
+
 $larghezza-massima: 70rem;
 $margine-laterale: clamp(1rem, 4vw, 2rem);
 $raggio: 0.5rem;

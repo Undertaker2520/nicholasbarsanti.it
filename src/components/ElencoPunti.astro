@@ -1,0 +1,22 @@
+---
+import type { Punto } from '../data/testi';
+
+interface Props {
+  voci: readonly Punto[];
+  /** Elenco ordinato con i numeri dei passi. */
+  numerato?: boolean;
+}
+
+const { voci, numerato = false } = Astro.props;
+const Elenco = numerato ? 'ol' : 'ul';
+---
+
+<Elenco class:list={['punti', { 'punti--numerati': numerato }]}>
+  {
+    voci.map((voce) => (
+      <li class="punti__voce">
+        <strong>{voce.titolo}</strong> {voce.testo}
+      </li>
+    ))
+  }
+</Elenco>

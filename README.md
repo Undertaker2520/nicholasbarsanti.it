@@ -32,7 +32,9 @@ astro.config.mjs   configurazione di Astro (output statico, sitemap)
 netlify.toml       impostazioni di build per Netlify
 src/
   config.ts        dati del sito (URL, contatti, flag delle sezioni)
-  data/            id delle sezioni, voci di menu
+  data/sezioni.ts  id delle ancore, voci di menu, titoli delle sezioni
+  data/testi.ts    TUTTI i testi della pagina (modificare solo qui)
+  assets/          foto facoltativa nicholas.jpg (se manca: segnaposto "NB")
   assets/fonts/    Inter variabile (sottoinsieme latin, licenza OFL)
   components/      componenti Astro riusabili
   layouts/         struttura HTML comune
@@ -46,4 +48,9 @@ src/
 
 Per cambiare colori o font si modifica solo `src/styles/_variabili.scss`.
 
-<!-- Da completare: stili, componenti, intestazioni di sicurezza, pubblicazione su Netlify, DNS OVH, checklist finale. -->
+## Foto e lavori realizzati
+
+- **Foto**: salvare un ritratto (meglio quadrato, almeno 512×512 px) come `src/assets/nicholas.jpg`. Astro lo converte in AVIF/WebP/JPEG fino a 512 px e rimuove i metadati EXIF. Senza file compare il cerchio con le iniziali.
+- **Lavori realizzati**: aggiungere i lavori in `lavori` dentro `src/data/testi.ts` e impostare `mostraLavori: true` in `src/config.ts`. La sezione compare solo se entrambe le condizioni sono vere.
+
+<!-- Da completare: intestazioni di sicurezza, pubblicazione su Netlify, DNS OVH, checklist finale. -->

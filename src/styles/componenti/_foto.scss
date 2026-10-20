@@ -1,0 +1,34 @@
+@use 'sass:map';
+@use '../variabili' as v;
+@use '../strumenti' as *;
+
+// Diametro della foto; le iniziali del segnaposto scalano in proporzione.
+@mixin dimensione-foto($chiave) {
+  $diametro: da-mappa(v.$foto-dimensioni, $chiave, '$foto-dimensioni');
+  width: $diametro;
+  font-size: $diametro * 0.34;
+}
+
+.foto {
+  @include dimensione-foto(piccola);
+  aspect-ratio: 1;
+  height: auto;
+  border-radius: 50%;
+  object-fit: cover;
+
+  @include da(medio) {
+    @include dimensione-foto(grande);
+  }
+
+  &--segnaposto {
+    display: grid;
+    place-items: center;
+    background: colore(superficie);
+    border: 2px solid colore(bordo);
+    color: colore(accento);
+    font-weight: v.$peso-forte;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    user-select: none;
+  }
+}

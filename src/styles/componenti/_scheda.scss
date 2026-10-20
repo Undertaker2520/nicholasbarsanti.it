@@ -1,0 +1,49 @@
+@use '../variabili' as v;
+@use '../strumenti' as *;
+
+.schede {
+  @include elenco-semplice;
+  @include griglia-in-riga;
+  max-width: none;
+
+  // Elenco di lunghezza variabile (lavori realizzati).
+  &--adattive {
+    @include griglia-adattiva;
+  }
+}
+
+.scheda {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: spazio(m);
+  background: colore(sfondo);
+  border: v.$bordo-spessore solid colore(bordo);
+  border-radius: v.$raggio;
+
+  // Evidenza leggera: sfondo tenue e bordo nel colore d'accento.
+  &--evidenziata {
+    background: colore(superficie);
+    border-color: colore(accento);
+  }
+
+  &__titolo {
+    margin-bottom: spazio(xs);
+  }
+
+  &__etichetta {
+    color: colore(accento);
+    font-weight: v.$peso-forte;
+  }
+
+  // Nota finale (tempi, link): sempre in fondo alla scheda.
+  &__nota {
+    margin-top: auto;
+    color: colore(testo-secondario);
+    font-size: testo(piccolo);
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
