@@ -97,6 +97,11 @@ svg {
 }
 
 // Spostamento dello scorrimento per le ancore, così i titoli non toccano il bordo.
+// `hidden` vince sempre, anche su elementi con un display impostato nei componenti.
+[hidden] {
+  display: none !important;
+}
+
 [id] {
   scroll-margin-top: spazio(m);
 

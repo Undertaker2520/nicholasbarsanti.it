@@ -45,7 +45,7 @@ src/
   lib/             funzioni comuni (URL, JSON-LD, email precompilate, risposte di testo)
   scripts/
     main.js          punto di ingresso del JavaScript (incluso dal layout)
-    moduli/          comparsa allo scorrimento, intestazione, sfondo
+    moduli/          carosello, comparsa allo scorrimento, intestazione, sfondo
     utilita.js       controlli comuni (movimento ridotto, puntatore, un aggiornamento per fotogramma)
   styles/
     _variabili.scss  UNICO file con font, colori, misure e breakpoint
@@ -66,7 +66,9 @@ Per cambiare colori o font si modifica solo `src/styles/_variabili.scss`.
 
 ## Schede dei servizi
 
-Ogni scheda ha in fondo il pulsante "Chiedi informazioni" (stesso componente `Pulsante` di "Scrivimi"), esteso a tutta la scheda: apre il programma di posta con oggetto e testo già scritti per quel servizio. I testi del messaggio sono in `richiestaServizio` (`src/data/testi.ts`); il link è costruito da `mailtoPrecompilato` (`src/lib/email.ts`). Le schede sono uguali: sfondo tenue e bordo petrolio compaiono su ognuna solo al passaggio del mouse. Titolo, prezzo, descrizione e fondo sono allineati tra schede vicine con CSS subgrid (righe in `$scheda-righe`, `_variabili.scss`). Il pulsante è la variante `dimensione="piccolo"` (a pillola, testo non in grassetto).
+Ogni scheda ha in fondo il pulsante "Chiedi informazioni" (stesso componente `Pulsante` di "Scrivimi"), esteso a tutta la scheda: apre il programma di posta con oggetto e testo già scritti per quel servizio. I testi del messaggio sono in `richiestaServizio` (`src/data/testi.ts`); il link è costruito da `mailtoPrecompilato` (`src/lib/email.ts`). Le schede sono uguali: sfondo tenue e bordo petrolio compaiono su ognuna solo al passaggio del mouse. Da 1024 px titolo, prezzo, descrizione e fondo sono allineati tra schede affiancate con CSS subgrid (righe in `$scheda-righe`, `_variabili.scss`).
+
+Sotto i 1024 px le schede diventano un **carosello** (`src/components/Carosello.astro`): scorrono in orizzontale con aggancio CSS (`scroll-snap`), la successiva si intravede di lato. I pallini sono nell'HTML ma nascosti; `src/scripts/moduli/carosello.js` li mostra, evidenzia quello della scheda visibile e porta alla scheda scelta. Senza JavaScript si scorre comunque con il dito o la barra di scorrimento. Nessuna libreria esterna (Owl Carousel scartato: non mantenuto dal 2018, incompatibile con jQuery 4 e con i pallini senza nome accessibile). Il pulsante è la variante `dimensione="piccolo"` (a pillola, testo non in grassetto).
 
 ## Animazioni e JavaScript
 

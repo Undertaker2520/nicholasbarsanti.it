@@ -78,6 +78,12 @@ export const richiestaServizio = {
     ].join('\n'),
 };
 
+/** Carosello delle schede su mobile: etichette dei pallini per i lettori di schermo. */
+export const carosello = {
+  gruppo: 'Scegli il servizio da vedere',
+  vaiA: (titolo: string) => `Mostra ${titolo}`,
+};
+
 /** Testo del prezzo; spazio indivisibile tra cifra ed euro, così non va a capo. */
 export const etichettaPrezzo = (servizio: Servizio) =>
   servizio.prezzoDa === undefined ? 'su preventivo' : `da ${servizio.prezzoDa} €`;

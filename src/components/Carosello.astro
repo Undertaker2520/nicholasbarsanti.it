@@ -1,0 +1,27 @@
+---
+/**
+ * Carosello per un elenco di schede (nello slot): sotto `largo` le schede scorrono in
+ * orizzontale con aggancio (CSS scroll-snap), da `largo` restano affiancate.
+ * I pallini sono già nell'HTML ma nascosti: li mostra e li collega src/scripts/moduli/carosello.js.
+ * Senza JavaScript si scorre comunque con il dito o la barra di scorrimento.
+ */
+interface Props {
+  /** Etichetta del gruppo di pallini. */
+  etichetta: string;
+  /** Un'etichetta per scheda, nello stesso ordine. */
+  voci: readonly string[];
+}
+
+const { etichetta, voci } = Astro.props;
+---
+
+<div class="carosello" data-carosello>
+  <slot />
+  <div class="carosello__pallini" role="group" aria-label={etichetta} hidden>
+    {
+      voci.map((voce, indice) => (
+        <button type="button" class="carosello__pallino" aria-label={voce} data-indice={indice} />
+      ))
+    }
+  </div>
+</div>

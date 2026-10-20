@@ -35,6 +35,13 @@
   }
 }
 
+// Media query sotto un breakpoint: @include fino-a(largo) { ... }
+@mixin fino-a($chiave) {
+  @media (max-width: (da-mappa(v.$breakpoint, $chiave, '$breakpoint') - 0.01rem)) {
+    @content;
+  }
+}
+
 // Media query limitata a un intervallo: @include tra(medio, largo) { ... }
 @mixin tra($da, $a) {
   $minimo: da-mappa(v.$breakpoint, $da, '$breakpoint');

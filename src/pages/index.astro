@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Apertura from '../components/Apertura.astro';
 import Sezione from '../components/Sezione.astro';
 import Scheda from '../components/Scheda.astro';
+import Carosello from '../components/Carosello.astro';
 import ElencoPunti from '../components/ElencoPunti.astro';
 import Profili from '../components/Profili.astro';
 import { sito, mailto } from '../config';
@@ -17,6 +18,7 @@ import {
   linkLavoro,
   contatti,
   richiestaServizio,
+  carosello,
 } from '../data/testi';
 import { datiStrutturati } from '../lib/dati-strutturati';
 import { mailtoPrecompilato } from '../lib/email';
@@ -32,28 +34,30 @@ const mostraLavori = sito.mostraLavori && lavori.length > 0;
   </Sezione>
 
   <Sezione sezione={sezioni.servizi}>
-    <ul class="schede" data-comparsa-gruppo>
-      {
-        servizi.map((servizio) => (
-          <li>
-            <Scheda
-              titolo={servizio.titolo}
-              etichetta={etichettaPrezzo(servizio)}
-              nota={servizio.tempi && `Tempi: ${servizio.tempi}.`}
-              azione={{
-                href: mailtoPrecompilato(
-                  richiestaServizio.oggetto(servizio.titolo),
-                  richiestaServizio.corpo(servizio.titolo),
-                ),
-                testo: richiestaServizio.link,
-              }}
-            >
-              <p>{servizio.descrizione}</p>
-            </Scheda>
-          </li>
-        ))
-      }
-    </ul>
+    <Carosello etichetta={carosello.gruppo} voci={servizi.map((servizio) => carosello.vaiA(servizio.titolo))}>
+      <ul class="schede" data-comparsa-gruppo>
+        {
+          servizi.map((servizio) => (
+            <li>
+              <Scheda
+                titolo={servizio.titolo}
+                etichetta={etichettaPrezzo(servizio)}
+                nota={servizio.tempi && `Tempi: ${servizio.tempi}.`}
+                azione={{
+                  href: mailtoPrecompilato(
+                    richiestaServizio.oggetto(servizio.titolo),
+                    richiestaServizio.corpo(servizio.titolo),
+                  ),
+                  testo: richiestaServizio.link,
+                }}
+              >
+                <p>{servizio.descrizione}</p>
+              </Scheda>
+            </li>
+          ))
+        }
+      </ul>
+    </Carosello>
   </Sezione>
 
   <Sezione sezione={sezioni.comeLavoro}>

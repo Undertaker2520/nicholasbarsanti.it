@@ -20,6 +20,7 @@
   flex-direction: column;
   height: 100%;
   padding: spazio(m);
+  padding-top: calc(#{spazio(m)} - #{v.$scheda-compensazione-ottica});
   background: colore(sfondo);
   border: v.$bordo-spessore solid colore(bordo);
   border-radius: v.$raggio;
@@ -107,27 +108,30 @@
   }
 }
 
-// Testi allineati tra schede vicine: ogni scheda (e il suo <li>) occupa le stesse righe
-// della griglia dell'elenco, una per parte; ogni riga è alta quanto la più alta tra le schede.
-// Senza supporto a subgrid resta l'impaginazione in colonna definita sopra.
+// Testi allineati tra schede affiancate (da `largo`): ogni scheda (e il suo <li>) occupa le
+// stesse righe della griglia dell'elenco, una per parte; ogni riga è alta quanto la più alta.
+// Sotto `largo` (colonna o carosello) si vede una scheda per volta: impaginazione naturale,
+// con nota e pulsante comunque in fondo. Senza supporto a subgrid resta l'impaginazione in colonna.
 @supports (grid-template-rows: subgrid) {
-  $numero-righe: list.length(map.keys(v.$scheda-righe));
+  @include da(largo) {
+    $numero-righe: list.length(map.keys(v.$scheda-righe));
 
-  .schede > li,
-  .scheda {
-    display: grid;
-    grid-row: span $numero-righe;
-    grid-template-rows: subgrid;
-    row-gap: 0; // lo spazio tra le parti viene dai margini, non dal gap dell'elenco
-  }
+    .schede > li,
+    .scheda {
+      display: grid;
+      grid-row: span $numero-righe;
+      grid-template-rows: subgrid;
+      row-gap: 0; // lo spazio tra le parti viene dai margini, non dal gap dell'elenco
+    }
 
-  .scheda {
-    height: auto;
-  }
+    .scheda {
+      height: auto;
+    }
 
-  @each $parte, $riga in v.$scheda-righe {
-    .scheda__#{$parte} {
-      grid-row: $riga;
+    @each $parte, $riga in v.$scheda-righe {
+      .scheda__#{$parte} {
+        grid-row: $riga;
+      }
     }
   }
 }

@@ -121,7 +121,17 @@ $numero-passo-diametro: 2rem; // cerchio con il numero dei passi in "Come lavoro
 // Righe di una scheda (titolo, etichetta, corpo, fondo): condivise tra schede vicine
 // con subgrid, così i testi partono alla stessa altezza. Vedi src/components/Scheda.astro.
 $scheda-righe: (titolo: 1, etichetta: 2, corpo: 3, fondo: 4);
-$larghezza-schede-min: 15rem; // sotto questa larghezza schede e punti vanno in colonna
+$larghezza-schede-min: 15rem;
+
+// Il primo testo di una scheda (titolo) ha spazio vuoto sopra le lettere, il pulsante in fondo
+// ha un bordo pieno: togliendo questi pixel in alto i due margini appaiono uguali.
+$scheda-compensazione-ottica: 4px;
+
+// Carosello delle schede sotto `largo`: una scheda per volta, la successiva si intravede.
+$carosello-larghezza-scheda: min(85%, 22rem);
+$pallino-diametro: 0.625rem;
+$pallino-area: 1.5rem; // area di tocco ≥ 24 px (WCAG 2.5.8)
+$pallino-bordo: 2px; // sotto questa larghezza schede e punti vanno in colonna
 
 $larghezza-massima: 70rem;
 $margine-laterale: clamp(1rem, 4vw, 2rem);

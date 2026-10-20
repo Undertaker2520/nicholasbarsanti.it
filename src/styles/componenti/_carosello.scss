@@ -1,0 +1,87 @@
+// Carosello delle schede (src/components/Carosello.astro) sotto `largo`.
+
+@use '../variabili' as v;
+@use '../strumenti' as *;
+
+.carosello > .schede {
+  @include fino-a(largo) {
+    // Una fila orizzontale; le righe del subgrid restano condivise, i testi allineati.
+    grid-auto-flow: column;
+    grid-auto-columns: v.$carosello-larghezza-scheda;
+    grid-template-columns: none;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+
+    // La fila arriva ai bordi dello schermo ma la prima scheda resta allineata al testo.
+    margin-inline: calc(-1 * #{v.$margine-laterale});
+    padding-inline: v.$margine-laterale;
+    scroll-padding-inline: v.$margine-laterale;
+
+    // Spazio per sollevamento, ombra e contorno di focus delle schede, che altrimenti verrebbero tagliati.
+    margin-block: calc(-1 * #{spazio(s)});
+    padding-block: spazio(s);
+
+    > li {
+      scroll-snap-align: start;
+    }
+  }
+}
+
+// Con i pallini attivi (JavaScript) la barra di scorrimento non serve più.
+.carosello--attivo > .schede {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.carosello__pallini {
+  display: flex;
+  justify-content: center;
+  gap: spazio(xs);
+  margin-top: spazio(xs);
+
+  @include da(largo) {
+    display: none;
+  }
+}
+
+// Area di tocco ampia, pallino visibile piccolo: vuoto se inattivo, pieno se attivo
+// (la differenza non dipende solo dal colore).
+.carosello__pallino {
+  display: grid;
+  place-items: center;
+  width: v.$pallino-area;
+  height: v.$pallino-area;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+
+  &::before {
+    content: '';
+    width: v.$pallino-diametro;
+    height: v.$pallino-diametro;
+    border: v.$pallino-bordo solid colore(testo-secondario);
+    border-radius: 50%;
+
+    @include con-movimento {
+      transition: transizioni(v.$durata-breve, background-color, border-color, transform);
+    }
+  }
+
+  @include al-passaggio {
+    &::before {
+      border-color: colore(accento);
+    }
+  }
+
+  &--attivo::before {
+    border-color: colore(accento);
+    background: colore(accento);
+    transform: scale(1.2);
+  }
+}

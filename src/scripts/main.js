@@ -4,6 +4,7 @@
  * Incluso dal layout: Astro lo raccoglie in un file esterno (CSP: script-src 'self').
  */
 import $ from 'jquery/slim';
+import { avviaCaroselli } from './moduli/carosello.js';
 import { avviaComparsa } from './moduli/comparsa.js';
 import { avviaIntestazione } from './moduli/intestazione.js';
 import { avviaSfondo } from './moduli/sfondo.js';
@@ -11,6 +12,7 @@ import { movimentoRidotto } from './utilita.js';
 
 $(() => {
   avviaIntestazione();
+  avviaCaroselli();
 
   if (!movimentoRidotto()) {
     avviaComparsa();
