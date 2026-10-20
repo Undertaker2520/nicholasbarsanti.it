@@ -58,6 +58,11 @@ Per cambiare colori o font si modifica solo `src/styles/_variabili.scss`.
 - **Foto**: salvare un ritratto (meglio quadrato, almeno 400×400 px) come `src/assets/nicholas.jpg`. Astro lo converte in AVIF/WebP/JPEG fino a 400 px (qualità 80) e rimuove i metadati EXIF. Senza file compare il cerchio con le iniziali.
 - **Lavori realizzati**: aggiungere i lavori in `lavori` dentro `src/data/testi.ts` e impostare `mostraLavori: true` in `src/config.ts`. La sezione compare solo se entrambe le condizioni sono vere.
 
+## Pagine
+
+- `/` pagina principale; `/privacy` informativa; `/404` pagina di errore (`noindex`, esclusa dalla sitemap), servita da Netlify per ogni indirizzo inesistente.
+- **L'informativa privacy (`src/pages/privacy.astro`) è una bozza**: va fatta verificare da un consulente prima della pubblicazione. Aggiornare la data in fondo a ogni modifica.
+
 ## Sicurezza
 
 Le intestazioni HTTP sono definite **solo** in `src/sicurezza/intestazioni.ts`:

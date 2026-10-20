@@ -1,0 +1,13 @@
+---
+/** Pagina interna con un titolo e testo libero (privacy, 404). */
+interface Props {
+  titolo: string;
+}
+
+const { titolo } = Astro.props;
+---
+
+<article class="pagina-semplice contenitore">
+  <h1>{titolo}</h1>
+  <slot />
+</article>

@@ -43,18 +43,24 @@ const urlAnteprima = urlAssoluto(anteprima.percorso);
     <link rel="icon" href={immagini.faviconSvg} type="image/svg+xml" />
     <link rel="apple-touch-icon" href={immagini.appleTouchIcon} />
 
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content={sito.locale} />
-    <meta property="og:site_name" content={sito.nome} />
-    <meta property="og:title" content={titolo} />
-    <meta property="og:description" content={descrizione} />
-    <meta property="og:url" content={canonico} />
-    <meta property="og:image" content={urlAnteprima} />
-    <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:width" content={String(anteprima.larghezza)} />
-    <meta property="og:image:height" content={String(anteprima.altezza)} />
-    <meta property="og:image:alt" content={anteprima.alt} />
-    <meta name="twitter:card" content="summary_large_image" />
+    {
+      indicizza && (
+        <>
+          <meta property="og:type" content="website" />
+          <meta property="og:locale" content={sito.locale} />
+          <meta property="og:site_name" content={sito.nome} />
+          <meta property="og:title" content={titolo} />
+          <meta property="og:description" content={descrizione} />
+          <meta property="og:url" content={canonico} />
+          <meta property="og:image" content={urlAnteprima} />
+          <meta property="og:image:type" content="image/png" />
+          <meta property="og:image:width" content={String(anteprima.larghezza)} />
+          <meta property="og:image:height" content={String(anteprima.altezza)} />
+          <meta property="og:image:alt" content={anteprima.alt} />
+          <meta name="twitter:card" content="summary_large_image" />
+        </>
+      )
+    }
 
     {
       datiStrutturati && (

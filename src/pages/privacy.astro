@@ -1,0 +1,66 @@
+---
+/**
+ * Informativa privacy. BOZZA: da far verificare a un consulente prima della pubblicazione.
+ * Contiene solo fatti veri sul sito; i dettagli che dipendono da Netlify
+ * (conservazione dei log, trasferimenti) rimandano alla sua informativa.
+ */
+import Base from '../layouts/Base.astro';
+import PaginaSemplice from '../components/PaginaSemplice.astro';
+import { sito, mailto, titoloPagina } from '../config';
+
+const aggiornamento = '20 ottobre 2026';
+const linkNetlify = 'https://www.netlify.com/privacy/';
+const linkGarante = 'https://www.garanteprivacy.it/';
+---
+
+<Base
+  titolo={titoloPagina('Privacy')}
+  descrizione={`Informativa sul trattamento dei dati personali del sito di ${sito.nome}: niente cookie, niente tracciamento.`}
+>
+  <PaginaSemplice titolo="Informativa privacy">
+    <p>
+      Questa pagina spiega quali dati personali vengono trattati quando visiti questo sito o mi
+      scrivi, e perché.
+    </p>
+
+    <h2>Titolare del trattamento</h2>
+    <p>
+      {sito.nome}, {sito.localita} ({sito.provincia}). Per qualsiasi domanda sui tuoi dati:
+      <a href={mailto}>{sito.email}</a>.
+    </p>
+
+    <h2>Cookie e tracciamento</h2>
+    <p>
+      Il sito non usa cookie, né strumenti di statistica, analisi o tracciamento. Non carica
+      risorse da altri siti: testi, caratteri e immagini sono serviti direttamente da qui.
+    </p>
+
+    <h2>Dati tecnici di navigazione</h2>
+    <p>
+      Il sito è ospitato da Netlify, Inc. Come ogni server web, quello di Netlify registra nei
+      propri log alcuni dati tecnici delle richieste, come l'indirizzo IP, la data e l'ora, la
+      pagina richiesta e il tipo di browser. Questi dati servono a far funzionare il sito e a
+      proteggerlo da abusi (legittimo interesse, art. 6.1.f del GDPR). Il loro trattamento,
+      compresi tempi di conservazione ed eventuali trasferimenti fuori dall'Unione europea, è
+      descritto nell'<a href={linkNetlify}>informativa privacy di Netlify</a>.
+    </p>
+
+    <h2>Email</h2>
+    <p>
+      Se mi scrivi, uso il tuo indirizzo email e quello che mi racconti solo per risponderti e,
+      se lo chiedi, per prepararti un preventivo (art. 6.1.b del GDPR). Non li cedo a nessuno e
+      non li uso per inviarti pubblicità. Li conservo per il tempo necessario a gestire la tua
+      richiesta ed eventuali obblighi di legge.
+    </p>
+
+    <h2>I tuoi diritti</h2>
+    <p>
+      Puoi chiedermi in qualsiasi momento di accedere ai tuoi dati, correggerli, cancellarli,
+      limitarne il trattamento o opporti, scrivendo a <a href={mailto}>{sito.email}</a>. Hai
+      anche il diritto di presentare un reclamo al
+      <a href={linkGarante}>Garante per la protezione dei dati personali</a>.
+    </p>
+
+    <p class="pagina-semplice__nota">Ultimo aggiornamento: {aggiornamento}.</p>
+  </PaginaSemplice>
+</Base>

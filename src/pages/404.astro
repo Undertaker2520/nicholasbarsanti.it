@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+import PaginaSemplice from '../components/PaginaSemplice.astro';
+import { sito, mailto, titoloPagina } from '../config';
+---
+
+<Base
+  titolo={titoloPagina('Pagina non trovata')}
+  descrizione="La pagina richiesta non esiste o è stata spostata."
+  indicizza={false}
+>
+  <PaginaSemplice titolo="Pagina non trovata">
+    <p>La pagina che cerchi non esiste o è stata spostata.</p>
+    <p>
+      Puoi tornare alla <a href="/">pagina principale</a> oppure scrivermi a
+      <a href={mailto}>{sito.email}</a>.
+    </p>
+  </PaginaSemplice>
+</Base>

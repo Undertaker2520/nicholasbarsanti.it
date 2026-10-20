@@ -27,6 +27,9 @@ export const sito = {
 
 export const mailto = `mailto:${sito.email}`;
 
+/** Title delle pagine interne, per esempio "Privacy · Nicholas Barsanti". */
+export const titoloPagina = (pagina: string) => `${pagina} · ${sito.nome}`;
+
 /** File generati da `npm run immagini` in public/ (percorsi pubblici). */
 export const immagini = {
   faviconSvg: '/favicon.svg',

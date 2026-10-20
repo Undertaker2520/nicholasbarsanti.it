@@ -1,0 +1,21 @@
+@use '../variabili' as v;
+@use '../strumenti' as *;
+
+.pagina-semplice {
+  padding-block: spazio(xl);
+
+  h1 {
+    margin-bottom: spazio(l);
+  }
+
+  h2 {
+    margin-top: spazio(l);
+    font-size: testo(h3);
+  }
+
+  .pagina-semplice__nota {
+    margin-top: spazio(l);
+    color: colore(testo-secondario);
+    font-size: testo(piccolo);
+  }
+}
