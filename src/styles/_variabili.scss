@@ -38,19 +38,21 @@ $colori-chiaro: (
   ombra: rgba(15, 50, 55, 0.14),
 );
 
+// Tema scuro "tinto di petrolio": neutri grigio-verdi invece che neri, accento meno saturo,
+// così sfondo e accento appartengono alla stessa famiglia di colori.
 $colori-scuro: (
-  sfondo: #111517,
-  superficie: #1a2023,
-  testo: #e6eaec,
-  testo-secondario: #a9b2b7,
-  bordo: #334045,
-  accento: #5fbfc4,
-  accento-hover: #8ad4d8,
-  su-accento: #0b1a1c,
-  banda-sfondo: #123f43,
-  banda-testo: #e6eaec,
-  banda-secondario: #b8d3d5,
-  ombra: rgba(0, 0, 0, 0.45),
+  sfondo: #0e1a1c,
+  superficie: #152629,
+  testo: #e3ecec,
+  testo-secondario: #a5b8ba,
+  bordo: #2a4145,
+  accento: #6cbfc1,
+  accento-hover: #93d2d3,
+  su-accento: #0a1c1e,
+  banda-sfondo: #174a4e,
+  banda-testo: #e8f1f1,
+  banda-secondario: #bcd6d7,
+  ombra: rgba(0, 0, 0, 0.5),
 );
 
 // --- Sfondo decorativo ----------------------------------------------------------
