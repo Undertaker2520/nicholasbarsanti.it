@@ -59,13 +59,14 @@
     font-size: testo(piccolo);
   }
 
-  &__azione {
-    font-weight: v.$peso-forte;
-  }
-
+  // Pulsante (componente Pulsante) che rende cliccabile tutta la scheda.
   &__link {
-    @include sottolineatura-animata;
-    color: colore(accento);
+    // Niente sollevamento proprio: un transform sul pulsante lo renderebbe il riferimento
+    // dell'area estesa (::after), che si ridurrebbe al pulsante stesso. Si solleva la scheda.
+    &:hover {
+      transform: none;
+      box-shadow: none;
+    }
 
     // Tutta la scheda è cliccabile: l'area del link si estende fino ai bordi.
     &::after {

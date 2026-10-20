@@ -1,9 +1,11 @@
 ---
 interface Props {
   href: string;
+  /** Classi aggiuntive, per adattare il pulsante al contesto (per esempio nelle schede). */
+  class?: string;
 }
 
-const { href } = Astro.props;
+const { href, class: classe } = Astro.props;
 ---
 
-<a class="pulsante" href={href}><slot /></a>
+<a class:list={['pulsante', classe]} href={href}><slot /></a>

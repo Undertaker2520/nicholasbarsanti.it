@@ -21,32 +21,18 @@
   }
 
   // Su mobile la foto sta sopra il testo; da `medio` va a destra.
-  // L'anello petrolio è staccato dalla foto da un bordo del colore dello sfondo.
+  // Anello petrolio a contatto con la foto.
   &__foto {
     order: -1;
     justify-self: start;
     border-radius: 50%;
-    box-shadow:
-      0 0 0 6px colore(sfondo),
-      0 0 0 8px colore(accento);
+    box-shadow: 0 0 0 v.$foto-anello colore(accento);
     overflow: hidden;
     line-height: 0;
 
     @include da(medio) {
       order: 0;
-      margin-right: 8px; // spazio per l'anello
-    }
-
-    .foto {
-      @include con-movimento {
-        transition: transizioni(v.$durata-media, transform);
-      }
-    }
-
-    @include al-passaggio {
-      .foto {
-        transform: scale(1.04);
-      }
+      margin-right: v.$foto-anello; // spazio per l'anello
     }
   }
 }

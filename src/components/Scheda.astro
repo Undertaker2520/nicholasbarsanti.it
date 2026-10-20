@@ -1,4 +1,6 @@
 ---
+import Pulsante from './Pulsante.astro';
+
 interface Azione {
   href: string;
   testo: string;
@@ -30,11 +32,11 @@ const { titolo, etichetta, nota, azione, evidenziata = false } = Astro.props;
         {nota && <p class="scheda__nota">{nota}</p>}
         {azione && (
           <p class="scheda__azione">
-            <a class="scheda__link" href={azione.href}>
+            <Pulsante href={azione.href} class="scheda__link">
               {azione.testo}
               <span class="solo-lettori-schermo">: {titolo}</span>
               <span class="scheda__freccia" aria-hidden="true">→</span>
-            </a>
+            </Pulsante>
           </p>
         )}
       </div>
