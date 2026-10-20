@@ -6,12 +6,21 @@ import Scheda from '../components/Scheda.astro';
 import ElencoPunti from '../components/ElencoPunti.astro';
 import { sito, mailto } from '../config';
 import { sezioni } from '../data/sezioni';
-import { chiSono, servizi, comeLavoro, perche, lavori, contatti } from '../data/testi';
+import {
+  chiSono,
+  servizi,
+  etichettaPrezzo,
+  comeLavoro,
+  perche,
+  lavori,
+  contatti,
+} from '../data/testi';
+import { datiStrutturati } from '../lib/dati-strutturati';
 
 const mostraLavori = sito.mostraLavori && lavori.length > 0;
 ---
 
-<Base>
+<Base datiStrutturati={datiStrutturati}>
   <Apertura />
 
   <Sezione sezione={sezioni.chiSono}>
@@ -25,7 +34,7 @@ const mostraLavori = sito.mostraLavori && lavori.length > 0;
           <li>
             <Scheda
               titolo={servizio.titolo}
-              etichetta={servizio.prezzo}
+              etichetta={etichettaPrezzo(servizio)}
               evidenziata={servizio.evidenziato}
             >
               <p>{servizio.descrizione}</p>

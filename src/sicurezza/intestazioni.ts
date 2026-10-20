@@ -26,7 +26,11 @@ const csp: Record<string, string[]> = {
   'upgrade-insecure-requests': [],
 };
 
-/** Funzionalità del browser disattivate: il sito non ne usa nessuna. */
+/**
+ * Funzionalità del browser disattivate: il sito non ne usa nessuna.
+ * Solo nomi riconosciuti da Chrome: quelli sconosciuti (per esempio `web-share`)
+ * producono avvisi in console a ogni pagina.
+ */
 const funzionalitaDisattivate = [
   'accelerometer',
   'autoplay',
@@ -46,7 +50,6 @@ const funzionalitaDisattivate = [
   'screen-wake-lock',
   'sync-xhr',
   'usb',
-  'web-share',
   'xr-spatial-tracking',
 ];
 

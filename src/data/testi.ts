@@ -11,7 +11,8 @@ export interface Punto {
 
 export interface Servizio {
   titolo: string;
-  prezzo: string;
+  /** Prezzo di partenza in euro; se assente il servizio è su preventivo. */
+  prezzoDa?: number;
   descrizione: string;
   tempi?: string;
   evidenziato?: boolean;
@@ -36,11 +37,10 @@ export const chiSono: readonly string[] = [
   'Mi sono formato in sicurezza informatica, e si vede nel modo in cui lavoro: ogni sito che consegno nasce già protetto.',
 ];
 
-// Spazio indivisibile tra cifra ed euro, così il prezzo non va a capo.
 export const servizi: readonly Servizio[] = [
   {
     titolo: 'Sito vetrina',
-    prezzo: 'da 900 €',
+    prezzoDa: 900,
     descrizione:
       'Il sito completo per presentare la tua attività: fino a 5 pagine, perfetto da telefono, con contatti, mappa e WhatsApp. Ti insegno a modificare testi e foto da solo.',
     tempi: '3–4 settimane',
@@ -48,17 +48,20 @@ export const servizi: readonly Servizio[] = [
   },
   {
     titolo: 'Controllo e messa in sicurezza del sito WordPress',
-    prezzo: 'da 290 €',
+    prezzoDa: 290,
     descrizione:
       'Hai un sito che nessuno aggiorna da tempo? Lo controllo, lo aggiorno e lo proteggo, e ti consegno un rapporto chiaro su cosa ho trovato e cosa ho sistemato.',
     tempi: 'circa una settimana',
   },
   {
     titolo: 'Progetti più strutturati',
-    prezzo: 'su preventivo',
     descrizione: 'Associazioni ed enti con molti contenuti, siti in più lingue, aree riservate.',
   },
 ];
+
+/** Testo del prezzo; spazio indivisibile tra cifra ed euro, così non va a capo. */
+export const etichettaPrezzo = (servizio: Servizio) =>
+  servizio.prezzoDa === undefined ? 'su preventivo' : `da ${servizio.prezzoDa} €`;
 
 export const comeLavoro: readonly Punto[] = [
   {

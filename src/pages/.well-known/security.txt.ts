@@ -4,21 +4,18 @@
  */
 import type { APIRoute } from 'astro';
 import { sito } from '../../config';
+import { rispostaTesto } from '../../lib/risposta-testo';
+import { urlAssoluto } from '../../lib/url';
 
 const UN_ANNO_MS = 365 * 24 * 60 * 60 * 1000;
 
 // Formato RFC 3339 senza millisecondi, per esempio 2027-10-20T08:00:00Z.
 const dataRfc3339 = (data: Date) => data.toISOString().replace(/\.\d{3}Z$/, 'Z');
 
-export const GET: APIRoute = ({ url }) => {
-  const righe = [
+export const GET: APIRoute = ({ url }) =>
+  rispostaTesto([
     `Contact: mailto:${sito.email}`,
     `Expires: ${dataRfc3339(new Date(Date.now() + UN_ANNO_MS))}`,
     'Preferred-Languages: it, en',
-    `Canonical: ${new URL(url.pathname, sito.url)}`,
-  ];
-
-  return new Response(righe.join('\n') + '\n', {
-    headers: { 'Content-Type': 'text/plain; charset=utf-8' },
-  });
-};
+    `Canonical: ${urlAssoluto(url.pathname)}`,
+  ]);

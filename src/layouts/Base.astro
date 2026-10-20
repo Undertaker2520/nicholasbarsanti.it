@@ -3,14 +3,28 @@ import '../styles/main.scss';
 import fontInter from '../assets/fonts/inter-latin-var.woff2?url';
 import Intestazione from '../components/Intestazione.astro';
 import Piede from '../components/Piede.astro';
-import { sito } from '../config';
+import { sito, immagini } from '../config';
+import { serializzaJsonLd } from '../lib/dati-strutturati';
+import { urlAssoluto, urlPagina } from '../lib/url';
 
 interface Props {
   titolo?: string;
   descrizione?: string;
+  /** false per pagine da non indicizzare (404): niente canonical, robots noindex. */
+  indicizza?: boolean;
+  datiStrutturati?: object;
 }
 
-const { titolo = sito.titolo, descrizione = sito.descrizione } = Astro.props;
+const {
+  titolo = sito.titolo,
+  descrizione = sito.descrizione,
+  indicizza = true,
+  datiStrutturati,
+} = Astro.props;
+
+const canonico = urlPagina(Astro.url.pathname);
+const { anteprima } = immagini;
+const urlAnteprima = urlAssoluto(anteprima.percorso);
 ---
 
 <!doctype html>
@@ -21,7 +35,32 @@ const { titolo = sito.titolo, descrizione = sito.descrizione } = Astro.props;
     <meta name="color-scheme" content="light dark" />
     <title>{titolo}</title>
     <meta name="description" content={descrizione} />
+    {indicizza ? <link rel="canonical" href={canonico} /> : <meta name="robots" content="noindex" />}
+
     <link rel="preload" href={fontInter} as="font" type="font/woff2" crossorigin />
+
+    <link rel="icon" href={immagini.faviconIco} sizes="32x32" />
+    <link rel="icon" href={immagini.faviconSvg} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={immagini.appleTouchIcon} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={sito.locale} />
+    <meta property="og:site_name" content={sito.nome} />
+    <meta property="og:title" content={titolo} />
+    <meta property="og:description" content={descrizione} />
+    <meta property="og:url" content={canonico} />
+    <meta property="og:image" content={urlAnteprima} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content={String(anteprima.larghezza)} />
+    <meta property="og:image:height" content={String(anteprima.altezza)} />
+    <meta property="og:image:alt" content={anteprima.alt} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    {
+      datiStrutturati && (
+        <script type="application/ld+json" set:html={serializzaJsonLd(datiStrutturati)} />
+      )
+    }
   </head>
   <body>
     <a class="salta-al-contenuto" href="#contenuto">Vai al contenuto</a>
