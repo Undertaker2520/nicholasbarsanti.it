@@ -1,0 +1,23 @@
+---
+import { sito } from '../config';
+
+interface Props {
+  titolo?: string;
+  descrizione?: string;
+}
+
+const { titolo = sito.titolo, descrizione = sito.descrizione } = Astro.props;
+---
+
+<!doctype html>
+<html lang={sito.lingua}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titolo}</title>
+    <meta name="description" content={descrizione} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

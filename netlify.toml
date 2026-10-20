@@ -1,0 +1,5 @@
+# Versione di Node: letta da .nvmrc.
+# Intestazioni HTTP: in public/_headers.
+[build]
+  command = "npm run build"
+  publish = "dist"
