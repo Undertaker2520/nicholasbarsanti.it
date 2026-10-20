@@ -22,7 +22,7 @@ const { titolo, etichetta, nota, azione } = Astro.props;
 <article class="scheda">
   <h3 class="scheda__titolo">{titolo}</h3>
   {etichetta && <p class="scheda__etichetta">{etichetta}</p>}
-  <slot />
+  <div class="scheda__corpo"><slot /></div>
   {
     (nota || azione) && (
       <div class="scheda__fondo">

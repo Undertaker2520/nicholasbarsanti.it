@@ -118,6 +118,9 @@ $foto-dimensioni: (
 
 $foto-anello: 3px; // anello petrolio attorno alla foto, a contatto con l'immagine
 $numero-passo-diametro: 2rem; // cerchio con il numero dei passi in "Come lavoro"
+// Righe di una scheda (titolo, etichetta, corpo, fondo): condivise tra schede vicine
+// con subgrid, così i testi partono alla stessa altezza. Vedi src/components/Scheda.astro.
+$scheda-righe: (titolo: 1, etichetta: 2, corpo: 3, fondo: 4);
 $larghezza-schede-min: 15rem; // sotto questa larghezza schede e punti vanno in colonna
 
 $larghezza-massima: 70rem;

@@ -1,3 +1,5 @@
+@use 'sass:list';
+@use 'sass:map';
 @use '../variabili' as v;
 @use '../strumenti' as *;
 
@@ -43,7 +45,11 @@
   }
 
   // Nota e link: sempre in fondo alla scheda, allineati tra schede vicine.
+  // Nota e pulsante in basso: allineati anche se una scheda non ha la nota.
   &__fondo {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     margin-top: auto;
     padding-top: spazio(s);
   }
@@ -98,5 +104,30 @@
 
   p:last-child {
     margin-bottom: 0;
+  }
+}
+
+// Testi allineati tra schede vicine: ogni scheda (e il suo <li>) occupa le stesse righe
+// della griglia dell'elenco, una per parte; ogni riga è alta quanto la più alta tra le schede.
+// Senza supporto a subgrid resta l'impaginazione in colonna definita sopra.
+@supports (grid-template-rows: subgrid) {
+  $numero-righe: list.length(map.keys(v.$scheda-righe));
+
+  .schede > li,
+  .scheda {
+    display: grid;
+    grid-row: span $numero-righe;
+    grid-template-rows: subgrid;
+    row-gap: 0; // lo spazio tra le parti viene dai margini, non dal gap dell'elenco
+  }
+
+  .scheda {
+    height: auto;
+  }
+
+  @each $parte, $riga in v.$scheda-righe {
+    .scheda__#{$parte} {
+      grid-row: $riga;
+    }
   }
 }
