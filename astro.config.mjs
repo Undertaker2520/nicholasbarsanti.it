@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import { sito } from './src/config.ts';
+import { intestazioni, intestazioniGlobali } from './src/sicurezza/intestazioni.ts';
 
 export default defineConfig({
   site: sito.url,
@@ -12,5 +13,8 @@ export default defineConfig({
     // Niente CSS inline: la Content Security Policy non deve richiedere 'unsafe-inline'.
     inlineStylesheets: 'never',
   },
-  integrations: [sitemap()],
+  // Le intestazioni di sicurezza valgono anche in `astro preview`, non in `astro dev`
+  // (il server di sviluppo usa script inline per il ricaricamento automatico).
+  server: ({ command }) => (command === 'preview' ? { headers: intestazioniGlobali } : {}),
+  integrations: [sitemap(), intestazioni()],
 });

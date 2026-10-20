@@ -38,7 +38,8 @@ src/
   assets/fonts/    Inter variabile (sottoinsieme latin, licenza OFL)
   components/      componenti Astro riusabili
   layouts/         struttura HTML comune
-  pages/           pagine del sito
+  pages/           pagine del sito (anche .well-known/security.txt, generato)
+  sicurezza/       intestazioni HTTP (CSP, HSTS, ...): unica fonte
   styles/
     _variabili.scss  UNICO file con font, colori, misure e breakpoint
     _strumenti.scss  funzioni e mixin (temi, media query, focus)
@@ -53,4 +54,27 @@ Per cambiare colori o font si modifica solo `src/styles/_variabili.scss`.
 - **Foto**: salvare un ritratto (meglio quadrato, almeno 512×512 px) come `src/assets/nicholas.jpg`. Astro lo converte in AVIF/WebP/JPEG fino a 512 px e rimuove i metadati EXIF. Senza file compare il cerchio con le iniziali.
 - **Lavori realizzati**: aggiungere i lavori in `lavori` dentro `src/data/testi.ts` e impostare `mostraLavori: true` in `src/config.ts`. La sezione compare solo se entrambe le condizioni sono vere.
 
-<!-- Da completare: intestazioni di sicurezza, pubblicazione su Netlify, DNS OVH, checklist finale. -->
+## Sicurezza
+
+Le intestazioni HTTP sono definite **solo** in `src/sicurezza/intestazioni.ts`:
+
+- `npm run build` le scrive in `dist/_headers`, il file che Netlify applica a ogni risposta;
+- `npm run preview` le applica al server locale, quindi la CSP si verifica prima di pubblicare
+  (console del browser: nessun errore "Refused to load…"). `npm run dev` non le applica, perché
+  il server di sviluppo usa script inline per il ricaricamento automatico.
+
+Regole che rendono possibile una CSP senza `unsafe-inline`:
+
+- nessun `<script>` né `<style>` inline e nessun attributo `style=` nell'HTML generato;
+- CSS sempre in file esterni (`build.inlineStylesheets: 'never'`);
+- nessuna risorsa da domini esterni (font, immagini, script: tutto self-hosted).
+
+Controllo rapido dopo la build (non deve stampare nulla):
+
+```bash
+grep -l -E "style=|<style|<script" dist/*.html
+```
+
+`/.well-known/security.txt` (RFC 9116) è generato in build da `src/config.ts`; il campo `Expires` è fissato a un anno dalla build, quindi ogni pubblicazione lo rinnova.
+
+<!-- Da completare: pubblicazione su Netlify, DNS OVH, checklist finale. -->

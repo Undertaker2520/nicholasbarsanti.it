@@ -1,5 +1,5 @@
 # Versione di Node: letta da .nvmrc.
-# Intestazioni HTTP: in public/_headers.
+# Intestazioni HTTP: definite in src/sicurezza/intestazioni.ts, scritte in dist/_headers dalla build.
 [build]
   command = "npm run build"
   publish = "dist"

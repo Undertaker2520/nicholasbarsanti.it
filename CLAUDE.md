@@ -23,7 +23,7 @@ Il sito stesso è una dimostrazione di competenza: deve essere veloce, accessibi
 
 ## Sicurezza (obiettivo: A+ su securityheaders.com e Mozilla Observatory)
 
-Intestazioni impostate in `netlify.toml` (o `public/_headers`):
+Intestazioni definite in `src/sicurezza/intestazioni.ts` (unica fonte): in build generano `dist/_headers` per Netlify e valgono anche in `npm run preview`:
 
 - `Content-Security-Policy`: `default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests`. Verificare dopo la build che nulla venga bloccato (per esempio eventuali script o stili inline generati da Astro, o lo script JSON-LD).
 - `Strict-Transport-Security: max-age=31536000; includeSubDomains` (niente `preload` per ora).
