@@ -78,10 +78,12 @@ export const richiestaServizio = {
     ].join('\n'),
 };
 
-/** Carosello delle schede su mobile: etichette dei pallini per i lettori di schermo. */
+/** Carosello delle schede su mobile: etichette di pallini e pulsante pausa per i lettori di schermo. */
 export const carosello = {
   gruppo: 'Scegli il servizio da vedere',
   vaiA: (titolo: string) => `Mostra ${titolo}`,
+  pausa: 'Metti in pausa lo scorrimento automatico',
+  riprendi: 'Riprendi lo scorrimento automatico',
 };
 
 /** Testo del prezzo; spazio indivisibile tra cifra ed euro, così non va a capo. */

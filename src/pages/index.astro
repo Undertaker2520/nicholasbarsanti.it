@@ -34,7 +34,12 @@ const mostraLavori = sito.mostraLavori && lavori.length > 0;
   </Sezione>
 
   <Sezione sezione={sezioni.servizi}>
-    <Carosello etichetta={carosello.gruppo} voci={servizi.map((servizio) => carosello.vaiA(servizio.titolo))}>
+    <Carosello
+      etichetta={carosello.gruppo}
+      voci={servizi.map((servizio) => carosello.vaiA(servizio.titolo))}
+      pausa={carosello.pausa}
+      riprendi={carosello.riprendi}
+    >
       <ul class="schede" data-comparsa-gruppo>
         {
           servizi.map((servizio) => (

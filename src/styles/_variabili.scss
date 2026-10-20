@@ -127,8 +127,9 @@ $larghezza-schede-min: 15rem;
 // ha un bordo pieno: togliendo questi pixel in alto i due margini appaiono uguali.
 $scheda-compensazione-ottica: 4px;
 
-// Carosello delle schede sotto `largo`: una scheda per volta, la successiva si intravede.
-$carosello-larghezza-scheda: min(85%, 22rem);
+// Carosello delle schede sotto `largo`: una scheda per volta, intera e centrata.
+$carosello-larghezza-scheda: 100%;
+$carosello-icona: 0.75rem; // icona pausa/riprendi
 $pallino-diametro: 0.625rem;
 $pallino-area: 1.5rem; // area di tocco ≥ 24 px (WCAG 2.5.8)
 $pallino-bordo: 2px; // sotto questa larghezza schede e punti vanno in colonna

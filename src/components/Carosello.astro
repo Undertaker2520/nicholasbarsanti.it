@@ -1,8 +1,9 @@
 ---
 /**
  * Carosello per un elenco di schede (nello slot): sotto `largo` le schede scorrono in
- * orizzontale con aggancio (CSS scroll-snap), da `largo` restano affiancate.
- * I pallini sono già nell'HTML ma nascosti: li mostra e li collega src/scripts/moduli/carosello.js.
+ * orizzontale, una per volta e centrate (CSS scroll-snap); da `largo` restano affiancate.
+ * Pallini e pulsante pausa sono già nell'HTML ma nascosti: li mostra e li collega
+ * src/scripts/moduli/carosello.js, che gestisce anche lo scorrimento automatico.
  * Senza JavaScript si scorre comunque con il dito o la barra di scorrimento.
  */
 interface Props {
@@ -10,18 +11,30 @@ interface Props {
   etichetta: string;
   /** Un'etichetta per scheda, nello stesso ordine. */
   voci: readonly string[];
+  /** Etichette del pulsante dello scorrimento automatico. */
+  pausa: string;
+  riprendi: string;
 }
 
-const { etichetta, voci } = Astro.props;
+const { etichetta, voci, pausa, riprendi } = Astro.props;
 ---
 
 <div class="carosello" data-carosello>
   <slot />
-  <div class="carosello__pallini" role="group" aria-label={etichetta} hidden>
-    {
-      voci.map((voce, indice) => (
-        <button type="button" class="carosello__pallino" aria-label={voce} data-indice={indice} />
-      ))
-    }
+  <div class="carosello__controlli" hidden>
+    <div class="carosello__pallini" role="group" aria-label={etichetta}>
+      {
+        voci.map((voce, indice) => (
+          <button type="button" class="carosello__pallino" aria-label={voce} data-indice={indice} />
+        ))
+      }
+    </div>
+    <button
+      type="button"
+      class="carosello__pausa"
+      aria-label={pausa}
+      data-testo-pausa={pausa}
+      data-testo-riprendi={riprendi}
+      hidden></button>
   </div>
 </div>
