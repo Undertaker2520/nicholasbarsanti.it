@@ -54,12 +54,12 @@ Intestazioni definite in `src/sicurezza/intestazioni.ts` (unica fonte): in build
 - Sobrio, professionale, molto spazio bianco. Un solo colore di accento (blu scuro o verde petrolio), il resto neutro.
 - Animazioni sobrie: comparsa allo scorrimento, effetti al passaggio del mouse, sfondo (da 640 px; su mobile nessuna nebulosa) con nebulose petrolio sfumate fisse rispetto allo schermo (in alto a destra e in basso a sinistra della parte visualizzata) che derivano e seguono il mouse; intensità limitata dal contrasto del testo (vedi `$decorazione-intensita`), fascia petrolio in "Perché lavorare con me" e nel piè di pagina. Sempre disattivate con `prefers-reduced-motion`; durate e distanze in `_variabili.scss`. Niente immagini stock, niente icone generiche in eccesso.
 - Tipografia leggibile: testo a 17–18 px su desktop, righe di massimo 70 caratteri circa.
-- Un solo pulsante principale ("Scrivimi"), che apre `mailto:info@nicholasbarsanti.it`. Nelle schede dei servizi un pulsante "Chiedi informazioni" nella variante piccola a pillola (esteso a tutta la scheda) apre l'email con oggetto e testo precompilati per quel servizio.
+- Un solo pulsante principale ("Scrivimi"), che apre `mailto:info@nicholasbarsanti.it`. Nella risposta "Come iniziamo?" delle domande frequenti un pulsante piccolo "Scrivimi". Nelle schede dei servizi un pulsante "Chiedi informazioni" nella variante piccola a pillola (esteso a tutta la scheda) apre l'email con oggetto e testo precompilati per quel servizio.
 - Foto: `public/images/nicholas.jpg`. **Se il file non esiste**, mostrare un cerchio con le iniziali "NB" come segnaposto. Quando la foto c'è, servirla ottimizzata (Astro `<Image>`, formati moderni, dimensioni corrette, `alt` descrittivo).
 
 ## Struttura della pagina (ordine fisso)
 
-1. **Intestazione**: nome a sinistra; a destra i link interni Chi sono, Servizi, Come lavoro, Contatti (ancore alla stessa pagina).
+1. **Intestazione**: nome a sinistra; a destra i link interni Chi sono, Servizi, Come lavoro, Domande, Contatti (ancore alla stessa pagina).
 2. **Apertura**: titolo, sottotitolo, pulsante "Scrivimi", foto.
 3. **Chi sono**
 4. **Cosa posso fare per te**: tre schede uguali; al passaggio del mouse ognuna si solleva, con sfondo tenue e bordo petrolio (scelta di Nicholas: nessuna scheda evidenziata di default).
@@ -115,7 +115,7 @@ Le risposte riprendono solo fatti già scritti nel sito.
 - **Dominio e hosting sono compresi?** Dominio e hosting sono intestati a te, così il sito resta tuo e non dipendi da me. Il loro costo annuale lo paghi direttamente al fornitore e lo trovi indicato nel preventivo.
 - **Potrò aggiornare il sito da solo?** Sì. Ti insegno a modificare testi e foto e alla consegna ricevi una guida scritta per gestire il sito in autonomia.
 - **Cosa succede dopo la consegna?** Hai 30 giorni di garanzia. Non ci sono abbonamenti obbligatori né vincoli: se un giorno vuoi cambiare, porti via tutto.
-- **Come iniziamo?** Scrivimi due righe su cosa ti serve: rispondo entro la giornata e fissiamo una prima chiacchierata, gratuita e senza impegno.
+- **Come iniziamo?** Scrivimi due righe su cosa ti serve: rispondo entro la giornata e fissiamo una prima chiacchierata, gratuita e senza impegno. (Sotto la risposta, pulsante piccolo "Scrivimi".)
 
 ### Contatti
 Raccontami il tuo progetto: rispondo entro la giornata.

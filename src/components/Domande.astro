@@ -2,8 +2,9 @@
 /**
  * Domande frequenti con <details>/<summary>: si aprono e chiudono senza JavaScript,
  * con mouse, tocco e tastiera (Invio o Spazio sulla domanda), annunciate come
- * pulsanti espandibili dai lettori di schermo.
+ * pulsanti espandibili dai lettori di schermo. Una risposta può avere un pulsante.
  */
+import Pulsante from './Pulsante.astro';
 import type { Domanda } from '../data/testi';
 
 interface Props {
@@ -20,6 +21,13 @@ const { voci } = Astro.props;
         <summary class="domanda__titolo">{voce.domanda}</summary>
         <div class="domanda__risposta">
           <p>{voce.risposta}</p>
+          {voce.azione && (
+            <p class="domanda__azione">
+              <Pulsante href={voce.azione.href} dimensione="piccolo">
+                {voce.azione.testo}
+              </Pulsante>
+            </p>
+          )}
         </div>
       </details>
     ))

@@ -2,6 +2,7 @@
  * Testi della pagina principale, presi dal brief (CLAUDE.md).
  * I componenti li ricevono da qui: per cambiare un testo si modifica solo questo file.
  */
+import { mailto } from '../config';
 
 /** Voce con titolo in grassetto seguito da una frase (passi, punti di forza). */
 export interface Punto {
@@ -20,6 +21,8 @@ export interface Servizio {
 export interface Domanda {
   domanda: string;
   risposta: string;
+  /** Pulsante facoltativo sotto la risposta. */
+  azione?: { href: string; testo: string };
 }
 
 export interface Lavoro {
@@ -167,6 +170,7 @@ export const domande: readonly Domanda[] = [
     domanda: 'Come iniziamo?',
     risposta:
       'Scrivimi due righe su cosa ti serve: rispondo entro la giornata e fissiamo una prima chiacchierata, gratuita e senza impegno.',
+    azione: { href: mailto, testo: 'Scrivimi' },
   },
 ];
 

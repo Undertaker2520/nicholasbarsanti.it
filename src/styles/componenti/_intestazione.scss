@@ -66,8 +66,12 @@
   width: 100%;
 
   @include da(medio) {
-    gap: 0 spazio(m);
     width: auto;
+  }
+
+  // Cinque voci: spazio pieno tra le voci solo quando ce n'è abbastanza accanto al nome.
+  @include da(largo) {
+    gap: 0 spazio(m);
   }
 
   &__link {
