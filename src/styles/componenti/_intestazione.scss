@@ -1,16 +1,17 @@
 @use '../variabili' as v;
 @use '../strumenti' as *;
 
+// Fondo proprio, leggermente diverso dalla pagina, e riga petrolio sotto.
 .intestazione {
-  border-bottom: v.$bordo-spessore solid colore(bordo);
-  background: colore(sfondo);
+  border-bottom: v.$intestazione-riga-spessore solid colore(intestazione-riga);
+  background: colore(intestazione-sfondo);
 
   // Da `medio` resta in alto durante lo scorrimento, semitrasparente e sfocata.
   @include da(medio) {
     position: sticky;
     top: 0;
     z-index: 5;
-    background: sfumato(sfondo, 85%);
+    background: sfumato(intestazione-sfondo, 92%);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
 

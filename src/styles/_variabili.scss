@@ -31,6 +31,9 @@ $colori-chiaro: (
   accento: #0f5c63,
   accento-hover: #0a454b,
   su-accento: #ffffff,
+  // Intestazione: fondo appena più scuro della pagina, riga petrolio sotto.
+  intestazione-sfondo: #f3f6f6,
+  intestazione-riga: #0f5c63,
   // Fascia a tutta larghezza color petrolio ("Perché lavorare con me").
   banda-sfondo: #0f5c63,
   banda-testo: #ffffff,
@@ -38,17 +41,19 @@ $colori-chiaro: (
   ombra: rgba(15, 50, 55, 0.14),
 );
 
-// Tema scuro "tinto di petrolio": neutri grigio-verdi invece che neri, accento meno saturo,
-// così sfondo e accento appartengono alla stessa famiglia di colori.
+// Tema scuro grafite: neutri caldi e morbidi invece del nero, accento petrolio meno saturo
+// (scelta di Nicholas tra quattro varianti: "D, grafite con intestazione a riga petrolio").
 $colori-scuro: (
-  sfondo: #0e1a1c,
-  superficie: #152629,
-  testo: #e3ecec,
-  testo-secondario: #a5b8ba,
-  bordo: #2a4145,
+  sfondo: #16191b,
+  superficie: #1e2225,
+  testo: #e6e9ea,
+  testo-secondario: #aab3b6,
+  bordo: #33393d,
   accento: #6cbfc1,
   accento-hover: #93d2d3,
   su-accento: #0a1c1e,
+  intestazione-sfondo: #1f2427,
+  intestazione-riga: #6cbfc1,
   banda-sfondo: #174a4e,
   banda-testo: #e8f1f1,
   banda-secondario: #bcd6d7,
@@ -151,6 +156,7 @@ $breakpoint: (
 
 // Intestazione fissa in alto da `medio`: le ancore si fermano sotto di lei.
 $intestazione-altezza: 4.5rem;
+$intestazione-riga-spessore: 2px;
 
 // --- Movimento ---------------------------------------------------------------
 // Tutto disattivato con prefers-reduced-motion: reduce (mixin `con-movimento`).
