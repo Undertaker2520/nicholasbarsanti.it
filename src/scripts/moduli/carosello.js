@@ -4,17 +4,26 @@
  * Lo scorrimento e l'aggancio sono CSS (scroll-snap): qui solo la navigazione.
  *
  * Scorrimento automatico (WCAG 2.2.2): c'è sempre il pulsante per fermarlo; si ferma per
- * sempre appena la persona tocca, trascina o usa un pallino; si sospende con mouse o focus
- * sul carosello, quando è fuori schermo o la scheda del browser è nascosta; con
- * prefers-reduced-motion non parte.
+ * sempre appena la persona sposta le schede (scorrimento orizzontale non fatto dal codice)
+ * o usa un pallino; toccare il carosello per scorrere la pagina non lo ferma. Si sospende
+ * con il mouse sopra (solo con un mouse vero), con il focus dentro, quando è fuori schermo
+ * o la scheda del browser è nascosta; con prefers-reduced-motion non parte.
  */
 import $ from 'jquery/slim';
-import { movimentoRidotto, osservazioneDisponibile, perFotogramma } from '../utilita.js';
+import {
+  movimentoRidotto,
+  osservazioneDisponibile,
+  perFotogramma,
+  puntatorePreciso,
+} from '../utilita.js';
 
 const CLASSE_ATTIVO = 'carosello--attivo';
 const CLASSE_PALLINO_ATTIVO = 'carosello__pallino--attivo';
 const CLASSE_PAUSA_FERMA = 'carosello__pausa--ferma';
-const INTERVALLO_MS = 4000; // tempo per leggere una scheda prima di passare alla successiva
+const INTERVALLO_MS = 1000; // ogni quanto passa alla scheda successiva (scelta di Nicholas)
+// Oltre questo tempo uno scorrimento avviato dal codice si considera concluso anche senza
+// l'evento scrollend (browser che non lo supportano).
+const DURATA_MAX_SCORRIMENTO_MS = 900;
 const TOLLERANZA_FINE_PX = 2;
 
 export function avviaCaroselli() {
@@ -40,9 +49,23 @@ function avviaCarosello($carosello) {
     return distanze.indexOf(Math.min(...distanze));
   };
 
+  // Distingue gli scorrimenti fatti dal codice (scorrimento automatico, pallini) da quelli
+  // fatti dalla persona: solo questi ultimi fermano lo scorrimento automatico.
+  let scorrimentoDelCodice = false;
+  let timerFineScorrimento = null;
+  const fineScorrimentoDelCodice = () => {
+    window.clearTimeout(timerFineScorrimento);
+    scorrimentoDelCodice = false;
+  };
+
   const vaiA = (indice) => {
+    scorrimentoDelCodice = true;
+    window.clearTimeout(timerFineScorrimento);
+    timerFineScorrimento = window.setTimeout(fineScorrimentoDelCodice, DURATA_MAX_SCORRIMENTO_MS);
     elenco.scrollTo({ left: posizione(voci[indice]), behavior: movimentoRidotto() ? 'auto' : 'smooth' });
   };
+
+  $(elenco).on('scrollend', fineScorrimentoDelCodice);
 
   const aggiornaPallini = () => {
     $pallini.removeClass(CLASSE_PALLINO_ATTIVO).removeAttr('aria-current');
@@ -57,7 +80,13 @@ function avviaCarosello($carosello) {
     $carosello,
     elenco,
     $pulsante: $carosello.find('.carosello__pausa'),
+    // Dopo l'ultima scheda si riparte dalla prima.
     successiva: () => vaiA((indiceCorrente() + 1) % voci.length),
+  });
+
+  // La persona sposta le schede con il dito, il trackpad o la tastiera: prende il controllo.
+  $(elenco).on('scroll', () => {
+    if (!scorrimentoDelCodice) automatico.fermaPerSempre();
   });
 
   $pallini.on('click', function () {
@@ -98,6 +127,7 @@ function avviaScorrimentoAutomatico({ $carosello, elenco, $pulsante, successiva 
   };
 
   const fermaPerSempre = () => {
+    if (inPausa) return;
     inPausa = true;
     aggiorna();
   };
@@ -107,12 +137,15 @@ function avviaScorrimentoAutomatico({ $carosello, elenco, $pulsante, successiva 
     aggiorna();
   });
 
-  // La persona prende il controllo delle schede: niente più movimento automatico.
-  $(elenco).on('pointerdown touchstart wheel keydown', fermaPerSempre);
+  // Pausa al passaggio del mouse solo con un mouse vero: sul touch il "passaggio" simulato
+  // dopo un tocco non finisce mai e terrebbe il carosello fermo.
+  if (puntatorePreciso()) {
+    $carosello
+      .on('mouseenter', () => sospendi('mouse', true))
+      .on('mouseleave', () => sospendi('mouse', false));
+  }
 
   $carosello
-    .on('mouseenter', () => sospendi('mouse', true))
-    .on('mouseleave', () => sospendi('mouse', false))
     .on('focusin', () => sospendi('focus', true))
     .on('focusout', (evento) => {
       if (!$carosello[0].contains(evento.relatedTarget)) sospendi('focus', false);
