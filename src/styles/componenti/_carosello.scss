@@ -24,6 +24,9 @@
 
     > li {
       scroll-snap-align: center;
+      // Ogni gesto (dito, trackpad, trascinamento) si ferma sulla scheda successiva:
+      // un movimento veloce non salta più schede fino in fondo.
+      scroll-snap-stop: always;
     }
   }
 }
@@ -37,12 +40,10 @@
   }
 }
 
-// Pallini e pulsante pausa, solo dove le schede scorrono.
+// Pallini, solo dove le schede scorrono.
 .carosello__controlli {
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: spazio(s);
   margin-top: spazio(xs);
 
   @include da(largo) {
@@ -53,38 +54,6 @@
 .carosello__pallini {
   display: flex;
   gap: spazio(xs);
-}
-
-// Pausa: due barre; riprendi (`--ferma`): triangolo. Disegnati in CSS, colore del tema.
-.carosello__pausa {
-  display: grid;
-  place-items: center;
-  width: v.$pallino-area;
-  height: v.$pallino-area;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: transparent;
-  color: colore(testo-secondario);
-  cursor: pointer;
-
-  &::before {
-    content: '';
-    width: v.$carosello-icona;
-    height: v.$carosello-icona;
-    box-sizing: border-box;
-    border-inline: (v.$carosello-icona * 0.33) solid currentColor;
-  }
-
-  &--ferma::before {
-    border: 0;
-    background: currentColor;
-    clip-path: polygon(15% 0, 100% 50%, 15% 100%);
-  }
-
-  @include al-passaggio {
-    color: colore(accento);
-  }
 }
 
 // Area di tocco ampia, pallino visibile piccolo: vuoto se inattivo, pieno se attivo

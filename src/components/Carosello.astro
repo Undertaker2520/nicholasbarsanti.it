@@ -2,7 +2,7 @@
 /**
  * Carosello per un elenco di schede (nello slot): sotto `largo` le schede scorrono in
  * orizzontale, una per volta e centrate (CSS scroll-snap); da `largo` restano affiancate.
- * Pallini e pulsante pausa sono già nell'HTML ma nascosti: li mostra e li collega
+ * I pallini sono già nell'HTML ma nascosti: li mostra e li collega
  * src/scripts/moduli/carosello.js, che gestisce anche lo scorrimento automatico.
  * Senza JavaScript si scorre comunque con il dito o la barra di scorrimento.
  */
@@ -11,12 +11,9 @@ interface Props {
   etichetta: string;
   /** Un'etichetta per scheda, nello stesso ordine. */
   voci: readonly string[];
-  /** Etichette del pulsante dello scorrimento automatico. */
-  pausa: string;
-  riprendi: string;
 }
 
-const { etichetta, voci, pausa, riprendi } = Astro.props;
+const { etichetta, voci } = Astro.props;
 ---
 
 <div class="carosello" data-carosello>
@@ -29,12 +26,5 @@ const { etichetta, voci, pausa, riprendi } = Astro.props;
         ))
       }
     </div>
-    <button
-      type="button"
-      class="carosello__pausa"
-      aria-label={pausa}
-      data-testo-pausa={pausa}
-      data-testo-riprendi={riprendi}
-      hidden></button>
   </div>
 </div>

@@ -1,13 +1,15 @@
 /**
- * Carosello (src/components/Carosello.astro): mostra pallini e pulsante pausa, evidenzia il
- * pallino della scheda visibile, porta alla scheda scelta e fa scorrere le schede da solo.
- * Lo scorrimento e l'aggancio sono CSS (scroll-snap): qui solo la navigazione.
+ * Carosello (src/components/Carosello.astro): mostra i pallini, evidenzia quello della
+ * scheda visibile, porta alla scheda scelta e fa scorrere le schede da solo.
+ * Lo scorrimento e l'aggancio (una scheda per gesto) sono CSS (scroll-snap): qui solo la navigazione.
  *
- * Scorrimento automatico (WCAG 2.2.2): c'è sempre il pulsante per fermarlo; si ferma per
- * sempre appena la persona sposta le schede (scorrimento orizzontale non fatto dal codice)
- * o usa un pallino; toccare il carosello per scorrere la pagina non lo ferma. Si sospende
- * con il mouse sopra (solo con un mouse vero), con il focus dentro, quando è fuori schermo
- * o la scheda del browser è nascosta; con prefers-reduced-motion non parte.
+ * Scorrimento automatico: parte a ogni caricamento della pagina e si ferma per sempre appena
+ * la persona interagisce con le schede, cioè le sposta (scorrimento orizzontale non fatto dal
+ * codice) o usa un pallino; toccare il carosello per scorrere la pagina non lo ferma.
+ * Si sospende con il mouse sopra (solo con un mouse vero), con il focus dentro, quando è
+ * fuori schermo o la scheda del browser è nascosta; con prefers-reduced-motion non parte.
+ * Nessun pulsante pausa (scelta di Nicholas): per WCAG 2.2.2 il modo di fermarlo è
+ * l'interazione con le schede, più le sospensioni con mouse e focus.
  */
 import $ from 'jquery/slim';
 import {
@@ -19,12 +21,13 @@ import {
 
 const CLASSE_ATTIVO = 'carosello--attivo';
 const CLASSE_PALLINO_ATTIVO = 'carosello__pallino--attivo';
-const CLASSE_PAUSA_FERMA = 'carosello__pausa--ferma';
 const INTERVALLO_MS = 3000; // ogni quanto passa alla scheda successiva (scelta di Nicholas)
 // Oltre questo tempo uno scorrimento avviato dal codice si considera concluso anche senza
 // l'evento scrollend (browser che non lo supportano).
 const DURATA_MAX_SCORRIMENTO_MS = 900;
 const TOLLERANZA_FINE_PX = 2;
+// Spostamento minimo del dito per considerare un trascinamento orizzontale delle schede.
+const SOGLIA_TRASCINAMENTO_PX = 10;
 
 export function avviaCaroselli() {
   $('[data-carosello]').each((_, carosello) => avviaCarosello($(carosello)));
@@ -79,12 +82,16 @@ function avviaCarosello($carosello) {
   const automatico = avviaScorrimentoAutomatico({
     $carosello,
     elenco,
-    $pulsante: $carosello.find('.carosello__pausa'),
     // Dopo l'ultima scheda si riparte dalla prima.
     successiva: () => vaiA((indiceCorrente() + 1) % voci.length),
   });
 
-  // La persona sposta le schede con il dito, il trackpad o la tastiera: prende il controllo.
+  ascoltaInterazioni(elenco, () => {
+    fineScorrimentoDelCodice();
+    automatico.fermaPerSempre();
+  });
+
+  // Rete di sicurezza: qualsiasi scorrimento delle schede non avviato dal codice.
   $(elenco).on('scroll', () => {
     if (!scorrimentoDelCodice) automatico.fermaPerSempre();
   });
@@ -95,11 +102,55 @@ function avviaCarosello($carosello) {
   });
 }
 
-function avviaScorrimentoAutomatico({ $carosello, elenco, $pulsante, successiva }) {
+/**
+ * Chiama `alInteragire` quando la persona sposta le schede: dito trascinato in orizzontale
+ * (non verticale: quello è lo scorrimento della pagina), rotella o trackpad in orizzontale,
+ * tasti premuti dentro il carosello. Ascoltatori passivi: non rallentano lo scorrimento.
+ */
+function ascoltaInterazioni(elenco, alInteragire) {
+  const passivo = { passive: true };
+  let inizioTocco = null;
+
+  elenco.addEventListener(
+    'touchstart',
+    (evento) => {
+      const tocco = evento.touches[0];
+      inizioTocco = { x: tocco.clientX, y: tocco.clientY };
+    },
+    passivo,
+  );
+
+  elenco.addEventListener(
+    'touchmove',
+    (evento) => {
+      if (!inizioTocco) return;
+      const tocco = evento.touches[0];
+      const dx = Math.abs(tocco.clientX - inizioTocco.x);
+      const dy = Math.abs(tocco.clientY - inizioTocco.y);
+      if (dx > SOGLIA_TRASCINAMENTO_PX && dx > dy) {
+        inizioTocco = null;
+        alInteragire();
+      }
+    },
+    passivo,
+  );
+
+  elenco.addEventListener(
+    'wheel',
+    (evento) => {
+      if (Math.abs(evento.deltaX) > Math.abs(evento.deltaY)) alInteragire();
+    },
+    passivo,
+  );
+
+  elenco.addEventListener('keydown', alInteragire);
+}
+
+function avviaScorrimentoAutomatico({ $carosello, elenco, successiva }) {
   const nessuno = { fermaPerSempre: () => {} };
   if (movimentoRidotto()) return nessuno;
 
-  let inPausa = false; // scelta della persona: pulsante o interazione diretta
+  let fermato = false; // la persona ha interagito con le schede: fino al prossimo caricamento
   const sospensioni = new Set(); // motivi temporanei: 'mouse', 'focus', 'fuori-schermo', 'nascosta'
   let timer = null;
 
@@ -107,17 +158,12 @@ function avviaScorrimentoAutomatico({ $carosello, elenco, $pulsante, successiva 
   const scorribile = () => elenco.scrollWidth > elenco.clientWidth + TOLLERANZA_FINE_PX;
 
   const aggiorna = () => {
-    const attivo = !inPausa && sospensioni.size === 0 && scorribile();
+    const attivo = !fermato && sospensioni.size === 0 && scorribile();
     if (attivo && !timer) timer = window.setInterval(successiva, INTERVALLO_MS);
     if (!attivo && timer) {
       window.clearInterval(timer);
       timer = null;
     }
-
-    $pulsante
-      .prop('hidden', !scorribile())
-      .toggleClass(CLASSE_PAUSA_FERMA, inPausa)
-      .attr('aria-label', $pulsante.data(inPausa ? 'testo-riprendi' : 'testo-pausa'));
   };
 
   const sospendi = (motivo, attiva) => {
@@ -127,15 +173,10 @@ function avviaScorrimentoAutomatico({ $carosello, elenco, $pulsante, successiva 
   };
 
   const fermaPerSempre = () => {
-    if (inPausa) return;
-    inPausa = true;
+    if (fermato) return;
+    fermato = true;
     aggiorna();
   };
-
-  $pulsante.on('click', () => {
-    inPausa = !inPausa;
-    aggiorna();
-  });
 
   // Pausa al passaggio del mouse solo con un mouse vero: sul touch il "passaggio" simulato
   // dopo un tocco non finisce mai e terrebbe il carosello fermo.

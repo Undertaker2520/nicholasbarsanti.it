@@ -39,8 +39,6 @@ const mostraLavori = sito.mostraLavori && lavori.length > 0;
     <Carosello
       etichetta={carosello.gruppo}
       voci={servizi.map((servizio) => carosello.vaiA(servizio.titolo))}
-      pausa={carosello.pausa}
-      riprendi={carosello.riprendi}
     >
       <ul class="schede" data-comparsa-gruppo>
         {
