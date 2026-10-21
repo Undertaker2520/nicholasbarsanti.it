@@ -38,12 +38,12 @@ const MAX = { nome: 100, email: 254, messaggio: 4000 };
     <label>{modulo.trappola} <input name={CAMPO_TRAPPOLA} tabindex="-1" autocomplete="off" /></label>
   </p>
 
-  <p class="modulo__campo">
+  <p class="modulo__campo modulo__campo--affiancato">
     <label for="modulo-nome">{modulo.nome}</label>
     <input id="modulo-nome" name="nome" type="text" autocomplete="name" maxlength={MAX.nome} required />
   </p>
 
-  <p class="modulo__campo">
+  <p class="modulo__campo modulo__campo--affiancato">
     <label for="modulo-email">{modulo.email}</label>
     <input
       id="modulo-email"

@@ -168,7 +168,7 @@ export const contatti = {
 
 /** Modulo di contatto (Netlify Forms) nella sezione Contatti. */
 export const modulo = {
-  nome: 'Nome',
+  nome: 'Nome e cognome',
   email: 'Email',
   servizio: 'Di cosa hai bisogno?',
   facoltativo: '(facoltativo)',

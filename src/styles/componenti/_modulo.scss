@@ -9,6 +9,21 @@
   max-width: v.$modulo-larghezza-max;
   margin-top: spazio(m);
 
+  // Da `medio`: due colonne; ogni elemento occupa la riga intera, tranne i campi affiancati
+  // (nome ed email), che stanno uno accanto all'altro.
+  @include da(medio) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: spazio(m);
+
+    > * {
+      grid-column: 1 / -1;
+    }
+
+    > .modulo__campo--affiancato {
+      grid-column: auto;
+    }
+  }
+
   p {
     margin: 0;
     max-width: none;

@@ -120,7 +120,7 @@ Le risposte riprendono solo fatti già scritti nel sito.
 ### Contatti
 Raccontami il tuo progetto: rispondo entro la giornata.
 
-Modulo: Nome · Email · Di cosa hai bisogno? (facoltativo: Non lo so ancora o uno dei tre servizi) · Messaggio · "Uso questi dati solo per risponderti. Informativa privacy" · pulsante "Invia il messaggio". Pagina di conferma `/grazie`: "Messaggio inviato" · "Grazie, ho ricevuto il tuo messaggio: ti rispondo entro la giornata."
+Modulo: Nome e cognome · Email (sulla stessa riga da 640 px) · Di cosa hai bisogno? (facoltativo: Non lo so ancora o uno dei tre servizi) · Messaggio · "Uso questi dati solo per risponderti. Informativa privacy" · pulsante "Invia il messaggio". Pagina di conferma `/grazie`: "Messaggio inviato" · "Grazie, ho ricevuto il tuo messaggio: ti rispondo entro la giornata."
 
 Preferisci l'email? Scrivimi a info@nicholasbarsanti.it.
 Mi trovi anche su LinkedIn.
