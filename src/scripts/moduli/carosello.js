@@ -20,7 +20,7 @@ import {
 const CLASSE_ATTIVO = 'carosello--attivo';
 const CLASSE_PALLINO_ATTIVO = 'carosello__pallino--attivo';
 const CLASSE_PAUSA_FERMA = 'carosello__pausa--ferma';
-const INTERVALLO_MS = 1000; // ogni quanto passa alla scheda successiva (scelta di Nicholas)
+const INTERVALLO_MS = 3000; // ogni quanto passa alla scheda successiva (scelta di Nicholas)
 // Oltre questo tempo uno scorrimento avviato dal codice si considera concluso anche senza
 // l'evento scrollend (browser che non lo supportano).
 const DURATA_MAX_SCORRIMENTO_MS = 900;
