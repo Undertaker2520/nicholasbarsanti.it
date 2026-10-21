@@ -30,6 +30,9 @@ export const sito = {
 
 export const mailto = `mailto:${sito.email}`;
 
+/** Pagina di conferma dopo l'invio del modulo: non indicizzata, esclusa dalla sitemap. */
+export const paginaGrazie = '/grazie';
+
 /** Title delle pagine interne, per esempio "Privacy · Nicholas Barsanti". */
 export const titoloPagina = (pagina: string) => `${pagina} · ${sito.nome}`;
 

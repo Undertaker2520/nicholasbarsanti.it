@@ -1,6 +1,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import { sito } from './src/config.ts';
+import { sito, paginaGrazie } from './src/config.ts';
 import { intestazioni, intestazioniGlobali } from './src/sicurezza/intestazioni.ts';
 
 export default defineConfig({
@@ -16,5 +16,6 @@ export default defineConfig({
   // Le intestazioni di sicurezza valgono anche in `astro preview`, non in `astro dev`
   // (il server di sviluppo usa script inline per il ricaricamento automatico).
   server: ({ command }) => (command === 'preview' ? { headers: intestazioniGlobali } : {}),
-  integrations: [sitemap(), intestazioni()],
+  // La pagina di conferma del modulo non va nella sitemap.
+  integrations: [sitemap({ filter: (pagina) => !pagina.endsWith(paginaGrazie) }), intestazioni()],
 });

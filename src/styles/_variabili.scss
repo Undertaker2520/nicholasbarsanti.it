@@ -34,6 +34,9 @@ $colori-chiaro: (
   // Intestazione: fondo appena più scuro della pagina, riga petrolio sotto.
   intestazione-sfondo: #f3f6f6,
   intestazione-riga: #0f5c63,
+  // Modulo di contatto: bordo dei campi ≥ 3:1 (WCAG 1.4.11), errore ≥ 4.5:1.
+  campo-bordo: #8a959b,
+  errore: #b3261e,
   // Fascia a tutta larghezza color petrolio ("Perché lavorare con me").
   banda-sfondo: #0f5c63,
   banda-testo: #ffffff,
@@ -54,6 +57,8 @@ $colori-scuro: (
   su-accento: #0a1c1e,
   intestazione-sfondo: #1f2427,
   intestazione-riga: #6cbfc1,
+  campo-bordo: #6b767c,
+  errore: #f2998e,
   banda-sfondo: #174a4e,
   banda-testo: #e8f1f1,
   banda-secondario: #bcd6d7,
@@ -133,6 +138,11 @@ $larghezza-schede-min: 15rem;
 // Il primo testo di una scheda (titolo) ha spazio vuoto sopra le lettere, il pulsante in fondo
 // ha un bordo pieno: togliendo questi pixel in alto i due margini appaiono uguali.
 $scheda-compensazione-ottica: 4px;
+
+// Modulo di contatto.
+$modulo-larghezza-max: 40rem;
+$campo-altezza: 2.75rem; // 44 px: comodo anche al tocco
+$campo-messaggio-altezza: 9rem;
 
 // Domande frequenti: elenco non più largo di una colonna di lettura comoda.
 $domande-larghezza-max: 48rem;

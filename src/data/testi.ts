@@ -2,7 +2,7 @@
  * Testi della pagina principale, presi dal brief (CLAUDE.md).
  * I componenti li ricevono da qui: per cambiare un testo si modifica solo questo file.
  */
-import { mailto } from '../config';
+import { linkSezione, sezioni } from './sezioni';
 
 /** Voce con titolo in grassetto seguito da una frase (passi, punti di forza). */
 export interface Punto {
@@ -65,25 +65,9 @@ export const servizi: readonly Servizio[] = [
   },
 ];
 
-/**
- * Link in fondo a ogni scheda dei servizi: apre l'email con oggetto e testo già scritti,
- * così chi scrive deve solo completare le risposte.
- */
+/** Pulsante in fondo a ogni scheda dei servizi: porta al modulo con il servizio già scelto. */
 export const richiestaServizio = {
   link: 'Chiedi informazioni',
-  oggetto: (servizio: string) => `Informazioni su: ${servizio}`,
-  corpo: (servizio: string) =>
-    [
-      'Ciao Nicholas,',
-      '',
-      `vorrei qualche informazione sul servizio «${servizio}».`,
-      '',
-      'La mia attività: ',
-      'Cosa mi servirebbe: ',
-      'Tempi che ho in mente: ',
-      '',
-      'Grazie!',
-    ].join('\n'),
 };
 
 /** Carosello delle schede su mobile: etichette di pallini e pulsante pausa per i lettori di schermo. */
@@ -170,12 +154,36 @@ export const domande: readonly Domanda[] = [
     domanda: 'Come iniziamo?',
     risposta:
       'Scrivimi due righe su cosa ti serve: rispondo entro la giornata e fissiamo una prima chiacchierata, gratuita e senza impegno.',
-    azione: { href: mailto, testo: 'Scrivimi' },
+    azione: { href: linkSezione(sezioni.contatti), testo: 'Scrivimi' },
   },
 ];
 
 export const contatti = {
   invito: 'Raccontami il tuo progetto: rispondo entro la giornata.',
+  /** Seguito dall'indirizzo email, sotto il modulo. */
+  alternativa: "Preferisci l'email? Scrivimi a",
   /** Seguito dai link ai profili (config.ts → sito.profili). */
   profili: 'Mi trovi anche su',
+};
+
+/** Modulo di contatto (Netlify Forms) nella sezione Contatti. */
+export const modulo = {
+  nome: 'Nome',
+  email: 'Email',
+  servizio: 'Di cosa hai bisogno?',
+  facoltativo: '(facoltativo)',
+  servizioNonSo: 'Non lo so ancora',
+  messaggio: 'Messaggio',
+  privacy: 'Uso questi dati solo per risponderti.',
+  linkPrivacy: 'Informativa privacy',
+  invia: 'Invia il messaggio',
+  /** Campo trappola per lo spam, nascosto: le persone non lo vedono, i bot sì. */
+  trappola: 'Non compilare questo campo',
+};
+
+/** Pagina di conferma dopo l'invio del modulo. */
+export const grazie = {
+  titolo: 'Messaggio inviato',
+  testo: 'Grazie, ho ricevuto il tuo messaggio: ti rispondo entro la giornata.',
+  ritorno: 'Torna alla pagina principale',
 };

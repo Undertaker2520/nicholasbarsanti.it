@@ -1,0 +1,82 @@
+---
+/**
+ * Modulo di contatto gestito da Netlify Forms: HTML puro, invio classico (POST) sullo
+ * stesso dominio, nessuna libreria né JavaScript necessario. Dopo l'invio Netlify mostra
+ * la pagina di conferma (`action`). Spam: campo trappola nascosto, senza reCAPTCHA.
+ * Validazione: quella nativa del browser (required, type="email", maxlength).
+ * src/scripts/moduli/modulo.js preseleziona il servizio dalla scheda cliccata.
+ */
+import Pulsante from './Pulsante.astro';
+import { paginaGrazie } from '../config';
+import { modulo } from '../data/testi';
+
+interface Props {
+  /** Servizi tra cui scegliere (titoli delle schede). */
+  servizi: readonly string[];
+}
+
+const { servizi } = Astro.props;
+
+const NOME_MODULO = 'contatti';
+const CAMPO_TRAPPOLA = 'sito-web';
+// Lunghezze massime: bastano a un messaggio vero e limitano invii abusivi.
+const MAX = { nome: 100, email: 254, messaggio: 4000 };
+---
+
+<form
+  class="modulo"
+  name={NOME_MODULO}
+  method="POST"
+  action={paginaGrazie}
+  data-netlify="true"
+  data-netlify-honeypot={CAMPO_TRAPPOLA}
+  data-comparsa
+>
+  <input type="hidden" name="form-name" value={NOME_MODULO} />
+
+  <p class="modulo__trappola" hidden>
+    <label>{modulo.trappola} <input name={CAMPO_TRAPPOLA} tabindex="-1" autocomplete="off" /></label>
+  </p>
+
+  <p class="modulo__campo">
+    <label for="modulo-nome">{modulo.nome}</label>
+    <input id="modulo-nome" name="nome" type="text" autocomplete="name" maxlength={MAX.nome} required />
+  </p>
+
+  <p class="modulo__campo">
+    <label for="modulo-email">{modulo.email}</label>
+    <input
+      id="modulo-email"
+      name="email"
+      type="email"
+      autocomplete="email"
+      inputmode="email"
+      maxlength={MAX.email}
+      required
+    />
+  </p>
+
+  <p class="modulo__campo">
+    <label for="modulo-servizio">
+      {modulo.servizio} <span class="modulo__facoltativo">{modulo.facoltativo}</span>
+    </label>
+    <select id="modulo-servizio" name="servizio">
+      <option value={modulo.servizioNonSo}>{modulo.servizioNonSo}</option>
+      {servizi.map((servizio) => <option value={servizio}>{servizio}</option>)}
+    </select>
+  </p>
+
+  <p class="modulo__campo">
+    <label for="modulo-messaggio">{modulo.messaggio}</label>
+    <textarea id="modulo-messaggio" name="messaggio" rows="6" maxlength={MAX.messaggio} required
+    ></textarea>
+  </p>
+
+  <p class="modulo__privacy">
+    {modulo.privacy} <a href="/privacy">{modulo.linkPrivacy}</a>
+  </p>
+
+  <p class="modulo__invio">
+    <Pulsante>{modulo.invia}</Pulsante>
+  </p>
+</form>

@@ -25,7 +25,7 @@ Il sito stesso è una dimostrazione di competenza: deve essere veloce, accessibi
 
 Intestazioni definite in `src/sicurezza/intestazioni.ts` (unica fonte): in build generano `dist/_headers` per Netlify e valgono anche in `npm run preview`:
 
-- `Content-Security-Policy`: `default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests`. Verificare dopo la build che nulla venga bloccato (per esempio eventuali script o stili inline generati da Astro, o lo script JSON-LD).
+- `Content-Security-Policy`: `default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests`. Verificare dopo la build che nulla venga bloccato (per esempio eventuali script o stili inline generati da Astro, o lo script JSON-LD).
 - `Strict-Transport-Security: max-age=31536000; includeSubDomains` (niente `preload` per ora).
 - `X-Content-Type-Options: nosniff`
 - `Referrer-Policy: strict-origin-when-cross-origin`
@@ -54,7 +54,7 @@ Intestazioni definite in `src/sicurezza/intestazioni.ts` (unica fonte): in build
 - Sobrio, professionale, molto spazio bianco. Un solo colore di accento (blu scuro o verde petrolio), il resto neutro.
 - Animazioni sobrie: comparsa allo scorrimento, effetti al passaggio del mouse, sfondo (da 640 px; su mobile nessuna nebulosa) con nebulose petrolio sfumate fisse rispetto allo schermo (in alto a destra e in basso a sinistra della parte visualizzata) che derivano e seguono il mouse; intensità limitata dal contrasto del testo (vedi `$decorazione-intensita`), fascia petrolio in "Perché lavorare con me" e nel piè di pagina. Sempre disattivate con `prefers-reduced-motion`; durate e distanze in `_variabili.scss`. Niente immagini stock, niente icone generiche in eccesso.
 - Tipografia leggibile: testo a 17–18 px su desktop, righe di massimo 70 caratteri circa.
-- Un solo pulsante principale ("Scrivimi"), che apre `mailto:info@nicholasbarsanti.it`. Nella risposta "Come iniziamo?" delle domande frequenti un pulsante piccolo "Scrivimi". Nelle schede dei servizi un pulsante "Chiedi informazioni" nella variante piccola a pillola (esteso a tutta la scheda) apre l'email con oggetto e testo precompilati per quel servizio.
+- Un solo pulsante principale ("Scrivimi"), che porta al **modulo di contatto** nella sezione Contatti. Nella risposta "Come iniziamo?" delle domande frequenti un pulsante piccolo "Scrivimi" verso lo stesso modulo. Nelle schede dei servizi un pulsante "Chiedi informazioni" nella variante piccola a pillola (esteso a tutta la scheda) porta al modulo con il servizio già selezionato.
 - Foto: `public/images/nicholas.jpg`. **Se il file non esiste**, mostrare un cerchio con le iniziali "NB" come segnaposto. Quando la foto c'è, servirla ottimizzata (Astro `<Image>`, formati moderni, dimensioni corrette, `alt` descrittivo).
 
 ## Struttura della pagina (ordine fisso)
@@ -67,10 +67,10 @@ Intestazioni definite in `src/sicurezza/intestazioni.ts` (unica fonte): in build
 6. **Perché lavorare con me**: tre punti brevi.
 7. **Lavori realizzati**: sezione predisposta ma **nascosta** finché non c'è almeno un lavoro vero (un flag in un file di configurazione la attiva). Non inventare progetti.
 8. **Domande frequenti**: cinque domande con `<details>`/`<summary>`, senza JavaScript.
-9. **Contatti**
+9. **Contatti**: invito, modulo di contatto (Netlify Forms) e, sotto, l'email e LinkedIn come alternativa.
 10. **Piè di pagina**, con link alla pagina `/privacy`.
 
-Pagina aggiuntiva `/privacy`: informativa breve e chiara (titolare Nicholas Barsanti, contatto info@nicholasbarsanti.it; il sito non usa cookie né analytics; l'hosting Netlify registra dati tecnici di accesso come l'indirizzo IP nei log del server; i dati inviati via email sono usati solo per rispondere). Da segnalare come bozza da far verificare.
+Pagina aggiuntiva `/privacy`: informativa breve e chiara (titolare Nicholas Barsanti, contatto info@nicholasbarsanti.it; il sito non usa cookie né analytics; l'hosting Netlify registra dati tecnici di accesso come l'indirizzo IP nei log del server; i dati inviati con il modulo (raccolti da Netlify Forms) o via email sono usati solo per rispondere). Da segnalare come bozza da far verificare.
 
 ## Testi (usare esattamente questi, segnalando eventuali correzioni invece di riscriverli)
 
@@ -119,7 +119,11 @@ Le risposte riprendono solo fatti già scritti nel sito.
 
 ### Contatti
 Raccontami il tuo progetto: rispondo entro la giornata.
-info@nicholasbarsanti.it
+
+Modulo: Nome · Email · Di cosa hai bisogno? (facoltativo: Non lo so ancora o uno dei tre servizi) · Messaggio · "Uso questi dati solo per risponderti. Informativa privacy" · pulsante "Invia il messaggio". Pagina di conferma `/grazie`: "Messaggio inviato" · "Grazie, ho ricevuto il tuo messaggio: ti rispondo entro la giornata."
+
+Preferisci l'email? Scrivimi a info@nicholasbarsanti.it.
+Mi trovi anche su LinkedIn.
 
 ### Piè di pagina
 Nicholas Barsanti · Capannori (LU) · info@nicholasbarsanti.it
@@ -131,7 +135,7 @@ Questo sito non usa cookie né sistemi di tracciamento. · Privacy
 - Non nominare il datore di lavoro né il suo settore.
 - Prima di modificare l'architettura o aggiungere dipendenze, chiedi conferma.
 - Niente codice duplicato: astrazione e modularità. Testi e dati in file dedicati, componenti riusabili che li ricevono, mixin e funzioni SCSS per gli schemi ricorrenti.
-- Il sito verrà sottoposto a **penetration testing** a lavoro finito: nessuna superficie d'attacco superflua (niente form, niente endpoint, niente file non necessari in `dist/`) e ogni intestazione di sicurezza verificata.
+- Il sito verrà sottoposto a **penetration testing** a lavoro finito: nessuna superficie d'attacco superflua (unico form: il modulo di contatto su Netlify Forms, con campo trappola e lunghezze massime, deciso da Nicholas; niente endpoint propri, niente file non necessari in `dist/`) e ogni intestazione di sicurezza verificata.
 - Commit piccoli e descrittivi, in italiano.
 - Dopo ogni modifica significativa esegui `npm run build` e correggi errori e avvisi.
 - Mantieni un `README.md` con: avvio in locale, build, struttura delle cartelle, procedura di pubblicazione su Netlify e collegamento del dominio OVH, checklist di verifica finale.

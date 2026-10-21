@@ -1,7 +1,7 @@
 ---
 import Foto from './Foto.astro';
 import Pulsante from './Pulsante.astro';
-import { mailto } from '../config';
+import { linkSezione, sezioni } from '../data/sezioni';
 import { apertura } from '../data/testi';
 ---
 
@@ -10,7 +10,7 @@ import { apertura } from '../data/testi';
     <div class="apertura__testo">
       <h1 id="apertura-titolo">{apertura.titolo}</h1>
       <p class="apertura__sottotitolo">{apertura.sottotitolo}</p>
-      <Pulsante href={mailto}>{apertura.pulsante}</Pulsante>
+      <Pulsante href={linkSezione(sezioni.contatti)}>{apertura.pulsante}</Pulsante>
     </div>
     <div class="apertura__foto">
       <Foto alt={apertura.altFoto} />

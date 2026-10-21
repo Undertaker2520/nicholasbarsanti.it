@@ -1,13 +1,27 @@
 ---
 interface Props {
-  href: string;
+  /** Con `href` è un link; senza, è il pulsante di invio del modulo che lo contiene. */
+  href?: string;
   /** `piccolo`: variante discreta a pillola, per esempio nelle schede. */
   dimensione?: 'piccolo';
   /** Classi aggiuntive, per adattare il pulsante al contesto (per esempio nelle schede). */
   class?: string;
+  /** Attributi data-* per il JavaScript (per esempio il servizio da preselezionare). */
+  [dato: `data-${string}`]: string | undefined;
 }
 
-const { href, dimensione, class: classe } = Astro.props;
+const { href, dimensione, class: classe, ...dati } = Astro.props;
+const classi = ['pulsante', dimensione && `pulsante--${dimensione}`, classe];
 ---
 
-<a class:list={['pulsante', dimensione && `pulsante--${dimensione}`, classe]} href={href}><slot /></a>
+{
+  href ? (
+    <a class:list={classi} href={href} {...dati}>
+      <slot />
+    </a>
+  ) : (
+    <button type="submit" class:list={classi} {...dati}>
+      <slot />
+    </button>
+  )
+}

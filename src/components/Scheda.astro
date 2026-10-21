@@ -4,6 +4,8 @@ import Pulsante from './Pulsante.astro';
 interface Azione {
   href: string;
   testo: string;
+  /** Servizio da preselezionare nel modulo di contatto (src/scripts/moduli/modulo.js). */
+  servizio?: string;
 }
 
 interface Props {
@@ -29,7 +31,12 @@ const { titolo, etichetta, nota, azione } = Astro.props;
         {nota && <p class="scheda__nota">{nota}</p>}
         {azione && (
           <p class="scheda__azione">
-            <Pulsante href={azione.href} dimensione="piccolo" class="scheda__link">
+            <Pulsante
+              href={azione.href}
+              dimensione="piccolo"
+              class="scheda__link"
+              data-servizio={azione.servizio}
+            >
               {azione.testo}
               <span class="solo-lettori-schermo">: {titolo}</span>
               <span class="scheda__freccia" aria-hidden="true">→</span>

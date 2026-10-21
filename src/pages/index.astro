@@ -7,8 +7,9 @@ import Carosello from '../components/Carosello.astro';
 import ElencoPunti from '../components/ElencoPunti.astro';
 import Profili from '../components/Profili.astro';
 import Domande from '../components/Domande.astro';
+import ModuloContatto from '../components/ModuloContatto.astro';
 import { sito, mailto } from '../config';
-import { sezioni } from '../data/sezioni';
+import { linkSezione, sezioni } from '../data/sezioni';
 import {
   chiSono,
   servizi,
@@ -23,7 +24,6 @@ import {
   carosello,
 } from '../data/testi';
 import { datiStrutturati } from '../lib/dati-strutturati';
-import { mailtoPrecompilato } from '../lib/email';
 
 const mostraLavori = sito.mostraLavori && lavori.length > 0;
 ---
@@ -51,11 +51,9 @@ const mostraLavori = sito.mostraLavori && lavori.length > 0;
                 etichetta={etichettaPrezzo(servizio)}
                 nota={servizio.tempi && `Tempi: ${servizio.tempi}.`}
                 azione={{
-                  href: mailtoPrecompilato(
-                    richiestaServizio.oggetto(servizio.titolo),
-                    richiestaServizio.corpo(servizio.titolo),
-                  ),
+                  href: linkSezione(sezioni.contatti),
                   testo: richiestaServizio.link,
+                  servizio: servizio.titolo,
                 }}
               >
                 <p>{servizio.descrizione}</p>
@@ -104,7 +102,10 @@ const mostraLavori = sito.mostraLavori && lavori.length > 0;
 
   <Sezione sezione={sezioni.contatti}>
     <p data-comparsa>{contatti.invito}</p>
-    <p class="contatti__email" data-comparsa><a href={mailto}>{sito.email}</a></p>
-    <p data-comparsa>{contatti.profili} <Profili />.</p>
+    <ModuloContatto servizi={servizi.map((servizio) => servizio.titolo)} />
+    <p class="contatti__alternative" data-comparsa>
+      {contatti.alternativa} <a href={mailto}>{sito.email}</a>.<br />
+      {contatti.profili} <Profili />.
+    </p>
   </Sezione>
 </Base>

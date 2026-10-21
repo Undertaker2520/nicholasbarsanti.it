@@ -1,0 +1,14 @@
+---
+/** Conferma dopo l'invio del modulo di contatto (action del modulo, servita da Netlify). */
+import Base from '../layouts/Base.astro';
+import PaginaSemplice from '../components/PaginaSemplice.astro';
+import { titoloPagina } from '../config';
+import { grazie } from '../data/testi';
+---
+
+<Base titolo={titoloPagina(grazie.titolo)} descrizione={grazie.testo} indicizza={false}>
+  <PaginaSemplice titolo={grazie.titolo}>
+    <p>{grazie.testo}</p>
+    <p><a href="/">{grazie.ritorno}</a></p>
+  </PaginaSemplice>
+</Base>

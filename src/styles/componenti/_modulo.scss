@@ -1,0 +1,70 @@
+// Modulo di contatto (src/components/ModuloContatto.astro).
+
+@use '../variabili' as v;
+@use '../strumenti' as *;
+
+.modulo {
+  display: grid;
+  gap: spazio(s);
+  max-width: v.$modulo-larghezza-max;
+  margin-top: spazio(m);
+
+  p {
+    margin: 0;
+    max-width: none;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-weight: v.$peso-medio;
+  }
+
+  input,
+  select,
+  textarea {
+    display: block;
+    width: 100%;
+    min-height: v.$campo-altezza;
+    padding: spazio(xs) 0.75rem;
+    background: colore(sfondo);
+    color: colore(testo);
+    border: v.$bordo-spessore solid colore(campo-bordo);
+    border-radius: v.$raggio;
+    font: inherit;
+
+    @include con-movimento {
+      transition: transizioni(v.$durata-breve, border-color, box-shadow);
+    }
+
+    &:hover {
+      border-color: colore(accento);
+    }
+
+    &:focus-visible {
+      @include focus-visibile;
+      border-color: colore(accento);
+    }
+
+    // Errore mostrato solo dopo che la persona ha interagito con il campo.
+    &:user-invalid {
+      border-color: colore(errore);
+      box-shadow: 0 0 0 1px colore(errore);
+    }
+  }
+
+  textarea {
+    min-height: v.$campo-messaggio-altezza;
+    resize: vertical;
+  }
+
+  &__facoltativo {
+    color: colore(testo-secondario);
+    font-weight: v.$peso-normale;
+  }
+
+  &__privacy {
+    color: colore(testo-secondario);
+    font-size: testo(piccolo);
+  }
+}

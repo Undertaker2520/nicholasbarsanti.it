@@ -18,8 +18,9 @@
   }
 }
 
-.contatti__email {
-  font-size: testo(h3);
-  font-weight: v.$peso-forte;
+// Email e profili sotto il modulo di contatto.
+.contatti__alternative {
+  margin-top: spazio(l);
+  color: colore(testo-secondario);
   overflow-wrap: anywhere;
 }

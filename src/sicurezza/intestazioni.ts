@@ -22,7 +22,8 @@ const csp: Record<string, string[]> = {
   'connect-src': [NESSUNO],
   'frame-ancestors': [NESSUNO],
   'base-uri': [SOLO_SE_STESSO],
-  'form-action': [NESSUNO],
+  // Solo il modulo di contatto, che invia al sito stesso (Netlify Forms).
+  'form-action': [SOLO_SE_STESSO],
   'upgrade-insecure-requests': [],
 };
 

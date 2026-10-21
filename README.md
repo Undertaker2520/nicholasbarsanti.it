@@ -66,9 +66,25 @@ Per cambiare colori o font si modifica solo `src/styles/_variabili.scss`.
 
 ## Schede dei servizi
 
-Ogni scheda ha in fondo il pulsante "Chiedi informazioni" (stesso componente `Pulsante` di "Scrivimi"), esteso a tutta la scheda: apre il programma di posta con oggetto e testo già scritti per quel servizio. I testi del messaggio sono in `richiestaServizio` (`src/data/testi.ts`); il link è costruito da `mailtoPrecompilato` (`src/lib/email.ts`). Le schede sono uguali: sfondo tenue e bordo petrolio compaiono su ognuna solo al passaggio del mouse. Da 1024 px titolo, prezzo, descrizione e fondo sono allineati tra schede affiancate con CSS subgrid (righe in `$scheda-righe`, `_variabili.scss`).
+Ogni scheda ha in fondo il pulsante "Chiedi informazioni" (componente `Pulsante`, variante `dimensione="piccolo"`), esteso a tutta la scheda: porta al modulo di contatto e, con JavaScript, preseleziona il servizio (`data-servizio`, `src/scripts/moduli/modulo.js`). Le schede sono uguali: sfondo tenue e bordo petrolio compaiono su ognuna solo al passaggio del mouse. Da 1024 px titolo, prezzo, descrizione e fondo sono allineati tra schede affiancate con CSS subgrid (righe in `$scheda-righe`, `_variabili.scss`).
 
 Sotto i 1024 px le schede diventano un **carosello** (`src/components/Carosello.astro`): una per volta, intere e centrate, con aggancio CSS (`scroll-snap`). Pallini e pulsante pausa sono nell'HTML ma nascosti; `src/scripts/moduli/carosello.js` li mostra, evidenzia il pallino della scheda visibile, porta alla scheda scelta e fa **scorrere le schede da sole ogni 4 secondi**. Lo scorrimento automatico rispetta WCAG 2.2.2: pulsante pausa/riprendi sempre visibile, arresto definitivo appena la persona tocca, trascina o usa un pallino, sospensione con mouse o focus sul carosello, fuori schermo o con la scheda del browser nascosta, nessun movimento con `prefers-reduced-motion`. Senza JavaScript si scorre comunque con il dito o la barra di scorrimento. Nessuna libreria esterna (Owl Carousel scartato: non mantenuto dal 2018, incompatibile con jQuery 4 e con i pallini senza nome accessibile). Il pulsante è la variante `dimensione="piccolo"` (a pillola, testo non in grassetto).
+
+## Modulo di contatto (Netlify Forms)
+
+Nella sezione Contatti (`src/components/ModuloContatto.astro`): nome, email, servizio (facoltativo) e messaggio, con l'email come alternativa sotto. È HTML puro: invio classico (POST) sullo stesso dominio, nessuna libreria, funziona senza JavaScript. Netlify riconosce il modulo dall'attributo `data-netlify` al momento del deploy, lo raccoglie e mostra la pagina di conferma `/grazie` (noindex, fuori dalla sitemap).
+
+- **Spam**: campo trappola nascosto (`data-netlify-honeypot`), nessun reCAPTCHA (sarebbe una terza parte con cookie).
+- **Sicurezza**: CSP `form-action 'self'`; lunghezze massime sui campi; validazione nativa del browser.
+- **Privacy**: i dati sono conservati da Netlify; l'informativa (`/privacy`) ne parla.
+- In locale (`npm run preview`) l'invio **non** funziona: lo gestisce solo Netlify.
+
+Da fare una volta nel pannello Netlify:
+
+1. **Forms → Enable form detection**, poi un nuovo deploy (anche solo **Trigger deploy**).
+2. **Forms → Form notifications → Add notification → Email notification**: indirizzo `info@nicholasbarsanti.it`, modulo `contatti`.
+3. **Forms → Usage**: controllare i limiti del piano gratuito.
+4. Inviare un messaggio di prova dal sito pubblicato e verificare che arrivi.
 
 ## Domande frequenti
 
@@ -179,6 +195,8 @@ Prima della pubblicazione (in locale):
 - [ ] informativa privacy verificata da un consulente
 
 Dopo la pubblicazione (su `https://nicholasbarsanti.it`):
+
+- [ ] modulo di contatto: "Enable form detection" attivo, notifica email configurata, messaggio di prova ricevuto, pagina `/grazie` mostrata dopo l'invio
 
 - [ ] Lighthouse 100/100/100/100 su mobile e desktop (Chrome DevTools → Lighthouse, finestra in incognito)
 - [ ] <https://securityheaders.com>: A+
