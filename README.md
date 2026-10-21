@@ -148,7 +148,8 @@ Il repository è `github.com/Undertaker2520/nicholasbarsanti.it` (privato). Ogni
 2. **Add new project → Import an existing project → GitHub**, autorizzare Netlify **solo** sul repository `nicholasbarsanti.it` (opzione "Only select repositories").
 3. Impostazioni di build: vengono lette da `netlify.toml` (comando `npm run build`, cartella `dist`); la versione di Node da `.nvmrc`. Non serve altro.
 4. **Deploy**. Al termine il sito è raggiungibile su un indirizzo tipo `nome-casuale.netlify.app`: annotarlo, serve per il DNS. Conviene rinominarlo in **Project configuration → Change project name** (per esempio `nicholasbarsanti`).
-5. Su `nome.netlify.app` controllare che tutto funzioni e che le intestazioni ci siano (vedi checklist) **prima** di toccare il DNS.
+5. **Project configuration → General → Powered by Netlify badge: disattivato.** Sui progetti gratuiti creati dal 19 agosto 2026 Netlify inietta in ogni pagina uno script (`/.netlify/scripts/hud`) che disegna il badge in un iframe con stili e script inline: la nostra CSP lo blocca, quindi il badge non compare ma la console si riempie di errori "Refused to…" (che pesano anche su Lighthouse). Il cambio vale dalla richiesta successiva, senza nuovo deploy. Verifica: `curl -s https://nicholasbarsanti.it/ | grep netlify/scripts` non deve stampare nulla.
+6. Su `nome.netlify.app` controllare che tutto funzioni e che le intestazioni ci siano (vedi checklist) **prima** di toccare il DNS.
 
 ### Dominio
 
@@ -202,6 +203,7 @@ Dopo la pubblicazione (su `https://nicholasbarsanti.it`):
 - [ ] <https://securityheaders.com>: A+
 - [ ] <https://developer.mozilla.org/observatory>: A+
 - [ ] scheda Rete del browser: nessuna richiesta verso domini esterni
+- [ ] nessuno script iniettato da Netlify (badge disattivato): console pulita anche in incognito
 - [ ] `https://www.nicholasbarsanti.it` e `http://nicholasbarsanti.it` reindirizzano a `https://nicholasbarsanti.it`
 - [ ] raggiungibili: `/.well-known/security.txt`, `/robots.txt`, `/sitemap-index.xml`, `/privacy`; un indirizzo inventato restituisce la pagina 404 con codice 404
 - [ ] `/_headers` **non** raggiungibile (deve dare 404)
