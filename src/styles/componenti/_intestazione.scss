@@ -39,24 +39,115 @@
     }
   }
 
-  &__nome {
-    color: colore(testo);
-    font-weight: v.$peso-forte;
-    font-size: testo(grande);
-    text-decoration: none;
-    letter-spacing: -0.01em;
+  // Logo: l'icona "NB" del favicon, link alla home.
+  &__logo {
+    display: block;
+    line-height: 0;
+    border-radius: v.$raggio;
+
+    img {
+      width: v.$logo-dimensione;
+      height: v.$logo-dimensione;
+    }
 
     @include con-movimento {
-      transition: transizioni(v.$durata-breve, color);
+      transition: transizioni(v.$durata-breve, opacity);
     }
 
     &:hover {
-      color: colore(accento);
+      opacity: 0.85;
+    }
+  }
+
+  // Menu richiudibile (JavaScript attivo, sotto `medio`): logo e hamburger sulla stessa riga,
+  // il menu si apre sotto a tutta larghezza.
+  @include fino-a(medio) {
+    &--compatta &__nav {
+      display: none;
+      width: 100%;
+    }
+
+    &--compatta.intestazione--aperta &__nav {
+      display: block;
+    }
+
+    &--compatta .menu {
+      flex-direction: column;
+      padding-bottom: spazio(xs);
+    }
+
+    &--compatta .menu__link {
+      font-size: testo(base); // voci più grandi, comode al tocco
     }
   }
 }
 
-// Su mobile i link vanno a capo sotto il nome; da `medio` stanno sulla stessa riga.
+// Pulsante hamburger: tre linee che diventano una "X" quando il menu è aperto.
+.menu-pulsante {
+  display: grid;
+  place-items: center;
+  width: v.$menu-pulsante-dimensione;
+  height: v.$menu-pulsante-dimensione;
+  padding: 0;
+  background: transparent;
+  color: colore(testo);
+  border: v.$bordo-spessore solid colore(campo-bordo);
+  border-radius: v.$raggio;
+  cursor: pointer;
+
+  @include da(medio) {
+    display: none;
+  }
+
+  &__icona,
+  &__icona::before,
+  &__icona::after {
+    display: block;
+    width: v.$menu-icona-larghezza;
+    height: v.$menu-icona-tratto;
+    background: currentColor;
+    border-radius: v.$menu-icona-tratto;
+  }
+
+  &__icona {
+    position: relative;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+
+      @include con-movimento {
+        transition: transizioni(v.$durata-breve, transform, top);
+      }
+    }
+
+    &::before {
+      top: -(v.$menu-icona-distanza);
+    }
+
+    &::after {
+      top: v.$menu-icona-distanza;
+    }
+  }
+
+  &[aria-expanded='true'] &__icona {
+    background: transparent;
+
+    &::before {
+      top: 0;
+      transform: rotate(45deg);
+    }
+
+    &::after {
+      top: 0;
+      transform: rotate(-45deg);
+    }
+  }
+}
+
+// Senza JavaScript (o da `medio`): voci in riga, che su mobile vanno a capo sotto il logo.
 .menu {
   @include elenco-semplice;
   display: flex;

@@ -59,7 +59,7 @@ Intestazioni definite in `src/sicurezza/intestazioni.ts` (unica fonte): in build
 
 ## Struttura della pagina (ordine fisso)
 
-1. **Intestazione**: nome a sinistra; a destra i link interni Chi sono, Servizi, Come lavoro, Domande, Contatti (ancore alla stessa pagina).
+1. **Intestazione**: a sinistra il logo (l'icona "NB" del favicon, con alt "Nicholas Barsanti", link alla home); a destra i link interni Chi sono, Servizi, Come lavoro, Domande, Contatti (ancore alla stessa pagina). Sotto i 640 px menu a hamburger (pulsante mostrato dal JavaScript; senza JavaScript il menu resta visibile).
 2. **Apertura**: titolo, sottotitolo, pulsante "Scrivimi", foto.
 3. **Chi sono**
 4. **Cosa posso fare per te**: tre schede uguali; al passaggio del mouse ognuna si solleva, con sfondo tenue e bordo petrolio (scelta di Nicholas: nessuna scheda evidenziata di default).

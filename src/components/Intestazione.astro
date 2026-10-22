@@ -1,17 +1,43 @@
 ---
-import { sito } from '../config';
+/**
+ * Intestazione: logo (l'icona "NB" del favicon) che porta alla home e menu delle sezioni.
+ * Su mobile il pulsante hamburger parte nascosto: lo mostra src/scripts/moduli/menu.js, che
+ * chiude il menu. Senza JavaScript il menu resta visibile, come da brief.
+ */
+import { sito, immagini } from '../config';
 import { menu, linkSezione } from '../data/sezioni';
+import { menuMobile } from '../data/testi';
+
+const ID_MENU = 'menu-principale';
+// Lato del logo in pixel: deve corrispondere a $logo-dimensione in _variabili.scss.
+const LATO_LOGO = 40;
 ---
 
-<header class="intestazione">
+<header class="intestazione" data-intestazione>
   <div class="contenitore intestazione__riga">
-    <a class="intestazione__nome" href="/">{sito.nome}</a>
-    <nav aria-label="Menu principale">
+    <a class="intestazione__logo" href="/">
+      <img src={immagini.faviconSvg} alt={sito.nome} width={LATO_LOGO} height={LATO_LOGO} />
+    </a>
+    <button
+      type="button"
+      class="menu-pulsante"
+      aria-controls={ID_MENU}
+      aria-expanded="false"
+      aria-label={menuMobile.apri}
+      data-testo-apri={menuMobile.apri}
+      data-testo-chiudi={menuMobile.chiudi}
+      hidden
+    >
+      <span class="menu-pulsante__icona" aria-hidden="true"></span>
+    </button>
+    <nav class="intestazione__nav" id={ID_MENU} aria-label="Menu principale">
       <ul class="menu">
         {
           menu.map((voce) => (
             <li>
-              <a class="menu__link" href={linkSezione(voce)}>{voce.etichetta}</a>
+              <a class="menu__link" href={linkSezione(voce)}>
+                {voce.etichetta}
+              </a>
             </li>
           ))
         }

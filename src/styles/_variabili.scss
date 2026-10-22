@@ -171,6 +171,11 @@ $breakpoint: (
 // Intestazione fissa in alto da `medio`: le ancore si fermano sotto di lei.
 $intestazione-altezza: 4.5rem;
 $intestazione-riga-spessore: 2px;
+$logo-dimensione: 2.5rem; // icona "NB" nell'intestazione (40 px, come width/height in Intestazione.astro)
+$menu-pulsante-dimensione: 2.75rem; // pulsante hamburger: 44 px, comodo al tocco
+$menu-icona-larghezza: 1.25rem;
+$menu-icona-tratto: 2px;
+$menu-icona-distanza: 6px; // tra le tre linee dell'hamburger
 
 // --- Movimento ---------------------------------------------------------------
 // Tutto disattivato con prefers-reduced-motion: reduce (mixin `con-movimento`).

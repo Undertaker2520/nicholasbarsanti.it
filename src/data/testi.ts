@@ -70,6 +70,12 @@ export const richiestaServizio = {
   link: 'Chiedi informazioni',
 };
 
+/** Pulsante del menu su mobile (hamburger): etichette per i lettori di schermo. */
+export const menuMobile = {
+  apri: 'Apri il menu',
+  chiudi: 'Chiudi il menu',
+};
+
 /** Carosello delle schede su mobile: etichette dei pallini per i lettori di schermo. */
 export const carosello = {
   gruppo: 'Scegli il servizio da vedere',

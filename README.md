@@ -45,7 +45,7 @@ src/
   lib/             funzioni comuni (URL, JSON-LD, email precompilate, risposte di testo)
   scripts/
     main.js          punto di ingresso del JavaScript (incluso dal layout)
-    moduli/          carosello, comparsa allo scorrimento, intestazione, sfondo
+    moduli/          carosello, comparsa allo scorrimento, intestazione, menu, modulo, sfondo
     utilita.js       controlli comuni (movimento ridotto, puntatore, un aggiornamento per fotogramma)
   styles/
     _variabili.scss  UNICO file con font, colori, misure e breakpoint
@@ -93,7 +93,8 @@ Sezione prima di Contatti (`src/components/Domande.astro`), con `<details>`/`<su
 ## Animazioni e JavaScript
 
 - **Comparsa allo scorrimento**: `data-comparsa` su un elemento, `data-comparsa-gruppo` su un elenco (i figli compaiono uno dopo l'altro). Il JavaScript nasconde solo gli elementi ancora fuori dallo schermo e li mostra quando entrano.
-- **Intestazione** (da 640 px): resta in alto, prende un'ombra quando la pagina scorre ed evidenzia la voce della sezione che si sta leggendo.
+- **Intestazione** (da 640 px): resta in alto, prende un'ombra quando la pagina scorre ed evidenzia la voce della sezione che si sta leggendo. Al posto del nome c'è il logo "NB" (il favicon, alt "Nicholas Barsanti").
+- **Menu su mobile** (sotto 640 px, `src/scripts/moduli/menu.js`): pulsante hamburger con `aria-expanded` e etichetta "Apri/Chiudi il menu"; si chiude toccando una voce, toccando fuori o con Esc (il focus torna al pulsante). Il pulsante parte nascosto: senza JavaScript il menu resta visibile.
 - **Al passaggio del mouse** (solo CSS, solo con mouse): schede che si sollevano, pulsante, sottolineatura animata nel menu.
 - **Sfondo di pagina** (`src/components/Sfondo.astro`, mappa `$macchie` in `_variabili.scss`): da 640 px, nebulose petrolio sfumate fisse rispetto allo schermo (restano in alto a destra e in basso a sinistra della parte di pagina visualizzata), con una deriva continua e, solo con il mouse, un leggero spostamento che segue il puntatore (le due macchie in direzioni opposte). Fascia petrolio in "Perché lavorare con me".
 - Con `prefers-reduced-motion: reduce` niente si muove e il JavaScript non nasconde nulla. Durate, distanze e intensità sono in `src/styles/_variabili.scss`.
