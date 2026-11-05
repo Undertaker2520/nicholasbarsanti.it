@@ -135,7 +135,7 @@ $spazi: (
   m: 1.5rem,
   l: 2.5rem,
   xl: 4rem,
-  xxl: clamp(4rem, 3rem + 5vw, 7rem),
+  xxl: clamp(4rem, 2.5rem + 3.75vw, 6rem), // 64 → 96 px: respiro verticale delle sezioni
 );
 
 // Diametro della foto: piccola su mobile, grande da `medio`.

@@ -16,9 +16,10 @@
   &--numerati {
     counter-reset: passo;
 
-    // Quattro passi: 2 × 2 sugli schermi medi (da `largo` stanno in fila).
-    @include tra(medio, largo) {
+    // Quattro passi: 2 × 2 da `medio`, così le righe restano lunghe e leggibili anche su desktop.
+    @include da(medio) {
       grid-template-columns: repeat(2, 1fr);
+      grid-auto-flow: row;
     }
 
     .punti__voce {
