@@ -49,7 +49,7 @@
     font: inherit;
 
     @include con-movimento {
-      transition: transizioni(v.$durata-breve, border-color, box-shadow);
+      transition: transizioni(breve, border-color, box-shadow);
     }
 
     &:hover {

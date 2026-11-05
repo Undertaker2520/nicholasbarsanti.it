@@ -26,7 +26,7 @@
   border-radius: v.$raggio;
 
   @include con-movimento {
-    transition: transizioni(v.$durata-media, transform, box-shadow, border-color, background-color);
+    transition: transizioni(media, transform, box-shadow, border-color, background-color);
   }
 
   @include al-passaggio {
@@ -93,7 +93,7 @@
     margin-left: 0.35em;
 
     @include con-movimento {
-      transition: transizioni(v.$durata-breve, transform);
+      transition: transizioni(breve, transform);
     }
   }
 

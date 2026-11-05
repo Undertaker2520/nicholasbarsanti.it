@@ -15,7 +15,7 @@ $font-ripiego: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', A
 
 $peso-normale: 400;
 $peso-medio: 500;
-$peso-forte: 650;
+$peso-forte: 600; // come apple.com: 400 e 600, niente grassetto pieno
 
 // --- Colori ------------------------------------------------------------------
 // Le due palette devono avere le stesse chiavi (lo verifica il mixin `temi`).
@@ -105,8 +105,16 @@ $testo: (
   h1: clamp(2.125rem, 1.5rem + 2.8vw, 3.5rem),
 );
 
-$interlinea: 1.65;
+$interlinea: 1.55; // tra l'1.47 di apple.com e la lettura comoda per chiunque
 $interlinea-titoli: 1.2;
+
+// Spaziatura ottica tra le lettere (dynamic metrics di Inter): leggermente negativa,
+// più stretta al crescere della dimensione.
+$tracciamento: (
+  testo: -0.013em, // 17–18 px
+  titoli: -0.02em, // h2, h3
+  h1: -0.022em,
+);
 $misura-testo: 68ch; // circa 70 caratteri per riga
 
 // --- Spazi e misure ----------------------------------------------------------
@@ -179,13 +187,43 @@ $menu-icona-distanza: 6px; // tra le tre linee dell'hamburger
 
 // --- Movimento ---------------------------------------------------------------
 // Tutto disattivato con prefers-reduced-motion: reduce (mixin `con-movimento`).
+// Curve di apple.com; molle del modello Apple (rimbalzo 0 e 0.15) convertite in linear():
+// la forma non dipende dalla durata. Le molle servono per ciò che si sposta o si espande,
+// le curve per colori e opacità.
 
-$durata-breve: 0.2s; // hover di link e pulsanti
-$durata-media: 0.3s; // hover delle schede
-$durata-comparsa: 0.7s; // comparsa degli elementi durante lo scorrimento
+$curve: (
+  standard: cubic-bezier(0.4, 0, 0.6, 1), // colori, opacità, passaggio del mouse
+  entrata: cubic-bezier(0, 0, 0.2, 1), // ciò che arriva e rallenta
+  uscita: cubic-bezier(0.4, 0, 1, 1), // ciò che se ne va, più rapido
+  comparsa: cubic-bezier(0.28, 0.11, 0.32, 1), // comparsa delle sezioni allo scorrimento
+  molla: linear(0, 0.0392, 0.1285, 0.2385, 0.3517, 0.4587, 0.5547, 0.638, 0.7085, 0.7672, 0.8153,
+    0.8543, 0.8856, 0.9106, 0.9304, 0.946, 0.9582, 0.9677, 0.9752, 0.9809, 0.9854, 0.9888, 0.9915,
+    0.9935, 0.995, 0.9962, 0.9971, 0.9978, 0.9984, 0.9988, 1),
+  molla-vivace: linear(0, 0.0364, 0.1233, 0.235, 0.3543, 0.4702, 0.5762, 0.6691, 0.7477, 0.8125,
+    0.8644, 0.9051, 0.9362, 0.9593, 0.9761, 0.988, 0.9959, 1.0011, 1.0041, 1.0057, 1.0063, 1.0062,
+    1.0057, 1.0051, 1.0043, 1.0036, 1.0029, 1.0023, 1.0017, 1.0013, 1),
+);
+
+// Movimenti: durata e curva (chiave di $curve), da usare con le funzioni `transizioni` e
+// `movimento` di _strumenti.scss. Le molle durano fino all'assestamento (circa 1.5 volte
+// la durata percepita): 0.52s si percepisce come 0.35s.
+$movimenti: (
+  pressione: (0.1s, standard), // pulsante premuto
+  breve: (0.24s, standard), // passaggio del mouse su link, pulsanti, campi
+  media: (0.32s, standard), // schede, domande, ombra dell'intestazione
+  uscita: (0.24s, uscita), // menu che si chiude, risposta che si richiude
+  comparsa: (0.56s, comparsa), // elementi che compaiono durante lo scorrimento
+  molla: (0.52s, molla), // risposta che si apre
+  molla-vivace: (0.52s, molla-vivace), // menu che si apre dal pulsante
+  inseguimento: (1.2s, entrata), // le nebulose raggiungono la posizione del mouse
+);
+
 $durata-deriva: 16s; // ciclo della deriva delle nebulose decorative
-$durata-inseguimento: 1.2s; // ritardo con cui le macchie raggiungono la posizione del mouse
-$curva: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+$scala-pressione: 0.97; // pulsante premuto
+$scala-pressione-scheda: 0.985; // scheda premuta: grande, quindi si riduce meno
+$scala-comparsa-menu: 0.96; // il menu si apre crescendo da qui
+$opacita-disattivato: 0.42; // pulsante non disponibile (per esempio durante l'invio)
 
 $comparsa-spostamento: 1.25rem; // gli elementi salgono di questa distanza mentre compaiono
 $comparsa-ritardo: 90ms; // sfasamento tra gli elementi di uno stesso gruppo

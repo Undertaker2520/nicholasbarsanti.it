@@ -77,7 +77,7 @@
     border-radius: 50%;
 
     @include con-movimento {
-      transition: transizioni(v.$durata-breve, background-color, border-color, transform);
+      transition: transizioni(breve, background-color, border-color, transform);
     }
   }
 

@@ -16,7 +16,7 @@
     backdrop-filter: blur(10px);
 
     @include con-movimento {
-      transition: transizioni(v.$durata-media, box-shadow);
+      transition: transizioni(media, box-shadow);
     }
   }
 
@@ -51,7 +51,7 @@
     }
 
     @include con-movimento {
-      transition: transizioni(v.$durata-breve, opacity);
+      transition: transizioni(breve, opacity);
     }
 
     &:hover {
@@ -119,7 +119,7 @@
       left: 0;
 
       @include con-movimento {
-        transition: transizioni(v.$durata-breve, transform, top);
+        transition: transizioni(breve, transform, top);
       }
     }
 

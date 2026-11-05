@@ -15,7 +15,7 @@
   border-radius: v.$raggio;
 
   @include con-movimento {
-    transition: transizioni(v.$durata-media, border-color, background-color);
+    transition: transizioni(media, border-color, background-color);
   }
 
   &[open] {
@@ -52,7 +52,7 @@
       color: colore(accento);
 
       @include con-movimento {
-        transition: transizioni(v.$durata-breve, background-size);
+        transition: transizioni(breve, background-size);
       }
     }
 

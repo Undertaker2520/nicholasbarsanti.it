@@ -41,7 +41,7 @@
 
     @include con-movimento {
       animation: deriva v.$durata-deriva ease-in-out infinite map.get($macchia, deriva);
-      transition: translate v.$durata-inseguimento v.$curva;
+      transition: translate movimento(inseguimento);
     }
   }
 }

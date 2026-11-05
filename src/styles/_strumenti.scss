@@ -22,6 +22,10 @@
   @return da-mappa(v.$testo, $chiave, '$testo');
 }
 
+@function tracciamento($chiave) {
+  @return da-mappa(v.$tracciamento, $chiave, '$tracciamento');
+}
+
 // Riferimento a un colore del tema attivo (variabile CSS generata da `temi`).
 @function colore($chiave) {
   $_: da-mappa(v.$colori-chiaro, $chiave, '$colori-chiaro');
@@ -83,11 +87,23 @@
   @return color-mix(in srgb, #{colore($chiave)} #{$intensita}, transparent);
 }
 
-// Transizioni sulle proprietà indicate, con durata e curva comuni.
-@function transizioni($durata, $proprieta...) {
+// Curva da $curve: curva(molla).
+@function curva($chiave) {
+  @return da-mappa(v.$curve, $chiave, '$curve');
+}
+
+// Durata e curva di un movimento da $movimenti: `transition: opacity movimento(breve)`.
+@function movimento($chiave) {
+  $m: da-mappa(v.$movimenti, $chiave, '$movimenti');
+  @return list.nth($m, 1) curva(list.nth($m, 2));
+}
+
+// Transizioni sulle proprietà indicate, tutte con lo stesso movimento:
+// transizioni(breve, color, background-color).
+@function transizioni($chiave, $proprieta...) {
   $lista: ();
   @each $p in $proprieta {
-    $lista: list.append($lista, $p $durata v.$curva, comma);
+    $lista: list.append($lista, $p movimento($chiave), comma);
   }
   @return $lista;
 }
@@ -114,7 +130,7 @@
   background: linear-gradient(currentColor, currentColor) no-repeat 0 100% / 0 2px;
 
   @include con-movimento {
-    transition: transizioni(v.$durata-breve, background-size, color);
+    transition: transizioni(breve, background-size, color);
   }
 
   &:hover,

@@ -9,7 +9,7 @@ $elementi: '[data-comparsa], [data-comparsa-gruppo] > *';
 
 @include con-movimento {
   #{$elementi} {
-    transition: transizioni(v.$durata-comparsa, opacity, transform);
+    transition: transizioni(comparsa, opacity, transform);
   }
 
   .in-attesa {

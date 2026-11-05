@@ -36,6 +36,7 @@ body {
   font-size: testo(base);
   font-weight: v.$peso-normale;
   line-height: v.$interlinea;
+  letter-spacing: tracciamento(testo);
   overflow-wrap: break-word;
   -webkit-font-smoothing: antialiased;
 }
@@ -50,13 +51,13 @@ h3 {
   margin: 0 0 spazio(s);
   line-height: v.$interlinea-titoli;
   font-weight: v.$peso-forte;
-  letter-spacing: -0.015em;
+  letter-spacing: tracciamento(titoli);
   text-wrap: balance;
 }
 
 h1 {
   font-size: testo(h1);
-  letter-spacing: -0.025em;
+  letter-spacing: tracciamento(h1);
 }
 
 h2 {

@@ -19,7 +19,7 @@
   cursor: pointer;
 
   @include con-movimento {
-    transition: transizioni(v.$durata-breve, background-color, transform, box-shadow);
+    transition: transizioni(breve, background-color, transform, box-shadow);
   }
 
   &:hover {
