@@ -69,6 +69,12 @@
   @media (prefers-color-scheme: dark) {
     @include _variabili-colore($scuro);
   }
+
+  @include con-contrasto-alto {
+    @each $chiave, $sostituto in v.$contrasto-alto {
+      --colore-#{$chiave}: #{colore($sostituto)};
+    }
+  }
 }
 
 @mixin _variabili-colore($palette) {
@@ -112,6 +118,33 @@
 @mixin con-movimento {
   @media (prefers-reduced-motion: no-preference) {
     @content;
+  }
+}
+
+// Preferenze di sistema per trasparenze e contrasto: superfici opache, bordi e testi più netti.
+@mixin con-trasparenza-ridotta {
+  @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+    @content;
+  }
+}
+
+@mixin con-contrasto-alto {
+  @media (prefers-contrast: more) {
+    @content;
+  }
+}
+
+// Materiale vetro ($vetro) con il colore del tema indicato; opaco se richiesto dal sistema.
+@mixin vetro($chiave) {
+  background: sfumato($chiave, map.get(v.$vetro, opacita));
+  $filtro: saturate(map.get(v.$vetro, saturazione)) blur(map.get(v.$vetro, sfocatura));
+  -webkit-backdrop-filter: $filtro;
+  backdrop-filter: $filtro;
+
+  @include con-trasparenza-ridotta {
+    background: colore($chiave);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 }
 

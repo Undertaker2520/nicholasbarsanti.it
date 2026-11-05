@@ -67,6 +67,14 @@ $colori-scuro: (
   ombra: rgba(0, 0, 0, 0.5),
 );
 
+// Con prefers-contrast: more alcuni colori prendono il valore di un altro più contrastato,
+// in entrambi i temi: bordi come quelli dei campi, testi secondari come il testo principale.
+$contrasto-alto: (
+  bordo: campo-bordo,
+  testo-secondario: testo,
+  banda-secondario: banda-testo,
+);
+
 // --- Sfondo decorativo ----------------------------------------------------------
 // Nebulose petrolio sfumate dietro la pagina (src/components/Sfondo.astro), fisse rispetto
 // allo schermo: restano negli angoli della parte di pagina visualizzata mentre si scorre.
@@ -181,7 +189,14 @@ $breakpoint: (
 );
 
 // Intestazione fissa in alto da `medio`: le ancore si fermano sotto di lei.
-$intestazione-altezza: 4.5rem;
+$intestazione-altezza: 3.5rem; // 56 px, come le barre di navigazione Apple
+// Materiale vetro dell'intestazione fissa (livello di navigazione, sopra il contenuto).
+// Opaca con prefers-reduced-transparency o prefers-contrast: more.
+$vetro: (
+  opacita: 80%,
+  sfocatura: 20px,
+  saturazione: 180%,
+);
 $intestazione-riga-spessore: 2px;
 $logo-dimensione: 2.5rem; // icona "NB" nell'intestazione (40 px, come width/height in Intestazione.astro)
 $logo-raggio: math.div($logo-dimensione * 14, 64); // come gli angoli del favicon (rx 14 su 64)
