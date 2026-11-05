@@ -42,6 +42,15 @@
     }
   }
 
+  // Non disponibile, per esempio mentre il modulo viene inviato.
+  &:disabled {
+    background: colore(accento);
+    opacity: v.$opacita-disattivato;
+    transform: none;
+    box-shadow: none;
+    cursor: progress;
+  }
+
   // Variante discreta (schede, domande): più bassa, testo non in grassetto.
   &--piccolo {
     min-height: 2.5rem; // area di tocco ben sopra i 24 px richiesti (WCAG 2.5.8)

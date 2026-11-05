@@ -181,6 +181,8 @@ export const modulo = {
   privacy: 'Uso questi dati solo per risponderti.',
   linkPrivacy: 'Informativa privacy',
   invia: 'Invia il messaggio',
+  /** Testo del pulsante mentre il messaggio parte (con JavaScript). */
+  inviando: 'Invio in corso…',
   /** Campo trappola per lo spam, nascosto: le persone non lo vedono, i bot sì. */
   trappola: 'Non compilare questo campo',
 };

@@ -40,6 +40,13 @@ export const INTESTAZIONE = {
   tolleranzaFondoPx: 2,
 };
 
+/** Modulo di contatto (src/components/ModuloContatto.astro). */
+export const MODULO = {
+  selettoreServizio: '#modulo-servizio',
+  // Pulsante di invio: l'attributo contiene il testo da mostrare mentre il messaggio parte.
+  attributoTestoInvio: 'data-testo-invio',
+};
+
 /** Menu a hamburger su mobile (src/styles/componenti/_intestazione.scss). */
 export const MENU = {
   classeCompatta: 'intestazione--compatta',
