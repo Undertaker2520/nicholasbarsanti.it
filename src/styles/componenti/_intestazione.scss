@@ -43,7 +43,7 @@
   &__logo {
     display: block;
     line-height: 0;
-    border-radius: v.$raggio;
+    border-radius: v.$logo-raggio;
 
     img {
       width: v.$logo-dimensione;
@@ -92,7 +92,7 @@
   background: transparent;
   color: colore(testo);
   border: v.$bordo-spessore solid colore(campo-bordo);
-  border-radius: v.$raggio;
+  border-radius: v.$raggio-pillola;
   cursor: pointer;
 
   @include da(medio) {

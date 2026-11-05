@@ -3,6 +3,8 @@
 // Gli altri file le usano con `@use 'variabili' as v;` e non ridefiniscono valori.
 // =============================================================================
 
+@use 'sass:math';
+
 // --- Font --------------------------------------------------------------------
 
 $font-famiglia: 'Inter';
@@ -165,8 +167,10 @@ $pallino-bordo: 2px; // sotto questa larghezza schede e punti vanno in colonna
 
 $larghezza-massima: 70rem;
 $margine-laterale: clamp(1rem, 4vw, 2rem);
-$raggio: 0.5rem;
-$raggio-pillola: 999px; // angoli completamente arrotondati (pulsanti piccoli)
+// Forme: angoli fissi per le superfici, pillola per i controlli (pulsanti, menu).
+$raggio: 0.75rem; // 12 px: schede e domande frequenti
+$raggio-campo: 0.625rem; // 10 px: campi del modulo
+$raggio-pillola: 999px; // angoli completamente arrotondati
 $bordo-spessore: 1px;
 $focus-spessore: 3px;
 $focus-distanza: 3px;
@@ -180,6 +184,7 @@ $breakpoint: (
 $intestazione-altezza: 4.5rem;
 $intestazione-riga-spessore: 2px;
 $logo-dimensione: 2.5rem; // icona "NB" nell'intestazione (40 px, come width/height in Intestazione.astro)
+$logo-raggio: math.div($logo-dimensione * 14, 64); // come gli angoli del favicon (rx 14 su 64)
 $menu-pulsante-dimensione: 2.75rem; // pulsante hamburger: 44 px, comodo al tocco
 $menu-icona-larghezza: 1.25rem;
 $menu-icona-tratto: 2px;

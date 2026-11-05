@@ -9,7 +9,7 @@
   padding: spazio(xs) spazio(l);
   background: colore(accento);
   color: colore(su-accento);
-  border-radius: v.$raggio;
+  border-radius: v.$raggio-pillola;
   font-weight: v.$peso-forte;
   text-decoration: none;
   // Stesso aspetto anche come <button> (invio del modulo).
@@ -19,7 +19,7 @@
   cursor: pointer;
 
   @include con-movimento {
-    transition: transizioni(breve, background-color, transform, box-shadow);
+    transition: transizioni(breve, background-color, box-shadow), transform movimento(molla);
   }
 
   &:hover {
@@ -32,16 +32,20 @@
     box-shadow: ombra(bassa);
   }
 
+  // Premuto: si rimpicciolisce subito e torna con la molla al rilascio.
   &:active {
-    transform: none;
+    transform: scale(v.$scala-pressione);
     box-shadow: none;
+
+    @include con-movimento {
+      transition: transform movimento(pressione);
+    }
   }
 
-  // Variante discreta (schede): a pillola, più bassa, testo non in grassetto.
+  // Variante discreta (schede, domande): più bassa, testo non in grassetto.
   &--piccolo {
     min-height: 2.5rem; // area di tocco ben sopra i 24 px richiesti (WCAG 2.5.8)
     padding: spazio(xs) spazio(m);
-    border-radius: v.$raggio-pillola;
     font-weight: v.$peso-medio;
     line-height: v.$interlinea-titoli; // una sola riga: niente interlinea da paragrafo
   }

@@ -45,7 +45,7 @@
     background: colore(sfondo);
     color: colore(testo);
     border: v.$bordo-spessore solid colore(campo-bordo);
-    border-radius: v.$raggio;
+    border-radius: v.$raggio-campo;
     font: inherit;
 
     @include con-movimento {

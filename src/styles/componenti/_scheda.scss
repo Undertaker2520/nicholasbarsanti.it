@@ -26,7 +26,7 @@
   border-radius: v.$raggio;
 
   @include con-movimento {
-    transition: transizioni(media, transform, box-shadow, border-color, background-color);
+    transition: transizioni(media, box-shadow, border-color, background-color), transform movimento(molla);
   }
 
   @include al-passaggio {
@@ -34,6 +34,16 @@
     box-shadow: ombra(media);
     border-color: colore(accento);
     background: colore(superficie);
+  }
+
+  // Premuta (il pulsante copre tutta la scheda): si rimpicciolisce appena, come i pulsanti.
+  &:active {
+    transform: scale(v.$scala-pressione-scheda);
+    box-shadow: none;
+
+    @include con-movimento {
+      transition: transform movimento(pressione);
+    }
   }
 
   &__titolo {
@@ -65,7 +75,8 @@
   &__link {
     // Niente sollevamento proprio: un transform sul pulsante lo renderebbe il riferimento
     // dell'area estesa (::after), che si ridurrebbe al pulsante stesso. Si solleva la scheda.
-    &:hover {
+    &:hover,
+    &:active {
       transform: none;
       box-shadow: none;
     }
