@@ -5,10 +5,7 @@
  */
 import $ from 'jquery/slim';
 import { osservazioneDisponibile } from '../utilita.js';
-
-const SELETTORE = '[data-comparsa], [data-comparsa-gruppo] > *';
-const CLASSE_ATTESA = 'in-attesa';
-const SOGLIA_VISIBILITA = 0.1; // compare quando ne è visibile il 10%
+import { COMPARSA } from '../variabili.js';
 
 const sottoLoSchermo = (elemento) => elemento.getBoundingClientRect().top > window.innerHeight;
 
@@ -16,21 +13,21 @@ export function avviaComparsa() {
   if (!osservazioneDisponibile()) return;
 
   // Gli elementi già visibili al caricamento non vengono toccati: nessuno sfarfallio.
-  const $elementi = $(SELETTORE).filter((_, elemento) => sottoLoSchermo(elemento));
+  const $elementi = $(COMPARSA.selettore).filter((_, elemento) => sottoLoSchermo(elemento));
   if (!$elementi.length) return;
 
   const osservatore = new IntersectionObserver(
     (voci) => voci.filter((voce) => voce.isIntersecting).forEach((voce) => mostra(voce.target)),
-    { threshold: SOGLIA_VISIBILITA },
+    { threshold: COMPARSA.sogliaVisibilita },
   );
 
   function mostra(elemento) {
-    $(elemento).removeClass(CLASSE_ATTESA);
+    $(elemento).removeClass(COMPARSA.classeAttesa);
     osservatore.unobserve(elemento);
   }
 
   $elementi
-    .addClass(CLASSE_ATTESA)
+    .addClass(COMPARSA.classeAttesa)
     .each((_, elemento) => osservatore.observe(elemento))
     // Con la tastiera il focus può arrivare prima dello scorrimento: l'elemento compare subito.
     .on('focusin', function () {

@@ -46,6 +46,7 @@ src/
   scripts/
     main.js          punto di ingresso del JavaScript (incluso dal layout)
     moduli/          carosello, comparsa allo scorrimento, intestazione, menu, modulo, sfondo
+    variabili.js     UNICO file con classi, tempi e soglie del JavaScript
     utilita.js       controlli comuni (movimento ridotto, puntatore, un aggiornamento per fotogramma)
   styles/
     _variabili.scss  UNICO file con font, colori, misure e breakpoint
@@ -57,7 +58,7 @@ scripts/
 public/            file generati da `npm run immagini` (da committare)
 ```
 
-Per cambiare colori o font si modifica solo `src/styles/_variabili.scss`.
+Per cambiare colori o font si modifica solo `src/styles/_variabili.scss`; tempi e soglie del JavaScript stanno solo in `src/scripts/variabili.js`.
 
 ## Foto e lavori realizzati
 

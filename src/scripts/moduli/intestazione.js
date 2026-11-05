@@ -4,12 +4,7 @@
  */
 import $ from 'jquery/slim';
 import { perFotogramma } from '../utilita.js';
-
-const CLASSE_STACCATA = 'intestazione--staccata';
-const CLASSE_ATTIVO = 'menu__link--attivo';
-// Una sezione diventa "corrente" quando il suo inizio supera questa frazione dello schermo.
-const LINEA_LETTURA = 0.3;
-const TOLLERANZA_FONDO_PX = 2;
+import { INTESTAZIONE } from '../variabili.js';
 
 export function avviaIntestazione() {
   const $intestazione = $('.intestazione');
@@ -21,11 +16,11 @@ export function avviaIntestazione() {
   const sezioni = $('main > section').toArray();
 
   const aggiorna = () => {
-    $intestazione.toggleClass(CLASSE_STACCATA, window.scrollY > 0);
+    $intestazione.toggleClass(INTESTAZIONE.classeStaccata, window.scrollY > 0);
 
     const corrente = sezioneCorrente(sezioni);
-    $link.removeClass(CLASSE_ATTIVO);
-    $(linkPerSezione.get(corrente?.id) ?? []).addClass(CLASSE_ATTIVO);
+    $link.removeClass(INTESTAZIONE.classeLinkAttivo);
+    $(linkPerSezione.get(corrente?.id) ?? []).addClass(INTESTAZIONE.classeLinkAttivo);
   };
 
   $(window).on('scroll resize', perFotogramma(aggiorna));
@@ -36,9 +31,9 @@ function sezioneCorrente(sezioni) {
   // In fondo alla pagina l'ultima sezione può non raggiungere la linea: è comunque quella corrente.
   const inFondo =
     window.innerHeight + window.scrollY >=
-    document.documentElement.scrollHeight - TOLLERANZA_FONDO_PX;
+    document.documentElement.scrollHeight - INTESTAZIONE.tolleranzaFondoPx;
   if (inFondo) return sezioni.at(-1);
 
-  const linea = window.innerHeight * LINEA_LETTURA;
+  const linea = window.innerHeight * INTESTAZIONE.lineaLettura;
   return sezioni.filter((sezione) => sezione.getBoundingClientRect().top <= linea).at(-1);
 }

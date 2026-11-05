@@ -7,9 +7,7 @@
  */
 import $ from 'jquery/slim';
 import { perFotogramma } from '../utilita.js';
-
-const CLASSE_COMPATTA = 'intestazione--compatta';
-const CLASSE_APERTA = 'intestazione--aperta';
+import { MENU } from '../variabili.js';
 
 export function avviaMenu() {
   const $intestazione = $('[data-intestazione]');
@@ -22,13 +20,13 @@ export function avviaMenu() {
   const pulsanteVisibile = () => $pulsante.is(':visible');
 
   const imposta = (apri) => {
-    $intestazione.toggleClass(CLASSE_APERTA, apri);
+    $intestazione.toggleClass(MENU.classeAperta, apri);
     $pulsante
       .attr('aria-expanded', String(apri))
       .attr('aria-label', $pulsante.data(apri ? 'testo-chiudi' : 'testo-apri'));
   };
 
-  $intestazione.addClass(CLASSE_COMPATTA);
+  $intestazione.addClass(MENU.classeCompatta);
   $pulsante.prop('hidden', false);
   imposta(false);
 

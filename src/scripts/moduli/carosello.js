@@ -18,16 +18,7 @@ import {
   perFotogramma,
   puntatorePreciso,
 } from '../utilita.js';
-
-const CLASSE_ATTIVO = 'carosello--attivo';
-const CLASSE_PALLINO_ATTIVO = 'carosello__pallino--attivo';
-const INTERVALLO_MS = 3000; // ogni quanto passa alla scheda successiva (scelta di Nicholas)
-// Oltre questo tempo uno scorrimento avviato dal codice si considera concluso anche senza
-// l'evento scrollend (browser che non lo supportano).
-const DURATA_MAX_SCORRIMENTO_MS = 900;
-const TOLLERANZA_FINE_PX = 2;
-// Spostamento minimo del dito per considerare un trascinamento orizzontale delle schede.
-const SOGLIA_TRASCINAMENTO_PX = 10;
+import { CAROSELLO } from '../variabili.js';
 
 export function avviaCaroselli() {
   $('[data-carosello]').each((_, carosello) => avviaCarosello($(carosello)));
@@ -39,14 +30,14 @@ function avviaCarosello($carosello) {
   const $pallini = $carosello.find('.carosello__pallino');
   if (!elenco || voci.length < 2 || $pallini.length !== voci.length) return;
 
-  $carosello.addClass(CLASSE_ATTIVO);
+  $carosello.addClass(CAROSELLO.classeAttivo);
   $carosello.find('.carosello__controlli').prop('hidden', false);
 
   // Distanza di ogni scheda dall'inizio della fila, come valore di scrollLeft.
   const posizione = (voce) => voce.offsetLeft - voci[0].offsetLeft;
 
   const indiceCorrente = () => {
-    const fine = elenco.scrollLeft >= elenco.scrollWidth - elenco.clientWidth - TOLLERANZA_FINE_PX;
+    const fine = elenco.scrollLeft >= elenco.scrollWidth - elenco.clientWidth - CAROSELLO.tolleranzaFinePx;
     if (fine) return voci.length - 1;
     const distanze = voci.map((voce) => Math.abs(posizione(voce) - elenco.scrollLeft));
     return distanze.indexOf(Math.min(...distanze));
@@ -64,15 +55,15 @@ function avviaCarosello($carosello) {
   const vaiA = (indice) => {
     scorrimentoDelCodice = true;
     window.clearTimeout(timerFineScorrimento);
-    timerFineScorrimento = window.setTimeout(fineScorrimentoDelCodice, DURATA_MAX_SCORRIMENTO_MS);
+    timerFineScorrimento = window.setTimeout(fineScorrimentoDelCodice, CAROSELLO.durataMaxScorrimentoMs);
     elenco.scrollTo({ left: posizione(voci[indice]), behavior: movimentoRidotto() ? 'auto' : 'smooth' });
   };
 
   $(elenco).on('scrollend', fineScorrimentoDelCodice);
 
   const aggiornaPallini = () => {
-    $pallini.removeClass(CLASSE_PALLINO_ATTIVO).removeAttr('aria-current');
-    $pallini.eq(indiceCorrente()).addClass(CLASSE_PALLINO_ATTIVO).attr('aria-current', 'true');
+    $pallini.removeClass(CAROSELLO.classePallinoAttivo).removeAttr('aria-current');
+    $pallini.eq(indiceCorrente()).addClass(CAROSELLO.classePallinoAttivo).attr('aria-current', 'true');
   };
 
   $(elenco).on('scroll', perFotogramma(aggiornaPallini));
@@ -127,7 +118,7 @@ function ascoltaInterazioni(elenco, alInteragire) {
       const tocco = evento.touches[0];
       const dx = Math.abs(tocco.clientX - inizioTocco.x);
       const dy = Math.abs(tocco.clientY - inizioTocco.y);
-      if (dx > SOGLIA_TRASCINAMENTO_PX && dx > dy) {
+      if (dx > CAROSELLO.sogliaTrascinamentoPx && dx > dy) {
         inizioTocco = null;
         alInteragire();
       }
@@ -155,11 +146,11 @@ function avviaScorrimentoAutomatico({ $carosello, elenco, successiva }) {
   let timer = null;
 
   // Solo dove le schede scorrono davvero (sotto `largo`).
-  const scorribile = () => elenco.scrollWidth > elenco.clientWidth + TOLLERANZA_FINE_PX;
+  const scorribile = () => elenco.scrollWidth > elenco.clientWidth + CAROSELLO.tolleranzaFinePx;
 
   const aggiorna = () => {
     const attivo = !fermato && sospensioni.size === 0 && scorribile();
-    if (attivo && !timer) timer = window.setInterval(successiva, INTERVALLO_MS);
+    if (attivo && !timer) timer = window.setInterval(successiva, CAROSELLO.intervalloMs);
     if (!attivo && timer) {
       window.clearInterval(timer);
       timer = null;
