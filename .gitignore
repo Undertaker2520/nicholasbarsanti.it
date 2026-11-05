@@ -16,3 +16,6 @@ Thumbs.db
 
 # Impostazioni locali di Claude Code
 .claude/
+
+# Screenshot e log dei test nel browser (Playwright)
+.playwright-mcp/
