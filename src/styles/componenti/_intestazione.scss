@@ -16,6 +16,9 @@
     @include con-movimento {
       transition: transizioni(media, box-shadow);
     }
+
+    // Nel passaggio tra le pagine l'intestazione resta ferma: cambia solo il contenuto.
+    view-transition-name: intestazione;
   }
 
   // Aggiunta dal JavaScript appena la pagina scorre.
@@ -67,6 +70,33 @@
 
     &--compatta.intestazione--aperta &__nav {
       display: block;
+    }
+
+    // Il menu cresce dal pulsante (in alto a destra) con una molla vivace e si chiude più in fretta.
+    @include con-movimento {
+      &--compatta &__nav {
+        opacity: 0;
+        transform: scale(v.$scala-comparsa-menu);
+        transform-origin: top right;
+        // allow-discrete dentro la scorciatoia: il minificatore riordina le proprietà separate.
+        transition:
+          transizioni(uscita, opacity, transform),
+          display movimento(uscita) allow-discrete;
+      }
+
+      &--compatta.intestazione--aperta &__nav {
+        opacity: 1;
+        transform: none;
+        transition:
+          opacity movimento(breve),
+          transform movimento(molla-vivace),
+          display movimento(molla-vivace) allow-discrete;
+
+        @starting-style {
+          opacity: 0;
+          transform: scale(v.$scala-comparsa-menu);
+        }
+      }
     }
 
     &--compatta .menu {

@@ -236,6 +236,8 @@ $movimenti: (
   molla: (0.52s, molla), // risposta che si apre
   molla-vivace: (0.52s, molla-vivace), // menu che si apre dal pulsante
   inseguimento: (1.2s, entrata), // le nebulose raggiungono la posizione del mouse
+  pagina-uscita: (0.16s, uscita), // passaggio a un'altra pagina: la vecchia sfuma
+  pagina-entrata: (0.32s, entrata), // e la nuova compare salendo appena
 );
 
 $durata-deriva: 16s; // ciclo della deriva delle nebulose decorative
@@ -243,6 +245,7 @@ $durata-deriva: 16s; // ciclo della deriva delle nebulose decorative
 $scala-pressione: 0.97; // pulsante premuto
 $scala-pressione-scheda: 0.985; // scheda premuta: grande, quindi si riduce meno
 $scala-comparsa-menu: 0.96; // il menu si apre crescendo da qui
+$spostamento-pagina: 0.5rem; // la pagina nuova sale di questa distanza mentre compare
 $opacita-disattivato: 0.42; // pulsante non disponibile (per esempio durante l'invio)
 
 $comparsa-spostamento: 1.25rem; // gli elementi salgono di questa distanza mentre compaiono

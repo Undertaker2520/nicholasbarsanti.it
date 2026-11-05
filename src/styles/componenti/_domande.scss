@@ -23,6 +23,31 @@
     border-color: colore(accento);
   }
 
+  // La risposta si apre con la molla e si richiude più in fretta, dove il browser sa animare
+  // ::details-content fino ad `auto` (interpolate-size); altrove compare di colpo come prima.
+  @include con-movimento {
+    interpolate-size: allow-keywords;
+
+    &::details-content {
+      block-size: 0;
+      overflow-y: clip;
+      opacity: 0;
+      // allow-discrete dentro la scorciatoia: il minificatore riordina le proprietà separate.
+      transition:
+        transizioni(uscita, block-size, opacity),
+        content-visibility movimento(uscita) allow-discrete;
+    }
+
+    &[open]::details-content {
+      block-size: auto;
+      opacity: 1;
+      transition:
+        block-size movimento(molla),
+        opacity movimento(breve),
+        content-visibility movimento(molla) allow-discrete;
+    }
+  }
+
   // La domanda è il controllo: tutta la riga è cliccabile, il segno a destra indica lo stato.
   &__titolo {
     position: relative;

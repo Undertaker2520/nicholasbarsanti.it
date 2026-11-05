@@ -45,6 +45,35 @@ main {
   flex: 1;
 }
 
+// Passaggio tra le pagine del sito (privacy, conferma, 404): la vecchia sfuma, la nuova
+// compare salendo appena. Solo nei browser con le View Transition tra documenti.
+@include con-movimento {
+  @view-transition {
+    navigation: auto;
+  }
+
+  ::view-transition-old(root) {
+    animation: pagina-uscita movimento(pagina-uscita) both;
+  }
+
+  ::view-transition-new(root) {
+    animation: pagina-entrata movimento(pagina-entrata) both;
+  }
+}
+
+@keyframes pagina-uscita {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes pagina-entrata {
+  from {
+    opacity: 0;
+    transform: translateY(v.$spostamento-pagina);
+  }
+}
+
 h1,
 h2,
 h3 {
