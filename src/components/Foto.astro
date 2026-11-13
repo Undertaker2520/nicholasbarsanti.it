@@ -1,7 +1,7 @@
 ---
-import type { ImageMetadata } from 'astro';
 import { Picture } from 'astro:assets';
 import { sito } from '../config';
+import { foto, QUALITA_FOTO } from '../lib/foto';
 
 interface Props {
   alt: string;
@@ -9,12 +9,7 @@ interface Props {
 
 const { alt } = Astro.props;
 
-// La foto è facoltativa: se src/assets/nicholas.jpg non esiste si mostra il segnaposto.
-const trovate = import.meta.glob<{ default: ImageMetadata }>('../assets/nicholas.jpg', {
-  eager: true,
-});
-const foto = Object.values(trovate)[0]?.default;
-
+// La foto è facoltativa (src/lib/foto.ts): se manca si mostra il segnaposto.
 const iniziali = sito.nome
   .split(' ')
   .map((parola) => parola[0])
@@ -25,8 +20,6 @@ const sizes = '(min-width: 40rem) 12.5rem, 10rem';
 // 10rem e 12.5rem a densità 1x e 2x, senza superare la larghezza dell'originale
 // (le foto non vengono mai ingrandite); 400 px è il massimo pubblicato.
 const LARGHEZZE = [160, 200, 320, 400];
-// Qualità più alta del predefinito (circa 50): capelli e tessuti restano definiti.
-const QUALITA = 80;
 const massima = Math.min(foto?.width ?? 0, Math.max(...LARGHEZZE));
 const widths = [...LARGHEZZE.filter((larghezza) => larghezza < massima), massima];
 ---
@@ -41,7 +34,7 @@ const widths = [...LARGHEZZE.filter((larghezza) => larghezza < massima), massima
       width={massima}
       widths={widths}
       sizes={sizes}
-      quality={QUALITA}
+      quality={QUALITA_FOTO}
       priority
     />
   ) : (

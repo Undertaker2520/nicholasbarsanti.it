@@ -1,16 +1,28 @@
 ---
 /**
- * "Dal progetto al sito online": un portatile disegnato in HTML e CSS (nessuna immagine).
+ * "Dal progetto al sito online": un portatile disegnato in HTML e CSS, con un telefono accanto.
  * Sullo schermo una pagina d'esempio, disegnata a blocchi, e le fasi della costruzione.
  *
  * Senza JavaScript o con movimento ridotto: portatile aperto, pagina finita, fasi elencate sotto.
  * Con JavaScript (src/scripts/moduli/costruzione.js) la scena resta ferma mentre si scorre:
- * il coperchio si apre e sullo schermo la pagina si costruisce una fase per volta, con la
- * fase corrente scritta dentro lo schermo. Stili in src/styles/componenti/_costruzione.scss.
+ * il coperchio si apre e la pagina si costruisce una fase per volta (Progetto: struttura a
+ * tratteggio; Design: colori, foto e telefono; Protezione: scansione e scudo; Online: indirizzo,
+ * caricamento e spunta), con la fase corrente scritta dentro lo schermo.
+ * Stili in src/styles/componenti/_costruzione.scss.
  */
+import { Picture } from 'astro:assets';
 import { costruzione } from '../data/testi';
+import { foto, QUALITA_FOTO } from '../lib/foto';
 
 const { indirizzo, fasi } = costruzione;
+
+// Ritratto piccolo dentro i cerchi della pagina d'esempio (circa 150 px sul portatile, meno sul telefono).
+const ritratto = {
+  widths: [160, 320],
+  sizes: '10rem',
+  formats: ['avif', 'webp'] as const,
+  quality: QUALITA_FOTO,
+};
 ---
 
 <div class="costruzione" data-costruzione>
@@ -32,6 +44,7 @@ const { indirizzo, fasi } = costruzione;
                   <span class="anteprima__caricamento"></span>
                 </div>
                 <div class="anteprima__pagina">
+                  <span class="anteprima__griglia"></span>
                   <div class="anteprima__intestazione">
                     <span class="anteprima__logo"></span>
                     <span class="anteprima__menu"></span>
@@ -44,7 +57,9 @@ const { indirizzo, fasi } = costruzione;
                       <span class="anteprima__riga anteprima__riga--corta"></span>
                       <span class="anteprima__pulsante"></span>
                     </div>
-                    <span class="anteprima__foto"></span>
+                    <span class="anteprima__foto">
+                      {foto && <Picture class="anteprima__ritratto" src={foto} alt="" loading="lazy" {...ritratto} />}
+                    </span>
                   </div>
                   <div class="anteprima__schede">
                     <span></span>
@@ -52,11 +67,35 @@ const { indirizzo, fasi } = costruzione;
                     <span></span>
                   </div>
                 </div>
+                <span class="anteprima__scansione"></span>
+                <span class="anteprima__scudo">
+                  <svg viewBox="0 0 24 24">
+                    <path
+                      class="anteprima__scudo-forma"
+                      d="M12 2 4 5.2v6.1c0 5 3.4 9.3 8 10.7 4.6-1.4 8-5.7 8-10.7V5.2L12 2Z"></path>
+                    <path class="anteprima__scudo-spunta" d="m8.4 12.2 2.5 2.5 4.8-5"></path>
+                  </svg>
+                </span>
               </div>
             </div>
           </div>
         </div>
         <div class="portatile__base"></div>
+
+        <!-- La stessa pagina da telefono (fase Design): solo forme, come quella sul portatile. -->
+        <div class="telefono" aria-hidden="true">
+          <div class="telefono__schermo">
+            <span class="telefono__isola"></span>
+            <span class="telefono__foto">
+              {foto && <Picture class="anteprima__ritratto" src={foto} alt="" loading="lazy" {...ritratto} />}
+            </span>
+            <span class="telefono__riga telefono__riga--titolo"></span>
+            <span class="telefono__riga telefono__riga--titolo telefono__riga--corta"></span>
+            <span class="telefono__riga"></span>
+            <span class="telefono__pulsante"></span>
+            <span class="telefono__scheda"></span>
+          </div>
+        </div>
 
         <ol class="punti punti--numerati costruzione__fasi">
           {

@@ -128,33 +128,54 @@ $animata: '.costruzione--animata';
   }
 }
 
-// --- Pagina d'esempio sullo schermo -----------------------------------------------------
-// Colori in variabili locali: nelle prime fasi diventano tutti il grigio dello scheletro e,
-// cambiando, le transizioni li fanno sfumare verso i colori veri.
+// --- Pagina d'esempio (sul portatile e sul telefono) -------------------------------------
+// Colori in variabili locali: nella fase Progetto diventano trasparenti (resta il tratteggio)
+// e, cambiando, le transizioni li fanno sfumare verso i colori veri.
+// Le misure in cqw sono la geometria del disegno, in proporzione alla larghezza del portatile.
 
-.anteprima {
+.costruzione {
   --a-accento: #{colore(accento)};
   --a-testo: #{colore(testo)};
   --a-tenue: #{sfumato(testo-secondario, 35%)};
   --a-figura: #{sfumato(accento, 55%)};
   --a-bordo: #{colore(bordo)};
+  --a-tratto: transparent;
+}
 
+.anteprima,
+.telefono {
+  @include con-movimento {
+    transition: transizioni(media, opacity), transform movimento(telefono);
+
+    *,
+    *::before,
+    *::after {
+      transition:
+        transizioni(media, background-color, border-color, box-shadow, outline-color, color, opacity),
+        transform movimento(molla);
+    }
+  }
+}
+
+// Blocchi della pagina: con il tratteggio (trasparente a pagina finita) per la fase Progetto.
+$blocchi: '.anteprima__logo', '.anteprima__menu', '.anteprima__riga', '.anteprima__pulsante',
+  '.anteprima__foto', '.anteprima__schede > span', '.anteprima__schede > span::before',
+  '.anteprima__schede > span::after', '.telefono__foto', '.telefono__riga', '.telefono__pulsante',
+  '.telefono__scheda';
+
+#{$blocchi} {
+  outline: v.$costruzione-tratto dashed var(--a-tratto);
+  outline-offset: -(v.$costruzione-tratto);
+}
+
+.anteprima {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
   background: colore(sfondo);
   font-size: 1.5cqw;
   line-height: 1;
-
-  @include con-movimento {
-    transition: transizioni(media, opacity);
-
-    *,
-    *::before,
-    *::after {
-      transition: transizioni(media, background-color, border-color, box-shadow, color, opacity), transform movimento(molla);
-    }
-  }
 }
 
 .anteprima__barra {
@@ -230,6 +251,7 @@ $animata: '.costruzione--animata';
 }
 
 .anteprima__pagina {
+  position: relative;
   display: grid;
   align-content: start;
   gap: 3cqw;
@@ -292,7 +314,38 @@ $animata: '.costruzione--animata';
   border-radius: v.$raggio-pillola;
 }
 
-// Ritratto stilizzato (testa e spalle) dentro il cerchio con l'anello d'accento.
+// Colonne della griglia d'impaginazione, visibili solo nella fase Progetto.
+.anteprima__griglia {
+  position: absolute;
+  inset: 0 5cqw;
+  background: repeating-linear-gradient(
+    90deg,
+    #{sfumato(accento, v.$costruzione-guide-intensita)} 0 13.5cqw,
+    transparent 13.5cqw 16.1cqw
+  );
+  opacity: 0;
+  pointer-events: none;
+}
+
+// Ritratto stilizzato (testa e spalle) dentro il cerchio con l'anello d'accento; sopra, la foto
+// vera (se c'è), che compare dalla fase Design.
+.anteprima__ritratto {
+  position: absolute;
+  inset: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.anteprima__foto,
+.telefono__foto {
+  position: relative;
+  overflow: hidden;
+}
+
 .anteprima__foto {
   width: 16cqw;
   aspect-ratio: 1;
@@ -399,6 +452,11 @@ $animata: '.costruzione--animata';
 }
 
 // --- Costruzione fase per fase ----------------------------------------------------------------
+// Lo stato finale è quello predefinito: qui si riporta indietro ciò che non è ancora costruito
+// (`prima-della-fase`) e si aggiungono le piccole sequenze che partono entrando in una fase.
+
+$ritardi: v.$costruzione-ritardi;
+$altezza-schermo: calc(#{v.$portatile-coperchio-altezza} - 2 * #{v.$portatile-cornice});
 
 // Fase 0: coperchio che si apre, schermo spento.
 @include prima-della-fase(1) {
@@ -407,22 +465,30 @@ $animata: '.costruzione--animata';
   }
 }
 
-// Progetto: solo la struttura, in grigio.
+// Progetto: solo la struttura, a tratteggio sulla griglia; niente colori, foto né telefono.
 @include prima-della-fase(2) {
-  .anteprima {
-    --a-accento: #{colore(portatile-scheletro)};
-    --a-testo: #{colore(portatile-scheletro)};
-    --a-tenue: #{colore(portatile-scheletro)};
-    --a-figura: #{colore(portatile-scheletro)};
-    --a-bordo: #{colore(portatile-scheletro)};
+  --a-accento: transparent;
+  --a-testo: transparent;
+  --a-tenue: transparent;
+  --a-figura: transparent;
+  --a-bordo: transparent;
+  --a-tratto: #{colore(portatile-guida)};
+
+  .anteprima__griglia {
+    opacity: 1;
   }
 
-  .anteprima__foto {
-    box-shadow: none;
+  .anteprima__ritratto {
+    opacity: 0;
+  }
+
+  .telefono {
+    opacity: 0;
+    transform: translateY(30%);
   }
 }
 
-// Protezione: compare il lucchetto.
+// Protezione: lucchetto nella barra.
 @include prima-della-fase(3) {
   .anteprima__lucchetto {
     opacity: 0;
@@ -430,7 +496,7 @@ $animata: '.costruzione--animata';
   }
 }
 
-// Online: indirizzo e spunta, dopo una barra di caricamento rapidissima.
+// Online: indirizzo e spunta.
 @include prima-della-fase(4) {
   .anteprima__dominio {
     opacity: 0;
@@ -442,9 +508,108 @@ $animata: '.costruzione--animata';
   }
 }
 
+// Protezione, mentre è la fase corrente: pagina attenuata e scudo al centro.
+#{$animata}[data-fase='3'] {
+  .anteprima__pagina {
+    opacity: v.$costruzione-pagina-attenuata;
+  }
+
+  .anteprima__scudo {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @include con-movimento {
-  #{$animata}[data-fase='#{v.$costruzione-fasi}'] .anteprima__caricamento {
-    animation: caricamento movimento(caricamento) both;
+  // Progetto: i blocchi compaiono uno dopo l'altro.
+  $sequenza: '.anteprima__logo', '.anteprima__menu', '.anteprima__testi > :nth-child(1)',
+    '.anteprima__testi > :nth-child(2)', '.anteprima__testi > :nth-child(3)',
+    '.anteprima__testi > :nth-child(4)', '.anteprima__testi > :nth-child(5)', '.anteprima__foto',
+    '.anteprima__schede > :nth-child(1)', '.anteprima__schede > :nth-child(2)',
+    '.anteprima__schede > :nth-child(3)';
+
+  @each $blocco in $sequenza {
+    #{$animata}[data-fase='1'] #{$blocco} {
+      animation: blocco-entra movimento(blocco) both;
+      animation-delay: (list.index($sequenza, $blocco) - 1) * map.get($ritardi, blocchi);
+    }
+  }
+
+  // Protezione: la scansione attraversa lo schermo, poi arriva lo scudo.
+  #{$animata}[data-fase='3'] {
+    .anteprima__scansione {
+      animation: scansione movimento(scansione) both;
+    }
+
+    .anteprima__scudo {
+      transition:
+        opacity movimento(breve),
+        transform movimento(scudo);
+      transition-delay: map.get($ritardi, scudo);
+    }
+  }
+
+  // Online: l'indirizzo si scrive, la barra di caricamento corre, la pagina si ricarica in un
+  // lampo e la spunta arriva con un piccolo rimbalzo.
+  #{$animata}[data-fase='#{v.$costruzione-fasi}'] {
+    .anteprima__dominio {
+      animation: digitazione movimento(digitazione) both;
+    }
+
+    .anteprima__caricamento {
+      animation: caricamento movimento(caricamento) both;
+    }
+
+    @for $i from 2 through 4 {
+      // Figli della pagina: 1 è la griglia, poi intestazione, apertura e schede.
+      .anteprima__pagina > :nth-child(#{$i}) {
+        animation: ricarica movimento(ricarica) both;
+        animation-delay: map.get($ritardi, ricarica) + ($i - 2) * map.get($ritardi, ricarica-passo);
+      }
+    }
+
+    .anteprima__spunta {
+      transition:
+        opacity movimento(breve),
+        transform movimento(spunta);
+      transition-delay: map.get($ritardi, spunta);
+    }
+  }
+}
+
+@keyframes blocco-entra {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+}
+
+@keyframes scansione {
+  from {
+    opacity: 1;
+    transform: translateY(-100%);
+  }
+
+  85% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY($altezza-schermo);
+  }
+}
+
+@keyframes digitazione {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+}
+
+@keyframes ricarica {
+  from {
+    opacity: 0;
+    transform: translateY(1.5cqw);
   }
 }
 
@@ -463,4 +628,126 @@ $animata: '.costruzione--animata';
     transform: scaleX(1);
     opacity: 0;
   }
+}
+
+// --- Scansione e scudo (fase Protezione) ----------------------------------------------------
+
+.anteprima__scansione {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 8cqw;
+  background: linear-gradient(transparent, #{sfumato(accento, 22%)});
+  border-bottom: 0.3cqw solid colore(accento);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.anteprima__scudo {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  width: 22cqw;
+  height: 22cqw;
+  margin: auto; // al centro dello schermo
+  background: radial-gradient(closest-side, #{sfumato(accento, 20%)}, transparent);
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0.6);
+
+  svg {
+    width: 55%;
+  }
+}
+
+.anteprima__scudo-forma {
+  fill: colore(accento);
+}
+
+.anteprima__scudo-spunta {
+  fill: none;
+  stroke: colore(su-accento);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+// --- Telefono (dalla fase Design) -------------------------------------------------------------
+
+.telefono {
+  position: absolute;
+  top: calc(#{v.$portatile-coperchio-altezza} + #{v.$portatile-base-altezza} - #{map.get(v.$telefono, altezza)});
+  right: calc(-1 * #{map.get(v.$telefono, sporgenza)});
+  width: map.get(v.$telefono, larghezza);
+  height: map.get(v.$telefono, altezza);
+  padding: map.get(v.$telefono, cornice);
+  background: colore(portatile-cornice);
+  border-radius: map.get(v.$telefono, raggio);
+  box-shadow:
+    0 0 0 v.$bordo-spessore colore(portatile-scocca),
+    ombra(media);
+}
+
+.telefono__schermo {
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  gap: 1cqw;
+  height: 100%;
+  padding: 1cqw 1.4cqw;
+  overflow: hidden;
+  background: colore(sfondo);
+  border-radius: calc(#{map.get(v.$telefono, raggio)} - #{map.get(v.$telefono, cornice)});
+}
+
+.telefono__isola {
+  width: 4cqw;
+  height: 1cqw;
+  margin-bottom: 1cqw;
+  background: colore(portatile-cornice);
+  border-radius: v.$raggio-pillola;
+}
+
+.telefono__foto {
+  width: 6cqw;
+  aspect-ratio: 1;
+  background:
+    radial-gradient(circle at 50% 40%, var(--a-figura) 0 18%, transparent 19%),
+    radial-gradient(ellipse 34% 26% at 50% 100%, var(--a-figura) 0 98%, transparent 100%),
+    colore(superficie);
+  border-radius: 50%;
+  box-shadow: 0 0 0 0.25cqw var(--a-accento);
+}
+
+.telefono__riga {
+  justify-self: stretch;
+  height: 0.8cqw;
+  background: var(--a-tenue);
+  border-radius: v.$raggio-pillola;
+
+  &--titolo {
+    height: 1.5cqw;
+    background: var(--a-testo);
+  }
+
+  &--corta {
+    justify-self: center;
+    width: 70%;
+  }
+}
+
+.telefono__pulsante {
+  width: 6cqw;
+  height: 1.8cqw;
+  margin-top: 0.4cqw;
+  background: var(--a-accento);
+  border-radius: v.$raggio-pillola;
+}
+
+.telefono__scheda {
+  justify-self: stretch;
+  height: 7cqw;
+  margin-top: 0.6cqw;
+  border: v.$bordo-spessore solid var(--a-bordo);
+  border-radius: 0.8cqw;
 }

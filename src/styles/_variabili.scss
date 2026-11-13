@@ -45,11 +45,11 @@ $colori-chiaro: (
   banda-secondario: #d6e9ea,
   ombra: rgba(15, 50, 55, 0.14),
   // Portatile disegnato ("Dal progetto al sito online"): alluminio, cornice nera dello
-  // schermo e blocchi grigi della pagina ancora da costruire.
+  // schermo e tratteggio della pagina ancora da costruire.
   portatile-scocca: #c3c9cd,
   portatile-scocca-chiaro: #e4e8ea,
   portatile-cornice: #101314,
-  portatile-scheletro: #e2e7e8,
+  portatile-guida: #8f9ca2, // tratteggio della struttura (fase Progetto)
 );
 
 // Tema scuro grafite: neutri caldi e morbidi invece del nero, accento petrolio meno saturo
@@ -74,7 +74,7 @@ $colori-scuro: (
   portatile-scocca: #50585d,
   portatile-scocca-chiaro: #6c757a,
   portatile-cornice: #060707,
-  portatile-scheletro: #2b3134,
+  portatile-guida: #66737a,
 );
 
 // Con prefers-contrast: more alcuni colori prendono il valore di un altro più contrastato,
@@ -235,6 +235,28 @@ $portatile-angolo-chiuso: -90deg; // coperchio chiuso (0deg: aperto, dritto)
 // Scena con l'animazione: alta quanto questo, il portatile resta fermo mentre si scorre.
 $costruzione-scena-altezza: (piccola: 230svh, grande: 280svh);
 $costruzione-fasi: 4; // quante fasi ha `costruzione.fasi` in src/data/testi.ts
+
+// Telefono accanto al portatile (fase Design): appoggiato sul piano, sporge a destra.
+$telefono: (
+  larghezza: 15cqw,
+  altezza: 32.5cqw, // proporzioni 9 : 19.5
+  sporgenza: 4cqw,
+  cornice: 0.7cqw,
+  raggio: 2.6cqw,
+);
+
+// Effetti delle fasi. Tratteggio e griglia (Progetto), pagina attenuata sotto lo scudo
+// (Protezione) e ritardi: ogni fase è una piccola sequenza che parte quando la si raggiunge.
+$costruzione-tratto: 0.2cqw;
+$costruzione-guide-intensita: 9%; // colonne della griglia d'impaginazione, in petrolio
+$costruzione-pagina-attenuata: 0.3;
+$costruzione-ritardi: (
+  blocchi: 45ms, // tra un blocco e il successivo mentre compare la struttura
+  scudo: 0.35s, // lo scudo arriva quando la scansione è a metà
+  ricarica: 0.3s, // la pagina si ricarica appena la barra di caricamento parte
+  ricarica-passo: 40ms,
+  spunta: 0.8s, // a caricamento finito
+);
 // Riquadro della fase: sotto il portatile su mobile (lo schermo è troppo piccolo per testo
 // leggibile senza coprire la pagina), dentro lo schermo da `medio`.
 $costruzione-scheda-larghezza: (piccola: 100%, grande: 64%);
@@ -253,6 +275,10 @@ $curve: (
   molla: linear(0, 0.0392, 0.1285, 0.2385, 0.3517, 0.4587, 0.5547, 0.638, 0.7085, 0.7672, 0.8153,
     0.8543, 0.8856, 0.9106, 0.9304, 0.946, 0.9582, 0.9677, 0.9752, 0.9809, 0.9854, 0.9888, 0.9915,
     0.9935, 0.995, 0.9962, 0.9971, 0.9978, 0.9984, 0.9988, 1),
+  // Rimbalzo 0.3: solo per la conferma finale ("online"), mai per i controlli.
+  molla-gioiosa: linear(0, 0.0501, 0.1692, 0.3198, 0.4761, 0.6213, 0.7461, 0.8469, 0.9234, 0.9778,
+    1.0135, 1.0343, 1.044, 1.0459, 1.0428, 1.0369, 1.0299, 1.0228, 1.0162, 1.0107, 1.0063, 1.003,
+    1.0006, 0.9991, 0.9983, 0.9979, 0.9979, 0.9981, 0.9984, 0.9987, 1),
   molla-vivace: linear(0, 0.0364, 0.1233, 0.235, 0.3543, 0.4702, 0.5762, 0.6691, 0.7477, 0.8125,
     0.8644, 0.9051, 0.9362, 0.9593, 0.9761, 0.988, 0.9959, 1.0011, 1.0041, 1.0057, 1.0063, 1.0062,
     1.0057, 1.0051, 1.0043, 1.0036, 1.0029, 1.0023, 1.0017, 1.0013, 1),
@@ -274,6 +300,13 @@ $movimenti: (
   pagina-entrata: (0.32s, entrata), // e la nuova compare salendo appena
   coperchio: (0.16s, entrata), // il coperchio segue lo scorrimento con un minimo di morbidezza
   caricamento: (0.6s, entrata), // barra di caricamento della pagina d'esempio: in un lampo
+  blocco: (0.52s, molla), // un blocco della struttura che compare
+  telefono: (0.74s, molla), // il telefono sale accanto al portatile
+  scansione: (1.4s, standard), // la linea di controllo attraversa lo schermo
+  scudo: (0.52s, molla-vivace),
+  digitazione: (0.5s, standard), // l'indirizzo che si scrive nella barra
+  ricarica: (0.4s, entrata), // la pagina ricompare, veloce
+  spunta: (0.82s, molla-gioiosa),
 );
 
 $durata-deriva: 16s; // ciclo della deriva delle nebulose decorative
