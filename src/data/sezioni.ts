@@ -11,6 +11,7 @@ export interface Sezione {
 }
 
 export const sezioni = {
+  costruzione: { id: 'costruzione', etichetta: 'Dal progetto al sito online' },
   chiSono: { id: 'chi-sono', etichetta: 'Chi sono' },
   servizi: { id: 'servizi', etichetta: 'Servizi', titolo: 'Cosa posso fare per te' },
   comeLavoro: { id: 'come-lavoro', etichetta: 'Come lavoro' },

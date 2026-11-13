@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Apertura from '../components/Apertura.astro';
+import Costruzione from '../components/Costruzione.astro';
 import Sezione from '../components/Sezione.astro';
 import Scheda from '../components/Scheda.astro';
 import Carosello from '../components/Carosello.astro';
@@ -30,6 +31,10 @@ const mostraLavori = sito.mostraLavori && lavori.length > 0;
 
 <Base datiStrutturati={datiStrutturati}>
   <Apertura />
+
+  <Sezione sezione={sezioni.costruzione}>
+    <Costruzione />
+  </Sezione>
 
   <Sezione sezione={sezioni.chiSono}>
     {chiSono.map((paragrafo) => <p data-comparsa>{paragrafo}</p>)}

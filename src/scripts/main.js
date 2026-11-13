@@ -6,6 +6,7 @@
 import $ from 'jquery/slim';
 import { avviaCaroselli } from './moduli/carosello.js';
 import { avviaComparsa } from './moduli/comparsa.js';
+import { avviaCostruzione } from './moduli/costruzione.js';
 import { avviaIntestazione } from './moduli/intestazione.js';
 import { avviaMenu } from './moduli/menu.js';
 import { avviaModulo } from './moduli/modulo.js';
@@ -20,6 +21,7 @@ $(() => {
 
   if (!movimentoRidotto()) {
     avviaComparsa();
+    avviaCostruzione();
     avviaSfondo();
   }
 });

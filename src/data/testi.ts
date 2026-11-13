@@ -122,6 +122,27 @@ export const perche: readonly Punto[] = [
   },
 ];
 
+/**
+ * Scena del portatile (src/components/Costruzione.astro): il sito si costruisce sullo schermo,
+ * una fase per volta durante lo scorrimento. Le frasi riprendono solo fatti già scritti nel sito.
+ */
+export const costruzione = {
+  /** Indirizzo d'esempio nella barra del browser disegnato sullo schermo. */
+  indirizzo: 'iltuosito.it',
+  fasi: [
+    { titolo: 'Progetto.', testo: 'Partiamo da cosa ti serve: pagine, contenuti e contatti.' },
+    {
+      titolo: 'Design.',
+      testo: 'Colori, testi e foto curati in ogni dettaglio, perfetti anche da telefono.',
+    },
+    {
+      titolo: 'Protezione.',
+      testo: 'Aggiornamenti automatici, backup e protezioni fin dal primo giorno.',
+    },
+    { titolo: 'Online.', testo: 'Veloce da caricare e facile da aggiornare, anche da solo.' },
+  ] satisfies readonly Punto[],
+};
+
 /** Solo lavori veri. La sezione compare se `sito.mostraLavori` è true e l'elenco non è vuoto. */
 export const lavori: readonly Lavoro[] = [];
 

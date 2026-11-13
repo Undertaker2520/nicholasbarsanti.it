@@ -7,7 +7,7 @@ Il sito stesso è una dimostrazione di competenza: deve essere veloce, accessibi
 ## Tecnologia
 
 - **Astro** con output completamente statico (`output: 'static'`). Nessun framework UI (niente React, Vue, ecc.).
-- **JavaScript solo come miglioramento progressivo**: senza JS la pagina è completa e funzionante (menu compreso). Oggi il JS gestisce il carosello delle schede su mobile (pallini e scorrimento automatico ogni 3 secondi che si ferma alla prima interazione con le schede; **nessun pulsante pausa, scelta di Nicholas**, consapevole del rischio WCAG 2.2.2; l'aggancio è CSS scroll-snap con una scheda per gesto), la comparsa degli elementi durante lo scorrimento, l'intestazione (ombra, voce di menu attiva) e lo sfondo che segue il mouse.
+- **JavaScript solo come miglioramento progressivo**: senza JS la pagina è completa e funzionante (menu compreso). Oggi il JS gestisce il carosello delle schede su mobile (pallini e scorrimento automatico ogni 3 secondi che si ferma alla prima interazione con le schede; **nessun pulsante pausa, scelta di Nicholas**, consapevole del rischio WCAG 2.2.2; l'aggancio è CSS scroll-snap con una scheda per gesto), la scena del portatile (coperchio e fasi seguono lo scorrimento), la comparsa degli elementi durante lo scorrimento, l'intestazione (ombra, voce di menu attiva) e lo sfondo che segue il mouse.
 - Quando serve JavaScript si usa **jQuery**, installato via npm e incluso nel bundle di Astro come file esterno: mai da CDN, mai script inline. Si usa la build **slim** (`jquery/slim`). Codice in `src/scripts/`, un modulo per funzione; classi, tempi e soglie in un unico file (`src/scripts/variabili.js`), come le variabili SCSS.
 - Stili scritti a mano in **SCSS** (compilato da Vite con `sass`), in file separati, niente Tailwind. **Font, colori e altre variabili di design stanno in un unico file dedicato** (`src/styles/_variabili.scss`); gli altri file li usano, non ridefiniscono valori. Impostare `build.inlineStylesheets: 'never'` così la Content Security Policy non richiede `unsafe-inline`.
 - Dipendenze ammesse: `astro`, `@astrojs/sitemap`, `sass` (sviluppo) e `jquery` (solo quando serve JS). Qualsiasi altra dipendenza va proposta e motivata prima di installarla.
@@ -62,14 +62,15 @@ Intestazioni definite in `src/sicurezza/intestazioni.ts` (unica fonte): in build
 
 1. **Intestazione**: a sinistra il logo (l'icona "NB" del favicon, con alt "Nicholas Barsanti", link alla home); a destra i link interni Chi sono, Servizi, Come lavoro, Domande, Contatti (ancore alla stessa pagina). Sotto i 640 px menu a hamburger (pulsante mostrato dal JavaScript; senza JavaScript il menu resta visibile).
 2. **Apertura**: titolo, sottotitolo, pulsante "Scrivimi", foto.
-3. **Chi sono**
-4. **Cosa posso fare per te**: tre schede uguali; al passaggio del mouse ognuna si solleva, con sfondo tenue e bordo petrolio (scelta di Nicholas: nessuna scheda evidenziata di default).
-5. **Come lavoro**: quattro passi numerati.
-6. **Perché lavorare con me**: tre punti brevi.
-7. **Lavori realizzati**: sezione predisposta ma **nascosta** finché non c'è almeno un lavoro vero (un flag in un file di configurazione la attiva). Non inventare progetti.
-8. **Domande frequenti**: cinque domande con `<details>`/`<summary>`, senza JavaScript.
-9. **Contatti**: invito, modulo di contatto (Netlify Forms) e, sotto, l'email e LinkedIn come alternativa.
-10. **Piè di pagina**, con link alla pagina `/privacy`.
+3. **Dal progetto al sito online**: un portatile disegnato in HTML e CSS (nessuna immagine) che, durante lo scorrimento, si apre e mostra la costruzione di un sito d'esempio in quattro fasi (Progetto, Design, Protezione, Online), con la fase corrente scritta dentro lo schermo (sotto il portatile su mobile). Senza JavaScript o con movimento ridotto: portatile aperto con il sito finito e le fasi elencate sotto.
+4. **Chi sono**
+5. **Cosa posso fare per te**: tre schede uguali; al passaggio del mouse ognuna si solleva, con sfondo tenue e bordo petrolio (scelta di Nicholas: nessuna scheda evidenziata di default).
+6. **Come lavoro**: quattro passi numerati.
+7. **Perché lavorare con me**: tre punti brevi.
+8. **Lavori realizzati**: sezione predisposta ma **nascosta** finché non c'è almeno un lavoro vero (un flag in un file di configurazione la attiva). Non inventare progetti.
+9. **Domande frequenti**: cinque domande con `<details>`/`<summary>`, senza JavaScript.
+10. **Contatti**: invito, modulo di contatto (Netlify Forms) e, sotto, l'email e LinkedIn come alternativa.
+11. **Piè di pagina**, con link alla pagina `/privacy`.
 
 Pagina aggiuntiva `/privacy`: informativa breve e chiara (titolare Nicholas Barsanti, contatto info@nicholasbarsanti.it; il sito non usa cookie né analytics; l'hosting Netlify registra dati tecnici di accesso come l'indirizzo IP nei log del server; i dati inviati con il modulo (raccolti da Netlify Forms) o via email sono usati solo per rispondere). Da segnalare come bozza da far verificare.
 
@@ -81,6 +82,13 @@ Registro: si dà del **tu** al visitatore.
 **Titolo:** Siti web curati e sicuri per attività e professionisti
 **Sottotitolo:** Realizzo siti veloci, facili da aggiornare e protetti, per chi lavora a Lucca e dintorni. Parli direttamente con chi li costruisce, dall'inizio alla consegna.
 **Pulsante:** Scrivimi
+
+### Dal progetto al sito online
+(Testi nuovi, ripresi da frasi già presenti nel sito.) Indirizzo d'esempio nello schermo: iltuosito.it.
+1. **Progetto.** Partiamo da cosa ti serve: pagine, contenuti e contatti.
+2. **Design.** Colori, testi e foto curati in ogni dettaglio, perfetti anche da telefono.
+3. **Protezione.** Aggiornamenti automatici, backup e protezioni fin dal primo giorno.
+4. **Online.** Veloce da caricare e facile da aggiornare, anche da solo.
 
 ### Chi sono
 Sono Nicholas, programmo professionalmente dal 2021 e sono responsabile del reparto informatico di un'azienda, dove seguo software, server e sicurezza. In parallelo realizzo siti per attività e professionisti della zona.

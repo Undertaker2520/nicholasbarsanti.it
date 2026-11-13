@@ -1,0 +1,73 @@
+---
+/**
+ * "Dal progetto al sito online": un portatile disegnato in HTML e CSS (nessuna immagine).
+ * Sullo schermo una pagina d'esempio, disegnata a blocchi, e le fasi della costruzione.
+ *
+ * Senza JavaScript o con movimento ridotto: portatile aperto, pagina finita, fasi elencate sotto.
+ * Con JavaScript (src/scripts/moduli/costruzione.js) la scena resta ferma mentre si scorre:
+ * il coperchio si apre e sullo schermo la pagina si costruisce una fase per volta, con la
+ * fase corrente scritta dentro lo schermo. Stili in src/styles/componenti/_costruzione.scss.
+ */
+import { costruzione } from '../data/testi';
+
+const { indirizzo, fasi } = costruzione;
+---
+
+<div class="costruzione" data-costruzione>
+  <div class="costruzione__scena">
+    <div class="costruzione__palco">
+      <div class="portatile">
+        <div class="portatile__coperchio">
+          <div class="portatile__dorso"></div>
+          <div class="portatile__fronte">
+            <div class="portatile__schermo">
+              <!-- Pagina d'esempio: solo forme, nessuna informazione per i lettori di schermo. -->
+              <div class="anteprima" aria-hidden="true">
+                <div class="anteprima__barra">
+                  <span class="anteprima__indirizzo">
+                    <span class="anteprima__lucchetto"></span>
+                    <span class="anteprima__dominio">{indirizzo}</span>
+                  </span>
+                  <span class="anteprima__spunta">✓</span>
+                  <span class="anteprima__caricamento"></span>
+                </div>
+                <div class="anteprima__pagina">
+                  <div class="anteprima__intestazione">
+                    <span class="anteprima__logo"></span>
+                    <span class="anteprima__menu"></span>
+                  </div>
+                  <div class="anteprima__apertura">
+                    <div class="anteprima__testi">
+                      <span class="anteprima__riga anteprima__riga--titolo"></span>
+                      <span class="anteprima__riga anteprima__riga--titolo anteprima__riga--corta"></span>
+                      <span class="anteprima__riga"></span>
+                      <span class="anteprima__riga anteprima__riga--corta"></span>
+                      <span class="anteprima__pulsante"></span>
+                    </div>
+                    <span class="anteprima__foto"></span>
+                  </div>
+                  <div class="anteprima__schede">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="portatile__base"></div>
+
+        <ol class="punti punti--numerati costruzione__fasi">
+          {
+            fasi.map((fase) => (
+              <li class="punti__voce costruzione__fase">
+                <strong>{fase.titolo}</strong> {fase.testo}
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,466 @@
+// "Dal progetto al sito online" (src/components/Costruzione.astro): portatile disegnato in CSS.
+//
+// Lo stato di partenza è il risultato finale (portatile aperto, pagina finita, fasi in elenco):
+// così si vede senza JavaScript e con movimento ridotto. Con l'animazione il JavaScript aggiunge
+// `.costruzione--animata`, imposta --apertura (0 chiuso, 1 aperto) e `data-fase` (da 0, schermo
+// spento, a $costruzione-fasi); `prima-della-fase` riporta indietro ciò che non è ancora costruito.
+
+@use 'sass:list';
+@use 'sass:map';
+@use '../variabili' as v;
+@use '../strumenti' as *;
+
+$animata: '.costruzione--animata';
+
+// Regole valide finché la costruzione non ha raggiunto la fase $n.
+@mixin prima-della-fase($n) {
+  $selettori: ();
+  @for $i from 0 to $n {
+    $selettori: list.append($selettori, '#{$animata}[data-fase="#{$i}"]', comma);
+  }
+
+  #{$selettori} {
+    @content;
+  }
+}
+
+// --- Scena: con l'animazione il portatile resta fermo mentre si scorre ------------------
+
+#{$animata} .costruzione__scena {
+  height: map.get(v.$costruzione-scena-altezza, piccola);
+
+  @include da(medio) {
+    height: map.get(v.$costruzione-scena-altezza, grande);
+  }
+}
+
+#{$animata} .costruzione__palco {
+  position: sticky;
+  top: 0;
+  display: grid;
+  place-items: center;
+  height: 100svh;
+
+  // Da `medio` l'intestazione è fissa: la scena occupa lo spazio sotto di lei.
+  @include da(medio) {
+    top: v.$intestazione-altezza;
+    height: calc(100svh - #{v.$intestazione-altezza});
+  }
+}
+
+#{$animata} .portatile {
+  width: v.$portatile-larghezza-scena;
+}
+
+// --- Portatile ------------------------------------------------------------------------
+
+.portatile {
+  position: relative;
+  width: v.$portatile-larghezza;
+  margin-inline: auto;
+  container-type: inline-size; // le misure interne (cqw) seguono la larghezza del portatile
+  perspective: v.$portatile-prospettiva;
+  perspective-origin: v.$portatile-punto-di-vista;
+}
+
+// Il coperchio ruota attorno alla cerniera (bordo inferiore): fronte con lo schermo, dorso in
+// alluminio, ognuno visibile solo dal proprio lato.
+.portatile__coperchio {
+  position: relative;
+  height: v.$portatile-coperchio-altezza;
+  transform-origin: 50% 100%;
+  transform-style: preserve-3d;
+  transform: rotateX(calc((1 - var(--apertura, 1)) * #{v.$portatile-angolo-chiuso}));
+
+  @include con-movimento {
+    transition: transform movimento(coperchio);
+  }
+}
+
+.portatile__fronte,
+.portatile__dorso {
+  position: absolute;
+  inset: 0;
+  border-radius: v.$portatile-raggio v.$portatile-raggio v.$portatile-cornice v.$portatile-cornice;
+  backface-visibility: hidden;
+}
+
+.portatile__fronte {
+  padding: v.$portatile-cornice;
+  background: colore(portatile-cornice);
+  box-shadow: 0 0 0 v.$bordo-spessore colore(portatile-scocca); // bordo in alluminio
+}
+
+.portatile__dorso {
+  transform: rotateX(180deg);
+  background: linear-gradient(colore(portatile-scocca-chiaro), colore(portatile-scocca));
+}
+
+.portatile__schermo {
+  height: 100%;
+  overflow: hidden;
+  border-radius: calc(#{v.$portatile-raggio} - #{v.$portatile-cornice}) calc(#{v.$portatile-raggio} - #{v.$portatile-cornice}) 0 0;
+  // Schermo spento finché la pagina non compare, con un riflesso di luce in diagonale.
+  background:
+    linear-gradient(135deg, #{sfumato(portatile-scocca-chiaro, 18%)}, transparent 45%),
+    colore(portatile-cornice);
+}
+
+// Base vista di fronte: più larga del coperchio, bordo inferiore arrotondato, incavo centrale.
+.portatile__base {
+  position: relative;
+  height: v.$portatile-base-altezza;
+  margin-inline: calc(-1 * #{v.$portatile-base-sporgenza});
+  background: linear-gradient(colore(portatile-scocca-chiaro), colore(portatile-scocca));
+  border-radius: 0 0 #{v.$portatile-base-sporgenza} #{v.$portatile-base-sporgenza} / 0 0 100% 100%;
+  box-shadow: ombra(media);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: map.get(v.$portatile-incavo, larghezza);
+    height: map.get(v.$portatile-incavo, altezza);
+    translate: -50% 0;
+    background: colore(portatile-scocca);
+    border-radius: 0 0 map.get(v.$portatile-incavo, altezza) map.get(v.$portatile-incavo, altezza);
+  }
+}
+
+// --- Pagina d'esempio sullo schermo -----------------------------------------------------
+// Colori in variabili locali: nelle prime fasi diventano tutti il grigio dello scheletro e,
+// cambiando, le transizioni li fanno sfumare verso i colori veri.
+
+.anteprima {
+  --a-accento: #{colore(accento)};
+  --a-testo: #{colore(testo)};
+  --a-tenue: #{sfumato(testo-secondario, 35%)};
+  --a-figura: #{sfumato(accento, 55%)};
+  --a-bordo: #{colore(bordo)};
+
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: colore(sfondo);
+  font-size: 1.5cqw;
+  line-height: 1;
+
+  @include con-movimento {
+    transition: transizioni(media, opacity);
+
+    *,
+    *::before,
+    *::after {
+      transition: transizioni(media, background-color, border-color, box-shadow, color, opacity), transform movimento(molla);
+    }
+  }
+}
+
+.anteprima__barra {
+  position: relative;
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  height: 4.4cqw;
+  padding-inline: 2cqw;
+  background: colore(superficie);
+  border-bottom: v.$bordo-spessore solid colore(bordo);
+}
+
+.anteprima__indirizzo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8cqw;
+  width: 34cqw;
+  height: 2.6cqw;
+  background: colore(sfondo);
+  border-radius: v.$raggio-pillola;
+  color: colore(testo-secondario);
+}
+
+// Lucchetto disegnato: corpo pieno e arco sopra.
+.anteprima__lucchetto {
+  position: relative;
+  width: 1.1cqw;
+  height: 0.9cqw;
+  margin-top: 0.4cqw;
+  background: var(--a-accento);
+  border-radius: 0.2cqw;
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    width: 0.7cqw;
+    height: 0.55cqw;
+    translate: -50% 0;
+    border: 0.2cqw solid var(--a-accento);
+    border-bottom: 0;
+    border-radius: 0.4cqw 0.4cqw 0 0;
+  }
+}
+
+.anteprima__spunta {
+  position: absolute;
+  right: 2cqw;
+  display: grid;
+  place-items: center;
+  width: 2.6cqw;
+  height: 2.6cqw;
+  background: var(--a-accento);
+  border-radius: 50%;
+  color: colore(su-accento);
+  font-weight: v.$peso-forte;
+}
+
+// Barra di caricamento: compare solo quando la pagina va online (fase finale animata).
+.anteprima__caricamento {
+  position: absolute;
+  right: 0;
+  bottom: -(v.$bordo-spessore);
+  left: 0;
+  height: 0.4cqw;
+  background: var(--a-accento);
+  transform-origin: 0 50%;
+  opacity: 0;
+}
+
+.anteprima__pagina {
+  display: grid;
+  align-content: start;
+  gap: 3cqw;
+  padding: 2.5cqw 5cqw;
+}
+
+.anteprima__intestazione {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1.4cqw;
+  border-bottom: 0.3cqw solid var(--a-accento);
+}
+
+.anteprima__logo {
+  width: 3cqw;
+  height: 3cqw;
+  background: var(--a-accento);
+  border-radius: 0.7cqw;
+}
+
+.anteprima__menu {
+  width: 26cqw;
+  height: 1.1cqw;
+  background: repeating-linear-gradient(90deg, var(--a-tenue) 0 4.4cqw, transparent 4.4cqw 5.4cqw);
+}
+
+.anteprima__apertura {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 5cqw;
+  align-items: center;
+}
+
+.anteprima__testi {
+  display: grid;
+  gap: 1.3cqw;
+}
+
+.anteprima__riga {
+  height: 1.5cqw;
+  background: var(--a-tenue);
+  border-radius: v.$raggio-pillola;
+
+  &--titolo {
+    height: 3.2cqw;
+    background: var(--a-testo);
+  }
+
+  &--corta {
+    width: 68%;
+  }
+}
+
+.anteprima__pulsante {
+  width: 14cqw;
+  height: 3.6cqw;
+  margin-top: 1cqw;
+  background: var(--a-accento);
+  border-radius: v.$raggio-pillola;
+}
+
+// Ritratto stilizzato (testa e spalle) dentro il cerchio con l'anello d'accento.
+.anteprima__foto {
+  width: 16cqw;
+  aspect-ratio: 1;
+  background:
+    radial-gradient(circle at 50% 40%, var(--a-figura) 0 18%, transparent 19%),
+    radial-gradient(ellipse 34% 26% at 50% 100%, var(--a-figura) 0 98%, transparent 100%),
+    colore(superficie);
+  border-radius: 50%;
+  box-shadow: 0 0 0 0.4cqw var(--a-accento);
+}
+
+// Tre schede: titolo e pulsante, come quelle dei servizi.
+.anteprima__schede {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2cqw;
+
+  > span {
+    position: relative;
+    height: 11cqw;
+    background: colore(sfondo);
+    border: v.$bordo-spessore solid var(--a-bordo);
+    border-radius: 1cqw;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      left: 1.8cqw;
+      border-radius: v.$raggio-pillola;
+    }
+
+    &::before {
+      top: 1.8cqw;
+      width: 55%;
+      height: 1.3cqw;
+      background: var(--a-testo);
+    }
+
+    &::after {
+      bottom: 1.8cqw;
+      width: 42%;
+      height: 2.2cqw;
+      background: var(--a-accento);
+    }
+  }
+}
+
+// --- Fasi ---------------------------------------------------------------------------------
+// Senza animazione: elenco numerato sotto il portatile (stili di .punti--numerati).
+
+.costruzione__fasi {
+  margin-top: spazio(l);
+}
+
+// Con l'animazione: un riquadro per volta, sotto il portatile su mobile e dentro lo schermo
+// (in basso al centro) da `medio`.
+#{$animata} .costruzione__fasi {
+  position: absolute;
+  top: calc(#{v.$portatile-coperchio-altezza} + #{v.$portatile-base-altezza} + #{spazio(m)});
+  left: 50%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-flow: row;
+  width: map.get(v.$costruzione-scheda-larghezza, piccola);
+  margin: 0;
+  translate: -50% 0;
+  font-size: testo(piccolo);
+  line-height: v.$interlinea-titoli + 0.2;
+
+  @include da(medio) {
+    top: calc(#{v.$portatile-coperchio-altezza} - #{v.$portatile-cornice} - 3cqw);
+    width: map.get(v.$costruzione-scheda-larghezza, grande);
+    translate: -50% -100%;
+  }
+
+  .costruzione__fase {
+    grid-area: 1 / 1;
+    padding: spazio(s) spazio(m) spazio(s) calc(#{spazio(m)} + #{v.$numero-passo-diametro} + #{spazio(s)});
+    background: colore(superficie);
+    border: v.$bordo-spessore solid colore(bordo);
+    border-radius: v.$raggio;
+    box-shadow: ombra(media);
+    opacity: 0;
+    transform: translateY(spazio(xs)) scale(v.$scala-comparsa-menu);
+
+    @include con-movimento {
+      transition: opacity movimento(breve), transform movimento(molla);
+    }
+
+    &::before {
+      top: spazio(s);
+      left: spazio(m);
+    }
+  }
+
+  // Si vede solo la fase corrente.
+  @for $i from 1 through v.$costruzione-fasi {
+    @at-root #{$animata}[data-fase='#{$i}'] .costruzione__fase:nth-child(#{$i}) {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+// --- Costruzione fase per fase ----------------------------------------------------------------
+
+// Fase 0: coperchio che si apre, schermo spento.
+@include prima-della-fase(1) {
+  .anteprima {
+    opacity: 0;
+  }
+}
+
+// Progetto: solo la struttura, in grigio.
+@include prima-della-fase(2) {
+  .anteprima {
+    --a-accento: #{colore(portatile-scheletro)};
+    --a-testo: #{colore(portatile-scheletro)};
+    --a-tenue: #{colore(portatile-scheletro)};
+    --a-figura: #{colore(portatile-scheletro)};
+    --a-bordo: #{colore(portatile-scheletro)};
+  }
+
+  .anteprima__foto {
+    box-shadow: none;
+  }
+}
+
+// Protezione: compare il lucchetto.
+@include prima-della-fase(3) {
+  .anteprima__lucchetto {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+}
+
+// Online: indirizzo e spunta, dopo una barra di caricamento rapidissima.
+@include prima-della-fase(4) {
+  .anteprima__dominio {
+    opacity: 0;
+  }
+
+  .anteprima__spunta {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+}
+
+@include con-movimento {
+  #{$animata}[data-fase='#{v.$costruzione-fasi}'] .anteprima__caricamento {
+    animation: caricamento movimento(caricamento) both;
+  }
+}
+
+@keyframes caricamento {
+  from {
+    transform: scaleX(0);
+    opacity: 1;
+  }
+
+  75% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+
+  to {
+    transform: scaleX(1);
+    opacity: 0;
+  }
+}

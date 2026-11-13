@@ -24,6 +24,14 @@ export const CAROSELLO = {
   sogliaTrascinamentoPx: 10,
 };
 
+/** Portatile "Dal progetto al sito online" (src/styles/componenti/_costruzione.scss). */
+export const COSTRUZIONE = {
+  selettore: '[data-costruzione]',
+  classeAnimata: 'costruzione--animata',
+  attributoFase: 'data-fase',
+  proprietaApertura: '--apertura', // 0 coperchio chiuso, 1 aperto
+};
+
 /** Comparsa durante lo scorrimento (src/styles/componenti/_comparsa.scss). */
 export const COMPARSA = {
   selettore: '[data-comparsa], [data-comparsa-gruppo] > *',
