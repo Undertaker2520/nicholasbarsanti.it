@@ -327,25 +327,8 @@ $blocchi: '.anteprima__logo', '.anteprima__menu', '.anteprima__riga', '.anteprim
   pointer-events: none;
 }
 
-// Ritratto stilizzato (testa e spalle) dentro il cerchio con l'anello d'accento; sopra, la foto
-// vera (se c'è), che compare dalla fase Design.
-.anteprima__ritratto {
-  position: absolute;
-  inset: 0;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-}
-
-.anteprima__foto,
-.telefono__foto {
-  position: relative;
-  overflow: hidden;
-}
-
+// Ritratto stilizzato (testa e spalle) dentro il cerchio con l'anello d'accento: la foto vera
+// è già nell'apertura, qui non si ripete.
 .anteprima__foto {
   width: 16cqw;
   aspect-ratio: 1;
@@ -465,7 +448,7 @@ $altezza-schermo: calc(#{v.$portatile-coperchio-altezza} - 2 * #{v.$portatile-co
   }
 }
 
-// Progetto: solo la struttura, a tratteggio sulla griglia; niente colori, foto né telefono.
+// Progetto: solo la struttura, a tratteggio sulla griglia; niente colori né telefono.
 @include prima-della-fase(2) {
   --a-accento: transparent;
   --a-testo: transparent;
@@ -476,10 +459,6 @@ $altezza-schermo: calc(#{v.$portatile-coperchio-altezza} - 2 * #{v.$portatile-co
 
   .anteprima__griglia {
     opacity: 1;
-  }
-
-  .anteprima__ritratto {
-    opacity: 0;
   }
 
   .telefono {

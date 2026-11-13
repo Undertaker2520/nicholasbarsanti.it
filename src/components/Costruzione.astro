@@ -6,23 +6,13 @@
  * Senza JavaScript o con movimento ridotto: portatile aperto, pagina finita, fasi elencate sotto.
  * Con JavaScript (src/scripts/moduli/costruzione.js) la scena resta ferma mentre si scorre:
  * il coperchio si apre e la pagina si costruisce una fase per volta (Progetto: struttura a
- * tratteggio; Design: colori, foto e telefono; Protezione: scansione e scudo; Online: indirizzo,
+ * tratteggio; Design: colori e telefono; Protezione: scansione e scudo; Online: indirizzo,
  * caricamento e spunta), con la fase corrente scritta dentro lo schermo.
  * Stili in src/styles/componenti/_costruzione.scss.
  */
-import { Picture } from 'astro:assets';
 import { costruzione } from '../data/testi';
-import { foto, QUALITA_FOTO } from '../lib/foto';
 
 const { indirizzo, fasi } = costruzione;
-
-// Ritratto piccolo dentro i cerchi della pagina d'esempio (circa 150 px sul portatile, meno sul telefono).
-const ritratto = {
-  widths: [160, 320],
-  sizes: '10rem',
-  formats: ['avif', 'webp'] as const,
-  quality: QUALITA_FOTO,
-};
 ---
 
 <div class="costruzione" data-costruzione>
@@ -57,9 +47,7 @@ const ritratto = {
                       <span class="anteprima__riga anteprima__riga--corta"></span>
                       <span class="anteprima__pulsante"></span>
                     </div>
-                    <span class="anteprima__foto">
-                      {foto && <Picture class="anteprima__ritratto" src={foto} alt="" loading="lazy" {...ritratto} />}
-                    </span>
+                    <span class="anteprima__foto"></span>
                   </div>
                   <div class="anteprima__schede">
                     <span></span>
@@ -86,9 +74,7 @@ const ritratto = {
         <div class="telefono" aria-hidden="true">
           <div class="telefono__schermo">
             <span class="telefono__isola"></span>
-            <span class="telefono__foto">
-              {foto && <Picture class="anteprima__ritratto" src={foto} alt="" loading="lazy" {...ritratto} />}
-            </span>
+            <span class="telefono__foto"></span>
             <span class="telefono__riga telefono__riga--titolo"></span>
             <span class="telefono__riga telefono__riga--titolo telefono__riga--corta"></span>
             <span class="telefono__riga"></span>
