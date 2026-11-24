@@ -58,7 +58,7 @@ scripts/
 public/            file generati da `npm run immagini` (da committare)
 ```
 
-Per cambiare colori o font si modifica solo `src/styles/_variabili.scss`; tempi e soglie del JavaScript stanno solo in `src/scripts/variabili.js`.
+Palette a tre ruoli: petrolio come base (`accento`: link, linee, fasce, decorazioni), sabbia calda come riempitivo (`sfondo`, `superficie`, `bordo`) e terracotta come accento a contrasto (`azione`), solo per i pulsanti pieni e l'anello di focus. Per cambiare colori o font si modifica solo `src/styles/_variabili.scss`; tempi e soglie del JavaScript stanno solo in `src/scripts/variabili.js`.
 
 ## Foto e lavori realizzati
 

@@ -8,8 +8,8 @@
   justify-content: center;
   min-height: 3rem;
   padding: spazio(xs) spazio(l);
-  background: colore(accento);
-  color: colore(su-accento);
+  background: colore(azione);
+  color: colore(su-azione);
   border-radius: v.$raggio-pillola;
   font-weight: v.$peso-forte;
   text-decoration: none;
@@ -24,8 +24,8 @@
   }
 
   &:hover {
-    background: colore(accento-hover);
-    color: colore(su-accento);
+    background: colore(azione-hover);
+    color: colore(su-azione);
   }
 
   @include al-passaggio {
@@ -45,7 +45,7 @@
 
   // Non disponibile, per esempio mentre il modulo viene inviato.
   &:disabled {
-    background: colore(accento);
+    background: colore(azione);
     opacity: v.$opacita-disattivato;
     transform: none;
     box-shadow: none;

@@ -26,19 +26,26 @@ $peso-forte: 600; // come apple.com: 400 e 600, niente grassetto pieno
 // il testo secondario è almeno 6:1 (oltre il 4.5:1 richiesto da AA).
 
 $colori-chiaro: (
-  sfondo: #ffffff,
-  superficie: #f3f6f6,
+  // Riempitivo: carta e sabbia calde, che si sposano con il petrolio.
+  sfondo: #fbf9f5,
+  superficie: #f2ede4,
   testo: #1c2124,
   testo-secondario: #4a5258,
-  bordo: #d5dcdf,
+  bordo: #e2d9c9,
+  // Base: petrolio (link, linee, fasce, decorazioni).
   accento: #0f5c63,
   accento-hover: #0a454b,
   su-accento: #ffffff,
+  // Accento "che non ci sta": terracotta, solo per le azioni (pulsanti pieni) e il focus.
+  // Testo bianco sopra 5:1; sul fondo 4.7:1.
+  azione: #b4532a,
+  azione-hover: #9a4523,
+  su-azione: #ffffff,
   // Intestazione: fondo appena più scuro della pagina, riga petrolio sotto.
-  intestazione-sfondo: #f3f6f6,
+  intestazione-sfondo: #f2ede4,
   intestazione-riga: #0f5c63,
   // Modulo di contatto: bordo dei campi ≥ 3:1 (WCAG 1.4.11), errore ≥ 4.5:1.
-  campo-bordo: #8a959b,
+  campo-bordo: #928a7d,
   errore: #b3261e,
   // Fascia a tutta larghezza color petrolio ("Perché lavorare con me").
   banda-sfondo: #0f5c63,
@@ -58,17 +65,22 @@ $colori-chiaro: (
 // Tema scuro grafite: neutri caldi e morbidi invece del nero, accento petrolio meno saturo
 // (scelta di Nicholas tra quattro varianti: "D, grafite con intestazione a riga petrolio").
 $colori-scuro: (
-  sfondo: #16191b,
-  superficie: #1e2225,
-  testo: #e6e9ea,
-  testo-secondario: #aab3b6,
-  bordo: #33393d,
+  // Riempitivo: grafite calda, in tono con la sabbia del tema chiaro.
+  sfondo: #191817,
+  superficie: #22201e,
+  testo: #ebe7e1,
+  testo-secondario: #bab3aa,
+  bordo: #3a3632,
   accento: #6cbfc1,
   accento-hover: #93d2d3,
   su-accento: #0a1c1e,
-  intestazione-sfondo: #1f2427,
+  // Terracotta più chiara per il fondo scuro: testo scuro sopra 6.5:1, sul fondo 6.4:1.
+  azione: #e0855b,
+  azione-hover: #ea9a75,
+  su-azione: #2b1206,
+  intestazione-sfondo: #23211f,
   intestazione-riga: #6cbfc1,
-  campo-bordo: #6b767c,
+  campo-bordo: #7a736b,
   errore: #f2998e,
   banda-sfondo: #174a4e,
   banda-testo: #e8f1f1,

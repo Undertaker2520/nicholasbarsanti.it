@@ -222,7 +222,7 @@
 
 // Contorno di focus coerente per tutti gli elementi interattivi.
 @mixin focus-visibile {
-  outline: v.$focus-spessore solid colore(accento);
+  outline: v.$focus-spessore solid colore(azione); // l'accento a contrasto: si vede subito
   outline-offset: v.$focus-distanza;
 }
 
