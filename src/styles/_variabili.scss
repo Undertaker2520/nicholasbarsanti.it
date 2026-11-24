@@ -273,9 +273,10 @@ $portatile-angolo-chiuso: -90deg; // coperchio chiuso (0deg: aperto, dritto)
 $costruzione-scena-altezza: (piccola: 230svh, grande: 280svh);
 $costruzione-fasi: 4; // quante fasi ha `costruzione.fasi` in src/data/testi.ts
 
-// Dispositivi appoggiati sul piano accanto al portatile: il telefono a destra (dalla fase
-// Design), il tablet a sinistra (fase Online). `sporgenza`: quanto escono dal portatile, al
-// massimo quanto la base (lo spazio ai lati, senza scorrimento orizzontale a 320 px).
+// Dispositivi appoggiati sul piano accanto al portatile nella fase Online, solo sugli schermi
+// dello stesso tipo: il telefono a destra sotto `medio`, il tablet a sinistra tra `medio` e
+// `largo`. `sporgenza`: quanto escono dal portatile, al massimo quanto la base (lo spazio ai
+// lati, senza scorrimento orizzontale a 320 px).
 $dispositivi: (
   telefono: (
     lato: right,
@@ -287,8 +288,8 @@ $dispositivi: (
   ),
   tablet: (
     lato: left,
-    larghezza: 24cqw,
-    altezza: 32cqw, // proporzioni 3 : 4, in verticale
+    larghezza: 21cqw,
+    altezza: 28cqw, // proporzioni 3 : 4, in verticale
     sporgenza: 6cqw,
     cornice: 1cqw,
     raggio: 2cqw,
@@ -308,8 +309,9 @@ $costruzione-ritardi: (
   spunta: 0.8s, // a caricamento finito
 );
 // Riquadro della fase: sotto il portatile su mobile (lo schermo è troppo piccolo per testo
-// leggibile senza coprire la pagina), dentro lo schermo da `medio`.
-$costruzione-scheda-larghezza: (piccola: 100%, grande: 64%);
+// leggibile senza coprire la pagina), dentro lo schermo da `medio`; più stretto finché c'è il
+// tablet accanto, così resta staccato da lui.
+$costruzione-scheda-larghezza: (piccola: 100%, media: 54%, grande: 64%);
 
 // --- Movimento ---------------------------------------------------------------
 // Tutto disattivato con prefers-reduced-motion: reduce (mixin `con-movimento`).

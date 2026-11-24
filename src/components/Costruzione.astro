@@ -1,13 +1,14 @@
 ---
 /**
- * "Dal progetto al sito online": un portatile disegnato in HTML e CSS, con telefono e tablet accanto.
+ * "Dal progetto al sito online": un portatile disegnato in HTML e CSS; accanto, nella fase Online,
+ * un tablet o un telefono se lo schermo di chi visita è di quel tipo.
  * Sullo schermo una pagina d'esempio, disegnata a blocchi, e le fasi della costruzione.
  *
  * Senza JavaScript o con movimento ridotto: portatile aperto, pagina finita, fasi elencate sotto.
  * Con JavaScript (src/scripts/moduli/costruzione.js) la scena resta ferma mentre si scorre:
  * il coperchio si apre e la pagina si costruisce una fase per volta (Progetto: struttura a
- * tratteggio; Design: colori e telefono; Protezione: scansione e scudo; Online: indirizzo,
- * caricamento, spunta e tablet), con la fase corrente scritta dentro lo schermo.
+ * tratteggio; Design: colori; Protezione: scansione e scudo; Online: indirizzo, caricamento,
+ * spunta e dispositivo accanto), con la fase corrente scritta dentro lo schermo.
  * Stili in src/styles/componenti/_costruzione.scss.
  */
 import { costruzione } from '../data/testi';
@@ -70,8 +71,8 @@ const { indirizzo, fasi } = costruzione;
         </div>
         <div class="portatile__base"></div>
 
-        <!-- La stessa pagina da tablet (fase Online) e da telefono (dalla fase Design), ognuna
-             impaginata per il suo schermo: solo forme, come quella sul portatile. -->
+        <!-- La stessa pagina da tablet e da telefono, ognuna impaginata per il suo schermo:
+             solo forme, come quella sul portatile. -->
         <div class="dispositivo dispositivo--tablet" aria-hidden="true">
           <div class="dispositivo__schermo">
             <span class="dispositivo__intestazione"></span>

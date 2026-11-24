@@ -407,8 +407,12 @@ $blocchi: '.anteprima__logo', '.anteprima__menu', '.anteprima__riga', '.anteprim
 
   @include da(medio) {
     top: calc(#{v.$portatile-coperchio-altezza} - #{v.$portatile-cornice} - 3cqw);
-    width: map.get(v.$costruzione-scheda-larghezza, grande);
+    width: map.get(v.$costruzione-scheda-larghezza, media);
     translate: -50% -100%;
+  }
+
+  @include da(largo) {
+    width: map.get(v.$costruzione-scheda-larghezza, grande);
   }
 
   .costruzione__fase {
@@ -454,7 +458,7 @@ $altezza-schermo: calc(#{v.$portatile-coperchio-altezza} - 2 * #{v.$portatile-co
   }
 }
 
-// Progetto: solo la struttura, a tratteggio sulla griglia; niente colori né telefono.
+// Progetto: solo la struttura, a tratteggio sulla griglia; niente colori.
 @include prima-della-fase(2) {
   --a-accento: transparent;
   --a-testo: transparent;
@@ -466,10 +470,6 @@ $altezza-schermo: calc(#{v.$portatile-coperchio-altezza} - 2 * #{v.$portatile-co
   .anteprima__griglia {
     opacity: 1;
   }
-
-  .dispositivo--telefono {
-    @include dispositivo-assente;
-  }
 }
 
 // Protezione: lucchetto nella barra.
@@ -480,9 +480,9 @@ $altezza-schermo: calc(#{v.$portatile-coperchio-altezza} - 2 * #{v.$portatile-co
   }
 }
 
-// Online: indirizzo, spunta e tablet.
+// Online: indirizzo, spunta e il dispositivo accanto.
 @include prima-della-fase(4) {
-  .dispositivo--tablet {
+  .dispositivo {
     @include dispositivo-assente;
   }
 
@@ -661,7 +661,8 @@ $altezza-schermo: calc(#{v.$portatile-coperchio-altezza} - 2 * #{v.$portatile-co
 }
 
 // --- Telefono e tablet ---------------------------------------------------------------------
-// Appoggiati sul piano accanto al portatile; misure e lato in $dispositivi.
+// Appoggiati sul piano accanto al portatile; misure e lato in $dispositivi. Si vede solo quello
+// dello stesso tipo dello schermo di chi visita: da computer resta il portatile da solo.
 
 .dispositivo {
   position: absolute;
@@ -669,6 +670,22 @@ $altezza-schermo: calc(#{v.$portatile-coperchio-altezza} - 2 * #{v.$portatile-co
   box-shadow:
     0 0 0 v.$bordo-spessore colore(portatile-scocca),
     ombra(media);
+}
+
+.dispositivo--telefono {
+  @include da(medio) {
+    display: none;
+  }
+}
+
+.dispositivo--tablet {
+  @include fino-a(medio) {
+    display: none;
+  }
+
+  @include da(largo) {
+    display: none;
+  }
 }
 
 @each $nome, $misure in v.$dispositivi {
