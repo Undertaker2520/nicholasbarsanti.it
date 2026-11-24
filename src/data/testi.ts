@@ -187,6 +187,11 @@ export const contatti = {
   invito: 'Raccontami il tuo progetto: rispondo entro la giornata.',
   /** Seguito dall'indirizzo email, sotto il modulo. */
   alternativa: "Preferisci l'email? Scrivimi a",
+  /** Pulsante accanto all'email (con JavaScript): copia l'indirizzo negli appunti. */
+  copia: 'Copia',
+  copiaEtichetta: "Copia l'indirizzo email",
+  copiata: 'Copiata',
+  copiataAnnuncio: 'Indirizzo email copiato',
   /** Seguito dai link ai profili (config.ts → sito.profili). */
   profili: 'Mi trovi anche su',
 };

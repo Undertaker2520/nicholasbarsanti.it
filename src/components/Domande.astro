@@ -17,7 +17,7 @@ const { voci } = Astro.props;
 <div class="domande" data-comparsa-gruppo>
   {
     voci.map((voce) => (
-      <details class="domanda">
+      <details class="domanda" data-luce>
         <summary class="domanda__titolo">{voce.domanda}</summary>
         <div class="domanda__risposta">
           <p>{voce.risposta}</p>

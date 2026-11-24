@@ -3,6 +3,7 @@
 // Gli altri file le usano con `@use 'variabili' as v;` e non ridefiniscono valori.
 // =============================================================================
 
+@use 'sass:map';
 @use 'sass:math';
 
 // --- Font --------------------------------------------------------------------
@@ -50,6 +51,8 @@ $colori-chiaro: (
   portatile-scocca-chiaro: #e4e8ea,
   portatile-cornice: #101314,
   portatile-guida: #8f9ca2, // tratteggio della struttura (fase Progetto)
+  // Riflesso di luce sul bordo superiore del pannello del modulo.
+  riflesso: #ffffff,
 );
 
 // Tema scuro grafite: neutri caldi e morbidi invece del nero, accento petrolio meno saturo
@@ -75,6 +78,7 @@ $colori-scuro: (
   portatile-scocca-chiaro: #6c757a,
   portatile-cornice: #060707,
   portatile-guida: #66737a,
+  riflesso: rgba(255, 255, 255, 0.12),
 );
 
 // Con prefers-contrast: more alcuni colori prendono il valore di un altro più contrastato,
@@ -172,10 +176,31 @@ $modulo-larghezza-max: 40rem;
 $campo-altezza: 2.75rem; // 44 px: comodo anche al tocco
 $campo-messaggio-altezza: 9rem;
 
+// Pannello del modulo: angoli da pannello (18 px) e riflesso di luce in alto, verso l'interno.
+$pannello-raggio: 1.125rem;
+$pannello-alone: 0 1.5rem 3rem -2rem; // forma dell'alone petrolio sotto il riflesso
+$pannello-alone-intensita: 22%;
+
 // Domande frequenti: elenco non più largo di una colonna di lettura comoda.
 $domande-larghezza-max: 48rem;
 $domanda-icona: 0.875rem; // segno "+" / "−" a destra della domanda
 $domanda-icona-tratto: 2px;
+$domanda-numero: 1.75rem; // spazio dell'indice 01–05 a sinistra della domanda
+
+// Pulsante tenue (fondo petrolio leggero): intensità a riposo e al passaggio del mouse.
+$tenue-intensita: (riposo: 14%, passaggio: 22%);
+
+// Pulsante "Copia" accanto all'email: basso per stare nella riga, area di tocco oltre i 24 px.
+$copia-altezza: 2rem;
+
+// Domande frequenti e Contatti affiancati da `largo` (src/pages/index.astro).
+$sezioni-affiancate-spazio: map.get($spazi, xl);
+
+// Luce che segue il mouse su domande e modulo (src/scripts/moduli/luce.js): il bordo si
+// accende di petrolio vicino al puntatore e il fondo riceve un riflesso appena percettibile.
+$luce-raggio-bordo: 9rem;
+$luce-raggio-fondo: 14rem;
+$luce-intensita-fondo: 7%;
 
 // Carosello delle schede sotto `largo`: una scheda per volta, intera e centrata.
 $carosello-larghezza-scheda: 100%;

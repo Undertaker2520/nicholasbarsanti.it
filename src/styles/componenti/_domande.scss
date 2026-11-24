@@ -7,10 +7,13 @@
   display: grid;
   gap: spazio(xs);
   max-width: v.$domande-larghezza-max;
+  counter-reset: domanda;
 }
 
 .domanda {
-  background: colore(sfondo);
+  --luce-fondo: #{colore(sfondo)};
+  counter-increment: domanda;
+  background: var(--luce-fondo);
   border: v.$bordo-spessore solid colore(bordo);
   border-radius: v.$raggio;
 
@@ -18,8 +21,10 @@
     transition: transizioni(media, border-color, background-color);
   }
 
+  @include luce-puntatore;
+
   &[open] {
-    background: colore(superficie);
+    --luce-fondo: #{colore(superficie)};
     border-color: colore(accento);
   }
 
@@ -53,6 +58,7 @@
     position: relative;
     padding: spazio(s) spazio(m);
     padding-right: calc(#{spazio(m)} * 2 + #{v.$domanda-icona});
+    padding-left: calc(#{spazio(m)} + #{v.$domanda-numero});
     border-radius: v.$raggio;
     font-weight: v.$peso-forte;
     list-style: none;
@@ -60,6 +66,19 @@
 
     &::-webkit-details-marker {
       display: none;
+    }
+
+    // Indice 01–05 a sinistra, come un'etichetta editoriale; i lettori di schermo non lo
+    // leggono (testo alternativo vuoto dopo "/", dove il browser lo supporta).
+    &::before {
+      content: counter(domanda, decimal-leading-zero);
+      content: counter(domanda, decimal-leading-zero) / '';
+      position: absolute;
+      top: spazio(s);
+      left: spazio(m);
+      color: colore(testo-secondario);
+      font-weight: v.$peso-normale;
+      font-variant-numeric: tabular-nums;
     }
 
     // "+" fatto di due tratti; da aperta resta solo quello orizzontale ("−").
@@ -92,8 +111,9 @@
       v.$domanda-icona-tratto 0;
   }
 
+  // Allineata al testo della domanda, dopo l'indice.
   &__risposta {
-    padding: 0 spazio(m) spazio(m);
+    padding: 0 spazio(m) spazio(m) calc(#{spazio(m)} + #{v.$domanda-numero});
     color: colore(testo-secondario);
   }
 }

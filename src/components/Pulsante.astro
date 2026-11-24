@@ -1,26 +1,37 @@
 ---
 interface Props {
-  /** Con `href` è un link; senza, è il pulsante di invio del modulo che lo contiene. */
+  /** Con `href` è un link; senza, è un pulsante (di invio del modulo, se non si indica `tipo`). */
   href?: string;
+  tipo?: 'submit' | 'button';
   /** `piccolo`: variante discreta a pillola, per esempio nelle schede. */
   dimensione?: 'piccolo';
+  /** `tenue`: fondo petrolio leggero, per azioni secondarie (per esempio "Copia"). */
+  variante?: 'tenue';
   /** Classi aggiuntive, per adattare il pulsante al contesto (per esempio nelle schede). */
   class?: string;
+  /** Nascosto finché il JavaScript non lo mostra (funzioni che senza JavaScript non ci sono). */
+  hidden?: boolean;
+  'aria-label'?: string;
   /** Attributi data-* per il JavaScript (per esempio il servizio da preselezionare). */
   [dato: `data-${string}`]: string | undefined;
 }
 
-const { href, dimensione, class: classe, ...dati } = Astro.props;
-const classi = ['pulsante', dimensione && `pulsante--${dimensione}`, classe];
+const { href, tipo = 'submit', dimensione, variante, class: classe, ...attributi } = Astro.props;
+const classi = [
+  'pulsante',
+  dimensione && `pulsante--${dimensione}`,
+  variante && `pulsante--${variante}`,
+  classe,
+];
 ---
 
 {
   href ? (
-    <a class:list={classi} href={href} {...dati}>
+    <a class:list={classi} href={href} {...attributi}>
       <slot />
     </a>
   ) : (
-    <button type="submit" class:list={classi} {...dati}>
+    <button type={tipo} class:list={classi} {...attributi}>
       <slot />
     </button>
   )

@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use '../variabili' as v;
 @use '../strumenti' as *;
 
@@ -49,6 +50,23 @@
     transform: none;
     box-shadow: none;
     cursor: progress;
+  }
+
+  // Variante tenue, per azioni secondarie accanto al testo ("Copia"): fondo petrolio leggero e
+  // testo petrolio (contrasto oltre 5.5:1 in entrambi i temi), senza sollevamento né ombra.
+  &--tenue {
+    background: sfumato(accento, map.get(v.$tenue-intensita, riposo));
+    color: colore(accento);
+
+    &:hover {
+      background: sfumato(accento, map.get(v.$tenue-intensita, passaggio));
+      color: colore(accento);
+    }
+
+    @include al-passaggio {
+      transform: none;
+      box-shadow: none;
+    }
   }
 
   // Variante discreta (schede, domande): più bassa, testo non in grassetto.

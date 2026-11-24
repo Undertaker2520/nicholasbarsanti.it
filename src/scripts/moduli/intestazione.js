@@ -13,7 +13,8 @@ export function avviaIntestazione() {
   // id della sezione → link del menu che la raggiunge (/#chi-sono → chi-sono).
   const linkPerSezione = new Map($link.toArray().map((link) => [new URL(link.href).hash.slice(1), link]));
   // Tutte le sezioni, anche quelle senza voce di menu (apertura, "Perché"): lì nessuna voce è attiva.
-  const sezioni = $('main > section').toArray();
+  // `main section`, non `main > section`: Domande e Contatti stanno in un contenitore comune.
+  const sezioni = $('main section').toArray();
 
   const aggiorna = () => {
     $intestazione.toggleClass(INTESTAZIONE.classeStaccata, window.scrollY > 0);

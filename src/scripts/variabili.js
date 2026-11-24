@@ -55,6 +55,21 @@ export const MODULO = {
   attributoTestoInvio: 'data-testo-invio',
 };
 
+/** Luce che segue il mouse su domande e modulo (mixin `luce-puntatore` in _strumenti.scss). */
+export const LUCE = {
+  selettore: '[data-luce]',
+  proprietaX: '--luce-x', // posizione del puntatore dentro l'elemento, in pixel
+  proprietaY: '--luce-y',
+};
+
+/** Pulsante "Copia" accanto all'email (src/pages/index.astro). */
+export const COPIA = {
+  attributo: 'data-copia', // contiene il testo da copiare
+  attributoTestoCopiato: 'data-testo-copiato',
+  attributoAnnuncio: 'data-annuncio', // frase per i lettori di schermo dopo la copia
+  ritornoMs: 2000, // dopo quanto il pulsante torna a "Copia"
+};
+
 /** Menu a hamburger su mobile (src/styles/componenti/_intestazione.scss). */
 export const MENU = {
   classeCompatta: 'intestazione--compatta',

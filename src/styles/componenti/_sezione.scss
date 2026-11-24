@@ -18,9 +18,34 @@
   }
 }
 
+// Domande frequenti e Contatti (src/pages/index.astro): il contenitore comune dà larghezza e
+// margini, le due sezioni dentro non li ripetono. Da `largo` stanno affiancate, una colonna
+// ciascuna; se le domande non ci sono, Contatti prende tutta la larghezza.
+.sezioni-affiancate {
+  > .sezione > .contenitore {
+    max-width: none;
+    padding-inline: 0;
+  }
+
+  @include da(largo) {
+    display: grid;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-auto-flow: column;
+    column-gap: v.$sezioni-affiancate-spazio;
+  }
+}
+
 // Email e profili sotto il modulo di contatto.
 .contatti__alternative {
   margin-top: spazio(l);
   color: colore(testo-secondario);
   overflow-wrap: anywhere;
+}
+
+// "Copia" accanto all'email: piccolo e allineato al testo della riga (lo separa lo spazio
+// del testo, così se va a capo resta allineato a sinistra).
+.contatti__copia {
+  min-height: v.$copia-altezza;
+  padding-block: 0;
+  vertical-align: baseline;
 }

@@ -6,8 +6,10 @@
 import $ from 'jquery/slim';
 import { avviaCaroselli } from './moduli/carosello.js';
 import { avviaComparsa } from './moduli/comparsa.js';
+import { avviaCopia } from './moduli/copia.js';
 import { avviaCostruzione } from './moduli/costruzione.js';
 import { avviaIntestazione } from './moduli/intestazione.js';
+import { avviaLuce } from './moduli/luce.js';
 import { avviaMenu } from './moduli/menu.js';
 import { avviaModulo } from './moduli/modulo.js';
 import { avviaSfondo } from './moduli/sfondo.js';
@@ -18,10 +20,12 @@ $(() => {
   avviaMenu();
   avviaCaroselli();
   avviaModulo();
+  avviaCopia();
 
   if (!movimentoRidotto()) {
     avviaComparsa();
     avviaCostruzione();
     avviaSfondo();
+    avviaLuce();
   }
 });

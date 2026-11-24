@@ -7,7 +7,7 @@ Il sito stesso è una dimostrazione di competenza: deve essere veloce, accessibi
 ## Tecnologia
 
 - **Astro** con output completamente statico (`output: 'static'`). Nessun framework UI (niente React, Vue, ecc.).
-- **JavaScript solo come miglioramento progressivo**: senza JS la pagina è completa e funzionante (menu compreso). Oggi il JS gestisce il carosello delle schede su mobile (pallini e scorrimento automatico ogni 3 secondi che si ferma alla prima interazione con le schede; **nessun pulsante pausa, scelta di Nicholas**, consapevole del rischio WCAG 2.2.2; l'aggancio è CSS scroll-snap con una scheda per gesto), la scena del portatile (coperchio e fasi seguono lo scorrimento), la comparsa degli elementi durante lo scorrimento, l'intestazione (ombra, voce di menu attiva) e lo sfondo che segue il mouse.
+- **JavaScript solo come miglioramento progressivo**: senza JS la pagina è completa e funzionante (menu compreso). Oggi il JS gestisce il carosello delle schede su mobile (pallini e scorrimento automatico ogni 3 secondi che si ferma alla prima interazione con le schede; **nessun pulsante pausa, scelta di Nicholas**, consapevole del rischio WCAG 2.2.2; l'aggancio è CSS scroll-snap con una scheda per gesto), la scena del portatile (coperchio e fasi seguono lo scorrimento), la comparsa degli elementi durante lo scorrimento, l'intestazione (ombra, voce di menu attiva), lo sfondo e la luce sui bordi di domande e modulo che seguono il mouse e il pulsante "Copia" accanto all'email.
 - Quando serve JavaScript si usa **jQuery**, installato via npm e incluso nel bundle di Astro come file esterno: mai da CDN, mai script inline. Si usa la build **slim** (`jquery/slim`). Codice in `src/scripts/`, un modulo per funzione; classi, tempi e soglie in un unico file (`src/scripts/variabili.js`), come le variabili SCSS.
 - Stili scritti a mano in **SCSS** (compilato da Vite con `sass`), in file separati, niente Tailwind. **Font, colori e altre variabili di design stanno in un unico file dedicato** (`src/styles/_variabili.scss`); gli altri file li usano, non ridefiniscono valori. Impostare `build.inlineStylesheets: 'never'` così la Content Security Policy non richiede `unsafe-inline`.
 - Dipendenze ammesse: `astro`, `@astrojs/sitemap`, `sass` (sviluppo) e `jquery` (solo quando serve JS). Qualsiasi altra dipendenza va proposta e motivata prima di installarla.
@@ -54,6 +54,7 @@ Intestazioni definite in `src/sicurezza/intestazioni.ts` (unica fonte): in build
 - Sobrio, professionale, molto spazio bianco. Un solo colore di accento (blu scuro o verde petrolio), il resto neutro.
 - Animazioni sobrie: comparsa allo scorrimento, effetti al passaggio del mouse, sfondo (da 640 px; su mobile nessuna nebulosa) con nebulose petrolio sfumate fisse rispetto allo schermo (in alto a destra e in basso a sinistra della parte visualizzata) che derivano e seguono il mouse; intensità limitata dal contrasto del testo (vedi `$decorazione-intensita`), fascia petrolio in "Perché lavorare con me" e nel piè di pagina. Sempre disattivate con `prefers-reduced-motion`; durate e distanze in `_variabili.scss`. Niente immagini stock, niente icone generiche in eccesso.
 - Riferimento grafico: linguaggio di apple.com adattato al sito (skill apple-design e apple-motion). Pulsanti a pillola con stato premuto (scala 0.97), angoli 12 px per schede e domande e 10 px per i campi, peso dei titoli 600, spaziatura ottica tra le lettere, sezioni con 64–96 px di respiro, intestazione in vetro da 56 px **con la linea petrolio (scelta di Nicholas)**. Movimento: curve di apple.com per colori e opacità, molle (`linear()`) per ciò che si sposta o si espande (domande, menu, pulsanti), View Transition tra le pagine; tutto in `$curve` e `$movimenti` di `_variabili.scss`. Rispettati anche `prefers-reduced-transparency` e `prefers-contrast: more`.
+- Spunti da uberdesigner.ai (scelta di Nicholas, solo CSS e jQuery, nessuna risorsa esterna): modulo in un pannello con riflesso di luce sul bordo superiore, domande numerate 01–05, bordo che si accende di petrolio vicino al mouse su domande e modulo (solo con mouse, mai con movimento ridotto), pulsante "Copia" accanto all'email.
 - Tipografia leggibile: testo a 17–18 px su desktop, righe di massimo 70 caratteri circa.
 - Un solo pulsante principale ("Scrivimi"), che porta al **modulo di contatto** nella sezione Contatti. Nella risposta "Come iniziamo?" delle domande frequenti un pulsante piccolo "Scrivimi" verso lo stesso modulo. Nelle schede dei servizi un pulsante "Chiedi informazioni" nella variante piccola a pillola (esteso a tutta la scheda) porta al modulo con il servizio già selezionato.
 - Foto: `public/images/nicholas.jpg`. **Se il file non esiste**, mostrare un cerchio con le iniziali "NB" come segnaposto. Quando la foto c'è, servirla ottimizzata (Astro `<Image>`, formati moderni, dimensioni corrette, `alt` descrittivo).
@@ -68,8 +69,8 @@ Intestazioni definite in `src/sicurezza/intestazioni.ts` (unica fonte): in build
 6. **Come lavoro**: quattro passi numerati.
 7. **Perché lavorare con me**: tre punti brevi.
 8. **Lavori realizzati**: sezione predisposta ma **nascosta** finché non c'è almeno un lavoro vero (un flag in un file di configurazione la attiva). Non inventare progetti.
-9. **Domande frequenti**: cinque domande con `<details>`/`<summary>`, senza JavaScript.
-10. **Contatti**: invito, modulo di contatto (Netlify Forms) e, sotto, l'email e LinkedIn come alternativa.
+9. **Domande frequenti**: cinque domande numerate con `<details>`/`<summary>`, senza JavaScript. Da 1024 px affiancata a Contatti (domande a sinistra, contatti a destra: scelta di Nicholas).
+10. **Contatti**: invito, modulo di contatto (Netlify Forms) e, sotto, l'email con il pulsante "Copia" e LinkedIn come alternativa.
 11. **Piè di pagina**, con link alla pagina `/privacy`.
 
 Pagina aggiuntiva `/privacy`: informativa breve e chiara (titolare Nicholas Barsanti, contatto info@nicholasbarsanti.it; il sito non usa cookie né analytics; l'hosting Netlify registra dati tecnici di accesso come l'indirizzo IP nei log del server; i dati inviati con il modulo (raccolti da Netlify Forms) o via email sono usati solo per rispondere). Da segnalare come bozza da far verificare.
@@ -131,7 +132,7 @@ Raccontami il tuo progetto: rispondo entro la giornata.
 
 Modulo: Nome e cognome · Email (sulla stessa riga da 640 px) · Di cosa hai bisogno? (facoltativo: Non lo so ancora o uno dei tre servizi) · Messaggio · "Uso questi dati solo per risponderti. Informativa privacy" · pulsante "Invia il messaggio". Pagina di conferma `/grazie`: "Messaggio inviato" · "Grazie, ho ricevuto il tuo messaggio: ti rispondo entro la giornata."
 
-Preferisci l'email? Scrivimi a info@nicholasbarsanti.it.
+Preferisci l'email? Scrivimi a info@nicholasbarsanti.it. (Con JavaScript, pulsante "Copia" → "Copiata"; per i lettori di schermo "Copia l'indirizzo email" e "Indirizzo email copiato".)
 Mi trovi anche su LinkedIn.
 
 ### Piè di pagina

@@ -9,6 +9,7 @@ import ElencoPunti from '../components/ElencoPunti.astro';
 import Profili from '../components/Profili.astro';
 import Domande from '../components/Domande.astro';
 import ModuloContatto from '../components/ModuloContatto.astro';
+import Pulsante from '../components/Pulsante.astro';
 import { sito, mailto } from '../config';
 import { linkSezione, sezioni } from '../data/sezioni';
 import {
@@ -95,20 +96,36 @@ const mostraLavori = sito.mostraLavori && lavori.length > 0;
     )
   }
 
-  {
-    domande.length > 0 && (
-      <Sezione sezione={sezioni.domande}>
-        <Domande voci={domande} />
-      </Sezione>
-    )
-  }
+  <!-- Domande frequenti e Contatti: affiancate da `largo`, una sotto l'altra prima. -->
+  <div class="contenitore sezioni-affiancate">
+    {
+      domande.length > 0 && (
+        <Sezione sezione={sezioni.domande}>
+          <Domande voci={domande} />
+        </Sezione>
+      )
+    }
 
-  <Sezione sezione={sezioni.contatti}>
-    <p data-comparsa>{contatti.invito}</p>
-    <ModuloContatto servizi={servizi.map((servizio) => servizio.titolo)} />
-    <p class="contatti__alternative" data-comparsa>
-      {contatti.alternativa} <a href={mailto}>{sito.email}</a>.<br />
-      {contatti.profili} <Profili />.
-    </p>
-  </Sezione>
+    <Sezione sezione={sezioni.contatti}>
+      <p data-comparsa>{contatti.invito}</p>
+      <ModuloContatto servizi={servizi.map((servizio) => servizio.titolo)} />
+      <p class="contatti__alternative" data-comparsa>
+        {contatti.alternativa} <a href={mailto}>{sito.email}</a>.
+        <Pulsante
+          tipo="button"
+          dimensione="piccolo"
+          variante="tenue"
+          class="contatti__copia"
+          hidden
+          aria-label={contatti.copiaEtichetta}
+          data-copia={sito.email}
+          data-testo-copiato={contatti.copiata}
+          data-annuncio={contatti.copiataAnnuncio}
+        >
+          {contatti.copia}
+        </Pulsante><span class="solo-lettori-schermo" role="status"></span><br />
+        {contatti.profili} <Profili />.
+      </p>
+    </Sezione>
+  </div>
 </Base>

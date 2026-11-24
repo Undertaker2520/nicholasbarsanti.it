@@ -134,6 +134,30 @@
   }
 }
 
+// Luce che segue il mouse (src/scripts/moduli/luce.js scrive --luce-x e --luce-y): al passaggio
+// il bordo si accende di petrolio vicino al puntatore e il fondo riceve un riflesso tenue.
+// Il fondo resta quello indicato da --luce-fondo (impostato dal componente). Bordo e fondo
+// stanno sullo stesso `background` (padding-box e border-box), così gli angoli restano tondi.
+// Solo con mouse o trackpad e senza movimento ridotto.
+@mixin luce-puntatore {
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    &:hover {
+      $punto: var(--luce-x, 50%) var(--luce-y, 0%);
+      border-color: transparent;
+      background:
+        radial-gradient(
+            circle v.$luce-raggio-fondo at $punto,
+            sfumato(accento, v.$luce-intensita-fondo),
+            transparent
+          )
+          padding-box,
+        linear-gradient(var(--luce-fondo), var(--luce-fondo)) padding-box,
+        radial-gradient(circle v.$luce-raggio-bordo at $punto, colore(accento), colore(bordo))
+          border-box;
+    }
+  }
+}
+
 // Materiale vetro ($vetro) con il colore del tema indicato; opaco se richiesto dal sistema.
 @mixin vetro($chiave) {
   background: sfumato($chiave, map.get(v.$vetro, opacita));
