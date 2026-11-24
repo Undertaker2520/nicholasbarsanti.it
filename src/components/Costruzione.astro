@@ -1,13 +1,13 @@
 ---
 /**
- * "Dal progetto al sito online": un portatile disegnato in HTML e CSS, con un telefono accanto.
+ * "Dal progetto al sito online": un portatile disegnato in HTML e CSS, con telefono e tablet accanto.
  * Sullo schermo una pagina d'esempio, disegnata a blocchi, e le fasi della costruzione.
  *
  * Senza JavaScript o con movimento ridotto: portatile aperto, pagina finita, fasi elencate sotto.
  * Con JavaScript (src/scripts/moduli/costruzione.js) la scena resta ferma mentre si scorre:
  * il coperchio si apre e la pagina si costruisce una fase per volta (Progetto: struttura a
  * tratteggio; Design: colori e telefono; Protezione: scansione e scudo; Online: indirizzo,
- * caricamento e spunta), con la fase corrente scritta dentro lo schermo.
+ * caricamento, spunta e tablet), con la fase corrente scritta dentro lo schermo.
  * Stili in src/styles/componenti/_costruzione.scss.
  */
 import { costruzione } from '../data/testi';
@@ -70,16 +70,36 @@ const { indirizzo, fasi } = costruzione;
         </div>
         <div class="portatile__base"></div>
 
-        <!-- La stessa pagina da telefono (fase Design): solo forme, come quella sul portatile. -->
-        <div class="telefono" aria-hidden="true">
-          <div class="telefono__schermo">
-            <span class="telefono__isola"></span>
-            <span class="telefono__foto"></span>
-            <span class="telefono__riga telefono__riga--titolo"></span>
-            <span class="telefono__riga telefono__riga--titolo telefono__riga--corta"></span>
-            <span class="telefono__riga"></span>
-            <span class="telefono__pulsante"></span>
-            <span class="telefono__scheda"></span>
+        <!-- La stessa pagina da tablet (fase Online) e da telefono (dalla fase Design), ognuna
+             impaginata per il suo schermo: solo forme, come quella sul portatile. -->
+        <div class="dispositivo dispositivo--tablet" aria-hidden="true">
+          <div class="dispositivo__schermo">
+            <span class="dispositivo__intestazione"></span>
+            <div class="dispositivo__apertura">
+              <div class="dispositivo__testi">
+                <span class="dispositivo__riga dispositivo__riga--titolo"></span>
+                <span class="dispositivo__riga dispositivo__riga--titolo dispositivo__riga--corta"></span>
+                <span class="dispositivo__riga"></span>
+                <span class="dispositivo__pulsante"></span>
+              </div>
+              <span class="dispositivo__foto"></span>
+            </div>
+            <div class="dispositivo__schede">
+              <span class="dispositivo__scheda"></span>
+              <span class="dispositivo__scheda"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dispositivo dispositivo--telefono" aria-hidden="true">
+          <div class="dispositivo__schermo">
+            <span class="dispositivo__isola"></span>
+            <span class="dispositivo__foto"></span>
+            <span class="dispositivo__riga dispositivo__riga--titolo"></span>
+            <span class="dispositivo__riga dispositivo__riga--titolo dispositivo__riga--corta"></span>
+            <span class="dispositivo__riga"></span>
+            <span class="dispositivo__pulsante"></span>
+            <span class="dispositivo__scheda"></span>
           </div>
         </div>
 

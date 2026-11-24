@@ -24,6 +24,12 @@ $animata: '.costruzione--animata';
   }
 }
 
+// Telefono o tablet non ancora arrivato: salirà dal piano accanto al portatile.
+@mixin dispositivo-assente {
+  opacity: 0;
+  transform: translateY(30%);
+}
+
 // --- Scena: con l'animazione il portatile resta fermo mentre si scorre ------------------
 
 #{$animata} .costruzione__scena {
@@ -128,7 +134,7 @@ $animata: '.costruzione--animata';
   }
 }
 
-// --- Pagina d'esempio (sul portatile e sul telefono) -------------------------------------
+// --- Pagina d'esempio (sul portatile, sul telefono e sul tablet) --------------------------
 // Colori in variabili locali: nella fase Progetto diventano trasparenti (resta il tratteggio)
 // e, cambiando, le transizioni li fanno sfumare verso i colori veri.
 // Le misure in cqw sono la geometria del disegno, in proporzione alla larghezza del portatile.
@@ -143,9 +149,9 @@ $animata: '.costruzione--animata';
 }
 
 .anteprima,
-.telefono {
+.dispositivo {
   @include con-movimento {
-    transition: transizioni(media, opacity), transform movimento(telefono);
+    transition: transizioni(media, opacity), transform movimento(dispositivo);
 
     *,
     *::before,
@@ -160,8 +166,8 @@ $animata: '.costruzione--animata';
 // Blocchi della pagina: con il tratteggio (trasparente a pagina finita) per la fase Progetto.
 $blocchi: '.anteprima__logo', '.anteprima__menu', '.anteprima__riga', '.anteprima__pulsante',
   '.anteprima__foto', '.anteprima__schede > span', '.anteprima__schede > span::before',
-  '.anteprima__schede > span::after', '.telefono__foto', '.telefono__riga', '.telefono__pulsante',
-  '.telefono__scheda';
+  '.anteprima__schede > span::after', '.dispositivo__foto', '.dispositivo__riga',
+  '.dispositivo__pulsante', '.dispositivo__scheda';
 
 #{$blocchi} {
   outline: v.$costruzione-tratto dashed var(--a-tratto);
@@ -461,9 +467,8 @@ $altezza-schermo: calc(#{v.$portatile-coperchio-altezza} - 2 * #{v.$portatile-co
     opacity: 1;
   }
 
-  .telefono {
-    opacity: 0;
-    transform: translateY(30%);
+  .dispositivo--telefono {
+    @include dispositivo-assente;
   }
 }
 
@@ -475,8 +480,12 @@ $altezza-schermo: calc(#{v.$portatile-coperchio-altezza} - 2 * #{v.$portatile-co
   }
 }
 
-// Online: indirizzo e spunta.
+// Online: indirizzo, spunta e tablet.
 @include prima-della-fase(4) {
+  .dispositivo--tablet {
+    @include dispositivo-assente;
+  }
+
   .anteprima__dominio {
     opacity: 0;
   }
@@ -651,35 +660,57 @@ $altezza-schermo: calc(#{v.$portatile-coperchio-altezza} - 2 * #{v.$portatile-co
   stroke-linejoin: round;
 }
 
-// --- Telefono (dalla fase Design) -------------------------------------------------------------
+// --- Telefono e tablet ---------------------------------------------------------------------
+// Appoggiati sul piano accanto al portatile; misure e lato in $dispositivi.
 
-.telefono {
+.dispositivo {
   position: absolute;
-  top: calc(#{v.$portatile-coperchio-altezza} + #{v.$portatile-base-altezza} - #{map.get(v.$telefono, altezza)});
-  right: calc(-1 * #{map.get(v.$telefono, sporgenza)});
-  width: map.get(v.$telefono, larghezza);
-  height: map.get(v.$telefono, altezza);
-  padding: map.get(v.$telefono, cornice);
   background: colore(portatile-cornice);
-  border-radius: map.get(v.$telefono, raggio);
   box-shadow:
     0 0 0 v.$bordo-spessore colore(portatile-scocca),
     ombra(media);
 }
 
-.telefono__schermo {
-  display: grid;
-  align-content: start;
-  justify-items: center;
-  gap: 1cqw;
-  height: 100%;
-  padding: 1cqw 1.4cqw;
-  overflow: hidden;
-  background: colore(sfondo);
-  border-radius: calc(#{map.get(v.$telefono, raggio)} - #{map.get(v.$telefono, cornice)});
+@each $nome, $misure in v.$dispositivi {
+  $raggio: map.get($misure, raggio);
+  $cornice: map.get($misure, cornice);
+
+  .dispositivo--#{$nome} {
+    top: calc(#{v.$portatile-coperchio-altezza} + #{v.$portatile-base-altezza} - #{map.get($misure, altezza)});
+    #{map.get($misure, lato)}: calc(-1 * #{map.get($misure, sporgenza)});
+    width: map.get($misure, larghezza);
+    height: map.get($misure, altezza);
+    padding: $cornice;
+    border-radius: $raggio;
+
+    .dispositivo__schermo {
+      border-radius: calc(#{$raggio} - #{$cornice});
+    }
+  }
 }
 
-.telefono__isola {
+.dispositivo__schermo {
+  display: grid;
+  align-content: start;
+  height: 100%;
+  overflow: hidden;
+  background: colore(sfondo);
+}
+
+// Telefono: una colonna centrata, una scheda.
+.dispositivo--telefono .dispositivo__schermo {
+  justify-items: center;
+  gap: 1cqw;
+  padding: 1cqw 1.4cqw;
+}
+
+// Tablet: intestazione con menu, testo e ritratto affiancati, due schede per riga.
+.dispositivo--tablet .dispositivo__schermo {
+  gap: 1.6cqw;
+  padding: 1.6cqw 2cqw;
+}
+
+.dispositivo__isola {
   width: 4cqw;
   height: 1cqw;
   margin-bottom: 1cqw;
@@ -687,7 +718,29 @@ $altezza-schermo: calc(#{v.$portatile-coperchio-altezza} - 2 * #{v.$portatile-co
   border-radius: v.$raggio-pillola;
 }
 
-.telefono__foto {
+// Logo a sinistra e voci del menu a destra, sopra la linea d'accento.
+.dispositivo__intestazione {
+  height: 2.4cqw;
+  border-bottom: 0.2cqw solid var(--a-accento);
+  background:
+    linear-gradient(var(--a-accento), var(--a-accento)) 0 0 / 1.6cqw 1.6cqw no-repeat,
+    repeating-linear-gradient(90deg, var(--a-tenue) 0 2cqw, transparent 2cqw 2.6cqw) 100% 0.45cqw / 10cqw 0.7cqw no-repeat;
+}
+
+.dispositivo__apertura {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1.6cqw;
+  align-items: center;
+}
+
+.dispositivo__testi {
+  display: grid;
+  justify-items: start;
+  gap: 0.8cqw;
+}
+
+.dispositivo__foto {
   width: 6cqw;
   aspect-ratio: 1;
   background:
@@ -698,7 +751,7 @@ $altezza-schermo: calc(#{v.$portatile-coperchio-altezza} - 2 * #{v.$portatile-co
   box-shadow: 0 0 0 0.25cqw var(--a-accento);
 }
 
-.telefono__riga {
+.dispositivo__riga {
   justify-self: stretch;
   height: 0.8cqw;
   background: var(--a-tenue);
@@ -710,12 +763,12 @@ $altezza-schermo: calc(#{v.$portatile-coperchio-altezza} - 2 * #{v.$portatile-co
   }
 
   &--corta {
-    justify-self: center;
+    justify-self: auto; // segue il contenitore: centrata sul telefono, a sinistra sul tablet
     width: 70%;
   }
 }
 
-.telefono__pulsante {
+.dispositivo__pulsante {
   width: 6cqw;
   height: 1.8cqw;
   margin-top: 0.4cqw;
@@ -723,7 +776,13 @@ $altezza-schermo: calc(#{v.$portatile-coperchio-altezza} - 2 * #{v.$portatile-co
   border-radius: v.$raggio-pillola;
 }
 
-.telefono__scheda {
+.dispositivo__schede {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.2cqw;
+}
+
+.dispositivo__scheda {
   justify-self: stretch;
   height: 7cqw;
   margin-top: 0.6cqw;
